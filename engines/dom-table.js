@@ -1,6 +1,6 @@
 const ENGINE_DOM_TABLE = 'dom-table-engine'
 
-function domTable() {
+function domTableEngine() {
   let html = '<table cellpadding=0 cellspacing=0>'
 
   for (let row = 0; row < fireHeight; row++) {
