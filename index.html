@@ -7,7 +7,6 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-top: -100px;
       }
 
       h1 {
@@ -27,14 +26,16 @@
       }
 
       td {
-        width: 50px;
-        height: 50px;
+        width: 32px;
+        height: 32px;
+        color: #FFF;
         border: 1px solid #000;
         text-align: center;
         vertical-align: center;
-        font-family: monospace;
-        font-size: 18px;
+        font-family: arial;
+        font-size: 10px;
         position: relative;
+        font-weight: bold;
       }
 
       td.pixel {
@@ -44,12 +45,22 @@
       }
 
       .pixel-index {
-        font-size: 10px;
+        font-size: 7px;
         display: inline-block;
         position: absolute;
-        top: 2px;
-        right: 2px;
-        color: #999;
+        top: 1px;
+        right: 1px;
+        color: #927450;
+      }
+
+      a {
+        color: #927450;
+        font-size: 10px;
+        font-family: arial;
+      }
+
+      .margin {
+        margin: 5px;
       }
     </style>
   </head>
@@ -57,11 +68,17 @@
 
     <center>
       <h1>Doom Fire Effect</h1>
+      <a href="https://github.com/filipedeschamps/doom-fire-algorithm">https://github.com/filipedeschamps/doom-fire-algorithm</a>
       <div id="fireCanvas"></div>
-      <button onclick="increaseFireSource()">+</button>
-      <button onclick="createFireSource()">Turn On</button>
-      <button onclick="destroyFireSource()">Turn Off</button>
-      <button onclick="decreaseFireSource()">-</button>
+      <div class="margin">
+        <button onclick="increaseFireSource()">+</button>
+        <button onclick="createFireSource()">Max Fire</button>
+        <button onclick="destroyFireSource()">Min Fire</button>
+        <button onclick="decreaseFireSource()">-</button>
+      </div>
+      <div class="margin">
+        <button onclick="toggleDebugMode()">Toggle Debug Mode</button>
+      </div>
     </center>
 
     <script src="fire.js"></script>
