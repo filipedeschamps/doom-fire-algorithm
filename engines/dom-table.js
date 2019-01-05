@@ -1,3 +1,5 @@
+const ENGINE_DOM_TABLE = 'dom-table-engine'
+
 function domTable() {
   let html = '<table cellpadding=0 cellspacing=0>'
 
