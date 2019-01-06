@@ -90,7 +90,7 @@ function manipulateFireSource(type, increasing) {
     const overflowPixelIndex = fireWidth * fireHeight
     const pixelIndex = (overflowPixelIndex - fireWidth) + column
 
-    if (type === 'creation') { firePixelsArray[pixelIndex] = positive ? 36 : 0 }
+    if (type === 'creation') { firePixelsArray[pixelIndex] = increasing ? 36 : 0 }
 
     if (type === 'manipulation') {
       const currentFireIntensity = firePixelsArray[pixelIndex]
