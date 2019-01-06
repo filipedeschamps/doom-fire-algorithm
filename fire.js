@@ -79,55 +79,33 @@ function renderFire() {
   document.querySelector('#fireCanvas').innerHTML = html  
 }
 
-function createFireSource() {
-  for (let column = 0; column <= fireWidth; column++) {
-    const overflowPixelIndex = fireWidth * fireHeight
-    const pixelIndex = (overflowPixelIndex - fireWidth) + column
-
-    firePixelsArray[pixelIndex] = 36
-  }
+function getFireIntensity(pixelIndex, increasing, calc) {
+  firePixelsArray[pixelIndex] = calc >= (increasing ? 36 : 0)
+    ? increasing ? 36 : calc
+    : increasing ? calc : 0
 }
 
-function destroyFireSource() {
+function manipulateFireSource(type, increasing) {
   for (let column = 0; column <= fireWidth; column++) {
     const overflowPixelIndex = fireWidth * fireHeight
     const pixelIndex = (overflowPixelIndex - fireWidth) + column
 
-    firePixelsArray[pixelIndex] = 0
-  }
-}
+    if (type === 'creation') { firePixelsArray[pixelIndex] = positive ? 36 : 0 }
 
-function increaseFireSource() {
-  for (let column = 0; column <= fireWidth; column++) {
-    const overflowPixelIndex = fireWidth * fireHeight
-    const pixelIndex = (overflowPixelIndex - fireWidth) + column
-    const currentFireIntensity = firePixelsArray[pixelIndex]
+    if (type === 'manipulation') {
+      const currentFireIntensity = firePixelsArray[pixelIndex]
+      const fireManipulation = Math.floor(Math.random() * 14)
 
-    if (currentFireIntensity < 36) {
-      const increase = Math.floor(Math.random() * 14)
-      const newFireIntensity =
-        currentFireIntensity + increase >= 36 ? 36 : currentFireIntensity + increase
-
-      firePixelsArray[pixelIndex] = newFireIntensity
+      if (increasing && currentFireIntensity < 36) { getFireIntensity(pixelIndex, increasing, (currentFireIntensity + fireManipulation)) }
+      if (!increasing && currentFireIntensity > 0) { getFireIntensity(pixelIndex, increasing, (currentFireIntensity - fireManipulation)) }
     }
   }
 }
 
-function decreaseFireSource() {
-  for (let column = 0; column <= fireWidth; column++) {
-    const overflowPixelIndex = fireWidth * fireHeight
-    const pixelIndex = (overflowPixelIndex - fireWidth) + column
-    const currentFireIntensity = firePixelsArray[pixelIndex]
-
-    if (currentFireIntensity > 0) {
-      const decay = Math.floor(Math.random() * 14)
-      const newFireIntensity =
-        currentFireIntensity - decay >= 0 ? currentFireIntensity - decay : 0
-
-      firePixelsArray[pixelIndex] = newFireIntensity
-    }
-  }
-}
+function createFireSource() { manipulateFireSource('creation', true) }
+function destroyFireSource() { manipulateFireSource('creation', false) }
+function increaseFireSource() { manipulateFireSource('manipulation', true) }
+function decreaseFireSource() { manipulateFireSource('manipulation', false) }
 
 function toggleDebugMode() {
   if (debug === false) {
