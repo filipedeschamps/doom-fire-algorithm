@@ -17,40 +17,11 @@
       }
 
       #fireCanvas {
+        border: 1px solid #000;
+        display: block;
         margin: 10px;
-      }
-
-      table {
-        border-collapse: collapse;
-        border: 1px solid #000;
-      }
-
-      td {
-        width: 32px;
-        height: 32px;
-        color: #FFF;
-        border: 1px solid #000;
-        text-align: center;
-        vertical-align: center;
-        font-family: arial;
-        font-size: 10px;
-        position: relative;
-        font-weight: bold;
-      }
-
-      td.pixel {
-        width: 4px;
-        height: 4px;
-        border: 0;
-      }
-
-      .pixel-index {
-        font-size: 7px;
-        display: inline-block;
-        position: absolute;
-        top: 1px;
-        right: 1px;
-        color: #927450;
+        width: 240px;
+        image-rendering: pixelated;
       }
 
       a {
@@ -69,7 +40,7 @@
     <center>
       <h1>Doom Fire Effect</h1>
       <a href="https://github.com/filipedeschamps/doom-fire-algorithm">https://github.com/filipedeschamps/doom-fire-algorithm</a>
-      <div id="fireCanvas"></div>
+      <canvas id="fireCanvas"></canvas>
       <div class="margin">
         <button onclick="decreaseFireSource()">-</button>
         <button onclick="destroyFireSource()">Min Fire</button>
@@ -77,7 +48,7 @@
         <button onclick="increaseFireSource()">+</button>
       </div>
       <div class="margin">
-        <button onclick="toggleDebugMode()">Toggle Debug Mode</button>
+        <button onclick="changeWindDirection()">Change Wind Direction</button>
       </div>
     </center>
 
