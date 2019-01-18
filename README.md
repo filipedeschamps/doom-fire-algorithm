@@ -8,7 +8,7 @@
 Fire effect from Doom implemented in plain JavaScript.
 
 - [Click here for the Demo page](https://filipedeschamps.github.io/doom-fire-algorithm/)
-- Video tutorial coming soon
+- [Click here for the Video tutorial](https://www.youtube.com/watch?v=HCjDjsHPOco)
 
 This project was inspired by [this article](http://fabiensanglard.net/doom_fire_psx/).
 
