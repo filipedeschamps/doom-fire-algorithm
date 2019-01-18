@@ -10,6 +10,7 @@ A playground of experiments related to the Doom fire effect implemented in JavaS
 ## Experiments
 
 - [First implementation using plain JavaScript and a Table to render](https://filipedeschamps.github.io/doom-fire-algorithm/playground/1st-implementation-with-tables/)
+- [Implementation using plain JavaScript and Canvas's `drawRect` to render](https://filipedeschamps.github.io/doom-fire-algorithm/playground/render-with-canvas-draw-rect/)
 
 ## Contributors
 
