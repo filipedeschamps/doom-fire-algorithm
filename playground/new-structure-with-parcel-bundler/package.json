@@ -1,0 +1,24 @@
+{
+  "name": "doom-fire-algorithm",
+  "version": "1.0.0",
+  "description": "<p align=\"center\">   <a href=\"https://filipedeschamps.github.io/doom-fire-algorithm/\">     <img src=\"https://github.com/filipedeschamps/doom-fire-algorithm/blob/master/doom-fire.gif?raw=true\" width=\"490\">   </a> </p>",
+  "main": "fire.js",
+  "scripts": {
+    "start": "parcel ./src/index.html --open",
+    "build": "parcel build ./src/index.html -d ./"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/filipedeschamps/doom-fire-algorithm.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/filipedeschamps/doom-fire-algorithm/issues"
+  },
+  "homepage": "https://github.com/filipedeschamps/doom-fire-algorithm#readme",
+  "devDependencies": {
+    "parcel-bundler": "^1.11.0"
+  }
+}
