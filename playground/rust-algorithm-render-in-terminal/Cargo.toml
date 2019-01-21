@@ -1,0 +1,10 @@
+[package]
+name = "rust-doom-fire"
+version = "0.1.0"
+authors = ["Mateus Moog <mateus.moog@pagar.me>"]
+edition = "2018"
+
+[dependencies]
+libmath = "*"
+rand = "*"
+termion = "*"
