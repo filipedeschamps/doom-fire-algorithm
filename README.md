@@ -15,7 +15,7 @@ A playground of experiments related to the Doom fire effect implemented in JavaS
 - [New structure using parcel-bundler and live-reload](https://filipedeschamps.github.io/doom-fire-algorithm/playground/new-structure-with-parcel-bundler/) ([@lucianopf](https://github.com/lucianopf))
 - [Implementation using PixiJS Graphics](https://filipedeschamps.github.io/doom-fire-algorithm/playground/render-with-pixijs/) ([@leocavalcante](https://github.com/leocavalcante))
 - [Implementation using Rust and rendered in Terminal](https://github.com/filipedeschamps/doom-fire-algorithm/tree/master/playground/rust-algorithm-render-in-terminal) ([@moog](https://github.com/moog))
-- [First implementation at the upside down using plain JavaScript and a Table to render](https://filipedeschamps.github.io/doom-fire-algorithm/playground/1st-implementation-with-tables-upside-down) ([@moog](https://github.com/lucianopf))
+- [First implementation at the upside down using plain JavaScript and a Table to render](https://filipedeschamps.github.io/doom-fire-algorithm/playground/1st-implementation-with-tables-upside-down) ([@lucianopf](https://github.com/lucianopf))
 
 ## Contributors
 
