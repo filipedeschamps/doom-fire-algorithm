@@ -14,10 +14,10 @@ function start() {  // initialization function
 
 function createFireDataStructure() {
   const numberOfPixels = fireWidth * fireHeight  // if I multiply the height times the width, 
-  												 // I will have all the pixels of the fire	
+  						 // I will have all the pixels of the fire	
   for (let i = 0; i < numberOfPixels; i++) {
     firePixelsArray[i] = 0  // increment zero in each of the indices of our array
-  }							// this means: 0 fire fireIntensity
+  }			    // this means: 0 fire fireIntensity
 }
 
 function calculateFirePropagation() {
@@ -35,7 +35,7 @@ function calculateFirePropagation() {
 
 function updateFireIntensityPerPixel(currentPixelIndex) {
   const belowPixelIndex = currentPixelIndex + fireWidth  // takes the reference value and adds a width
-  														 // that way I can go to the pixel below
+  							 // that way I can go to the pixel below
   // below pixel index overflows canvas
   if (belowPixelIndex >= fireWidth * fireHeight) {
     return
@@ -52,7 +52,7 @@ function updateFireIntensityPerPixel(currentPixelIndex) {
 
 function renderFire() {
   let html = '<table cellpadding=0 cellspacing=0>'  // within each cell of this table, 
-  													// we will show the information in this data structure
+  						    // we will show the information in this data structure
   // first iterate in the rows of the table and then iterate in the columns
   for (let row = 0; row < fireHeight; row++) {
     html += '<tr>'
@@ -82,7 +82,7 @@ function renderFire() {
   html += '</table>'
 
   document.querySelector('#fireCanvas').innerHTML = html  //identify the firecanvas and 
-}														  //replace the innerHTML with the result
+}							  //replace the innerHTML with the result
 	
 function createFireSource() {
   for (let column = 0; column <= fireWidth; column++) {
@@ -99,7 +99,7 @@ function destroyFireSource() {
     const pixelIndex = (overflowPixelIndex - fireWidth) + column  //find last pixel of the colunm
 
     firePixelsArray[pixelIndex] = 0  // increment zero in each of the indices of our array
-  }									 // this means: 0 fire fireIntensity
+  }			       	     // this means: 0 fire fireIntensity
 }
 
 function increaseFireSource() {
