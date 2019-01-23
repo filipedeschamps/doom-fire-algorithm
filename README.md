@@ -18,7 +18,7 @@ A playground of experiments related to the Doom fire effect implemented in JavaS
 - [First implementation at the upside down using plain JavaScript and a Table to render](https://filipedeschamps.github.io/doom-fire-algorithm/playground/1st-implementation-with-tables-upside-down) ([@lucianopf](https://github.com/lucianopf))
 - [First implementation but with comments all around the code](https://github.com/filipedeschamps/doom-fire-algorithm/blob/master/playground/doom-fire-algorithm-commented/fire.js) ([@WhoisBsa](https://github.com/WhoisBsa))
 - [Transparent fire and with new buttons to interact](https://filipedeschamps.github.io/doom-fire-algorithm/playground/burning-elements/) ([@mmoraisa](https://github.com/mmoraisa))
-- [Render using particles with P5 + more fire controls](https://filipedeschamps.github.io/doom-fire-algorithm/playground/burning-elements/) ([@SharkSharp](https://github.com/SharkSharp))
+- [Render using particles with P5 + more fire controls](https://filipedeschamps.github.io/doom-fire-algorithm/playground/render-using-particles-with-p5/) ([@SharkSharp](https://github.com/SharkSharp))
 
 ## Contributors
 
