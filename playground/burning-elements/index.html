@@ -1,0 +1,99 @@
+<html>
+  <head>
+    <title>Doom Fire Effect</title>
+    <link rel="stylesheet" href="burnElement.css"/>
+    <style>
+      body {
+        background-color: #63431c;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      h1 {
+        font-family: impact;
+        margin: 0;
+        font-size: 35px;
+        text-shadow: 0px -1px 0px rgba(255,225,31,0.4);
+      }
+
+      td {
+        width: 32px;
+        height: 32px;
+        color: #FFF;
+        border: 1px solid #000;
+        text-align: center;
+        vertical-align: center;
+        font-family: arial;
+        font-size: 10px;
+        position: relative;
+        font-weight: bold;
+      }
+
+      td.pixel {
+        width: 4px;
+        height: 4px;
+        border: 0;
+      }
+
+      .pixel-index {
+        font-size: 7px;
+        display: inline-block;
+        position: absolute;
+        top: 1px;
+        right: 1px;
+        color: #927450;
+      }
+
+      a {
+        color: #FFF;
+        font-size: 10px;
+        font-family: arial;
+      }
+
+      .margin {
+        margin: 5px;
+      }
+    </style>
+  </head>
+  <body>
+
+    <center>
+      <h1>Doom Fire Effect</h1>
+      <a href="https://github.com/filipedeschamps/doom-fire-algorithm">https://github.com/filipedeschamps/doom-fire-algorithm</a>
+      <div id="fireCanvas"></div>
+      <div class="margin">
+        <button
+          id="btn-already-burning"
+          onclick="burnControl.toggleBurn(this)">
+          Already burning
+        </button>
+        <button
+          id="btn-click-to-burn"
+          onclick="burnControl.toggleBurn(this)">
+          Click to toggle burn
+        </button>
+        <button
+          id="btn-hover-to-burn"
+          onmouseenter="burnControl.startBurn(this)"
+          onmouseleave="burnControl.stopBurn(this)">
+          Hover to toggle burn
+        </button>
+      </div>
+    </center>
+
+    <script src="burnControl.js"></script>
+
+    <script>
+      const elBtnAlreadyBurning = document.getElementById('btn-already-burning');
+      const elBtnClickToBurn = document.getElementById('btn-click-to-burn');
+      const elBtnHoverToBurn = document.getElementById('btn-hover-to-burn');
+
+      burnControl.burnElement(elBtnAlreadyBurning).start();
+      burnControl.burnElement(elBtnClickToBurn);
+      burnControl.burnElement(elBtnHoverToBurn);
+    </script>
+
+  </body>
+</html>
+
