@@ -1,6 +1,7 @@
 <html>
   <head>
     <title>Doom Fire Effect</title>
+    <link rel="stylesheet" href="burnElement.css"/>
     <style>
       body {
         background-color: #63431c;
@@ -14,15 +15,6 @@
         margin: 0;
         font-size: 35px;
         text-shadow: 0px -1px 0px rgba(255,225,31,0.4);
-      }
-
-      #fireCanvas {
-        margin: 10px;
-      }
-
-      table {
-        border-collapse: collapse;
-        border: 1px solid #000;
       }
 
       td {
@@ -71,22 +63,27 @@
       <a href="https://github.com/filipedeschamps/doom-fire-algorithm">https://github.com/filipedeschamps/doom-fire-algorithm</a>
       <div id="fireCanvas"></div>
       <div class="margin">
-        <button onclick="decreaseFireSource()">-</button>
-        <button onclick="destroyFireSource()">Min Fire</button>
-        <button onclick="createFireSource()">Max Fire</button>
-        <button onclick="increaseFireSource()">+</button>
-      </div>
-      <div class="margin">
-        <button onclick="toggleDebugMode()">Toggle Debug Mode</button>
+        <button
+          id="btn-already-burning"
+          onclick="burnControl.toggleBurn(this)">
+          Already burning
+        </button>
+        <button
+          id="btn-click-to-burn"
+          onclick="burnControl.toggleBurn(this)">
+          Click to burn
+        </button>
       </div>
     </center>
 
-    <script src="burnElements.js">
+    <script src="burnControl.js"></script>
 
-      document.onload = function() {
-        burnElements.start();
-      }
+    <script>
+      const elBtnAlreadyBurning = document.getElementById('btn-already-burning');
+      const elBtnClickToBurn = document.getElementById('btn-click-to-burn');
 
+      burnControl.burnElement(elBtnAlreadyBurning).start();
+      burnControl.burnElement(elBtnClickToBurn);
     </script>
 
   </body>
