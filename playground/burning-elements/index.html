@@ -71,7 +71,13 @@
         <button
           id="btn-click-to-burn"
           onclick="burnControl.toggleBurn(this)">
-          Click to burn
+          Click to toggle burn
+        </button>
+        <button
+          id="btn-hover-to-burn"
+          onmouseenter="burnControl.startBurn(this)"
+          onmouseleave="burnControl.stopBurn(this)">
+          Hover to toggle burn
         </button>
       </div>
     </center>
@@ -81,9 +87,11 @@
     <script>
       const elBtnAlreadyBurning = document.getElementById('btn-already-burning');
       const elBtnClickToBurn = document.getElementById('btn-click-to-burn');
+      const elBtnHoverToBurn = document.getElementById('btn-hover-to-burn');
 
       burnControl.burnElement(elBtnAlreadyBurning).start();
       burnControl.burnElement(elBtnClickToBurn);
+      burnControl.burnElement(elBtnHoverToBurn);
     </script>
 
   </body>
