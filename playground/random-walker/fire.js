@@ -7,6 +7,7 @@ const canvasCtx = canvas.getContext('2d')
 const pixelSize = 4
 const randomWalker = createRandomWalker()
 let gravity = 0
+let fireEffect = true
 
 function createRandomWalker() {
   let vector = {
@@ -53,26 +54,34 @@ function start() {
   canvas.height = fireHeight * pixelSize
   document.querySelector('#fireCanvas').appendChild(canvas)
 
-  setInterval(calculateFirePropagation, 50)
-  setInterval(walkRandomWalker, 25)
+  setInterval(calculateFirePropagation, 30)
+  setInterval(walkRandomWalker, 10)
 }
 
+function toggleFireEffect() {
+  fireEffect = !fireEffect
+}
 
 function walkRandomWalker() {
+  if (!fireEffect) {
+    // if no fire effect, set all canvas to default state: zero fire intensity
+    createFireDataStructure()
+  }
+
   randomWalker.walk()
 
   // Sorry for this mess, but it's to make a square
   firePixelsArray[randomWalker.vector.linearPosition] = 36
-  firePixelsArray[randomWalker.vector.linearPosition - 1] = 36
-  firePixelsArray[randomWalker.vector.linearPosition + 1] = 36
+  firePixelsArray[randomWalker.vector.linearPosition - 1] = 35
+  firePixelsArray[randomWalker.vector.linearPosition + 1] = 35
 
-  firePixelsArray[randomWalker.vector.linearPosition - fireWidth] = 36
-  firePixelsArray[randomWalker.vector.linearPosition - fireWidth - 1] = 36
-  firePixelsArray[randomWalker.vector.linearPosition - fireWidth + 1] = 36
+  firePixelsArray[randomWalker.vector.linearPosition - fireWidth] = 34
+  firePixelsArray[randomWalker.vector.linearPosition - fireWidth - 1] = 31
+  firePixelsArray[randomWalker.vector.linearPosition - fireWidth + 1] = 31
 
-  firePixelsArray[randomWalker.vector.linearPosition + fireWidth] = 36
-  firePixelsArray[randomWalker.vector.linearPosition + fireWidth - 1] = 36
-  firePixelsArray[randomWalker.vector.linearPosition + fireWidth + 1] = 36
+  firePixelsArray[randomWalker.vector.linearPosition + fireWidth] = 34
+  firePixelsArray[randomWalker.vector.linearPosition + fireWidth - 1] = 31
+  firePixelsArray[randomWalker.vector.linearPosition + fireWidth + 1] = 31
 }
 
 function createFireDataStructure() {
