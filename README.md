@@ -24,6 +24,7 @@ A playground of experiments related to the Doom fire effect implemented in JavaS
 - [Rendering with a Table and Random wind direction](https://filipedeschamps.github.io/doom-fire-algorithm/playground/1st-implementation-with-tables-randomic-variable-wind/) ([@hfabio](https://github.com/hfabio))
 - [Lua/Love2D Implementation](https://github.com/filipedeschamps/doom-fire-algorithm/tree/master/playground/lua-love2d-implementation) ([@wesleycsj](https://github.com/wesleycsj))
 - [Kotlin on Android Implementation](https://github.com/filipedeschamps/doom-fire-algorithm/tree/master/playground/android-implementation-kotlin) ([@kassiano](https://github.com/kassiano))
+- [Random Walker](https://filipedeschamps.github.io/doom-fire-algorithm/playground/random-walker/) ([@filipedeschamps](https://github.com/filipedeschamps))
 
 ## Contributors
 
