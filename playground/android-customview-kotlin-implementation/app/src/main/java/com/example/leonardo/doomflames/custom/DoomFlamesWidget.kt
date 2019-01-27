@@ -110,12 +110,12 @@ class DoomFlamesWidget(context: Context, attributeSet: AttributeSet) : View(cont
         flamesArray.forEachIndexed { index, _ -> flamesArray[index] = 0 }
     }
 
-    private fun createFireSource() {
+    private fun createFireSource(firePower: Int = 36) {
         val overFlowFireIndex = widthPixel * heightPixel
 
         for (column in 0 until widthPixel) {
             val pixelIndex = (overFlowFireIndex - widthPixel) + column
-            flamesArray[pixelIndex] = 36
+            flamesArray[pixelIndex] = firePower
         }
     }
 
@@ -169,8 +169,12 @@ class DoomFlamesWidget(context: Context, attributeSet: AttributeSet) : View(cont
         windDirection = direction.value
     }
 
+    fun setFlameIntensity(int: Int){
+        createFireSource(int)
+        invalidate()
+    }
+
     enum class WindDirection(val value:Int){
         RIGHT(2), LEFT(1), NONE(0)
     }
-
 }

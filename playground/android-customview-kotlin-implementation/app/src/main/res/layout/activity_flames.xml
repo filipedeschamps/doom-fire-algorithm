@@ -11,45 +11,69 @@
             android:id="@+id/flames"
             android:layout_height="0dp"
             android:layout_width="0dp"
-            android:layout_marginBottom="15dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/leftBtn"
+            app:layout_constraintBottom_toTopOf="@+id/buttons"
             app:wind="right"
     />
-    <android.support.v7.widget.AppCompatButton
-            android:id="@+id/leftBtn"
+    <SeekBar
+            android:id="@+id/seekBar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            android:layout_marginStart="8dp"
-            android:text="Left"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:max="9"
+            android:progress="9"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/noneBtn"
-    />
-    <android.support.v7.widget.AppCompatButton
-            android:id="@+id/noneBtn"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            android:layout_marginStart="8dp"
-            android:text="None"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/leftBtn"
-            app:layout_constraintEnd_toStartOf="@id/rightBtn"
-    />
-    <android.support.v7.widget.AppCompatButton
-            android:id="@+id/rightBtn"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            android:layout_marginStart="8dp"
-            android:text="Right"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/noneBtn"
             app:layout_constraintEnd_toEndOf="parent"
-    />
+            app:layout_constraintTop_toBottomOf="@+id/flames"
+            app:layout_constraintBottom_toTopOf="@id/buttons"/>
+
+    <android.support.constraint.ConstraintLayout
+            android:id="@+id/buttons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+        <android.support.v7.widget.AppCompatButton
+                android:id="@+id/leftBtn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginStart="8dp"
+                android:text="Left"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/noneBtn"
+        />
+        <android.support.v7.widget.AppCompatButton
+                android:id="@+id/noneBtn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginStart="8dp"
+                android:text="None"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/leftBtn"
+                app:layout_constraintEnd_toStartOf="@id/rightBtn"
+        />
+        <android.support.v7.widget.AppCompatButton
+                android:id="@+id/rightBtn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginStart="8dp"
+                android:text="Right"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/noneBtn"
+                app:layout_constraintEnd_toEndOf="parent"
+        />
+    </android.support.constraint.ConstraintLayout>
 
 </android.support.constraint.ConstraintLayout>
