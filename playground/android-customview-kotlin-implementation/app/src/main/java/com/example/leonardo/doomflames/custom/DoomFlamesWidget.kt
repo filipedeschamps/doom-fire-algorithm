@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.View
+import com.example.leonardo.doomflames.R
 import java.util.*
 import kotlin.math.absoluteValue
 
@@ -62,9 +63,15 @@ class DoomFlamesWidget(context: Context, attributeSet: AttributeSet) : View(cont
     private var widthPixel: Int = 0
     private var heightPixel: Int = 0
     private var pixelSize: Int = 0
-    private var windDirection: Int = 1
+    private var windDirection: Int = 0
 
     private lateinit var flamesArray: IntArray
+
+    init {
+        with(context.obtainStyledAttributes(attributeSet, R.styleable.DoomFlamesWidget)) {
+            windDirection = getInt(R.styleable.DoomFlamesWidget_wind, 0)
+        }
+    }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
@@ -125,12 +132,13 @@ class DoomFlamesWidget(context: Context, attributeSet: AttributeSet) : View(cont
         val bellowPixelIndex = currentPixelIndex + widthPixel
         if (bellowPixelIndex >= widthPixel * heightPixel) return
 
-        val decay = Math.floor(Random().nextDouble() * 3).toInt()
+        val heightIsBigger = getWidthCalculated() < getHeightCalculated()
+        val decay = Math.floor(Random().nextDouble() * if (heightIsBigger)2 else 3).toInt()
         val bellowPixelFireIntensity = flamesArray[bellowPixelIndex]
         val newFireIntensity = if (bellowPixelFireIntensity - decay >= 0) bellowPixelFireIntensity - decay else 0
         val pos = when(windDirection){
-            0 -> if (currentPixelIndex - decay >= 0) currentPixelIndex - decay else currentPixelIndex
-            1 -> if (currentPixelIndex + decay >= 0) currentPixelIndex + decay else currentPixelIndex
+            1 -> if (currentPixelIndex - decay >= 0) currentPixelIndex - decay else currentPixelIndex
+            2 -> if (currentPixelIndex + decay >= 0) currentPixelIndex + decay else currentPixelIndex
             else -> currentPixelIndex
         }
         flamesArray[pos] = newFireIntensity
@@ -155,6 +163,14 @@ class DoomFlamesWidget(context: Context, attributeSet: AttributeSet) : View(cont
         calculateFirePropagation()
         canvas?.let { renderFire(it) }
         postInvalidateDelayed(13)
+    }
+
+    fun setWind(direction: WindDirection){
+        windDirection = direction.value
+    }
+
+    enum class WindDirection(val value:Int){
+        RIGHT(2), LEFT(1), NONE(0)
     }
 
 }
