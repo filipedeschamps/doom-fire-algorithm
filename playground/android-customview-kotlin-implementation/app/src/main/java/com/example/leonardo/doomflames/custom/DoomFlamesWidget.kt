@@ -7,6 +7,7 @@ import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.View
 import java.util.*
+import kotlin.math.absoluteValue
 
 class DoomFlamesWidget(context: Context, attributeSet: AttributeSet) : View(context, attributeSet) {
 
@@ -63,7 +64,7 @@ class DoomFlamesWidget(context: Context, attributeSet: AttributeSet) : View(cont
     private var pixelSize: Int = 0
     private var windDirection: Int = 1
 
-    lateinit var flamesArray: IntArray
+    private lateinit var flamesArray: IntArray
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
@@ -92,11 +93,13 @@ class DoomFlamesWidget(context: Context, attributeSet: AttributeSet) : View(cont
     }
 
     private fun initializeFlamesArray() {
-        pixelSize = Math.ceil(getWidthCalculated().toDouble() / 50).toInt()
-        widthPixel = 50
-        heightPixel = Math.ceil(getHeightCalculated().toDouble()/pixelSize).toInt()
+        val heightIsBigger = getWidthCalculated() < getHeightCalculated()
+        val biggestSize = if (heightIsBigger) getWidthCalculated().toDouble() else getHeightCalculated().toDouble()
+        pixelSize = Math.ceil( biggestSize / 50).toInt()
+        widthPixel = if (heightIsBigger) 50 else Math.ceil(getWidthCalculated().toDouble()/pixelSize).toInt()
+        heightPixel = if (!heightIsBigger) 50 else Math.ceil(getHeightCalculated().toDouble()/pixelSize).toInt()
         val arraySize = widthPixel * heightPixel
-        flamesArray = IntArray(arraySize)
+        flamesArray = IntArray(arraySize.absoluteValue)
         flamesArray.forEachIndexed { index, _ -> flamesArray[index] = 0 }
     }
 
@@ -122,7 +125,7 @@ class DoomFlamesWidget(context: Context, attributeSet: AttributeSet) : View(cont
         val bellowPixelIndex = currentPixelIndex + widthPixel
         if (bellowPixelIndex >= widthPixel * heightPixel) return
 
-        val decay = Math.floor(Random().nextDouble() * 2).toInt()
+        val decay = Math.floor(Random().nextDouble() * 3).toInt()
         val bellowPixelFireIntensity = flamesArray[bellowPixelIndex]
         val newFireIntensity = if (bellowPixelFireIntensity - decay >= 0) bellowPixelFireIntensity - decay else 0
         val pos = when(windDirection){
@@ -153,4 +156,5 @@ class DoomFlamesWidget(context: Context, attributeSet: AttributeSet) : View(cont
         canvas?.let { renderFire(it) }
         postInvalidateDelayed(13)
     }
+
 }
