@@ -5,7 +5,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".FlamesActivity" android:background="@color/white">
+        tools:context=".FlamesActivity" android:background="@color/background">
 
     <com.example.leonardo.doomflames.custom.DoomFlamesWidget
             android:id="@+id/flames"
@@ -68,6 +68,8 @@
                 android:layout_marginBottom="15dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp
+"
                 android:text="Right"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
