@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://filipedeschamps.github.io/doom-fire-algorithm/playground/1st-implementation-with-tables/">
-    <img src="https://github.com/alvesleonardo/doom-fire-algorithm/raw/android/custom_view/playground/android-customview-kotlin-implementation/example.gif?raw=true" width="800">
+    <img src="https://github.com/alvesleonardo/doom-fire-algorithm/raw/android/custom_view/playground/android-customview-kotlin-implementation/example.gif?raw=true" width="480">
   </a>
 </p>
 
