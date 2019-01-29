@@ -102,3 +102,13 @@ export function toggleCanvasRender (config) {
     render: 'canvas',
   })
 }
+
+export function togglePixi (config) {
+  document.getElementById('render-info').innerHTML = 'pixi'
+  window.start({
+    ...config,
+    fireHeight: defaultConfig.fireHeight,
+    fireWidth: defaultConfig.fireWidth,
+    render: 'pixi',
+  })
+}

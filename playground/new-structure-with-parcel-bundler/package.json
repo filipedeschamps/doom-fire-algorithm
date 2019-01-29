@@ -21,5 +21,8 @@
   "devDependencies": {
     "parcel-bundler": "^1.11.0",
     "parcel-plugin-wasm.rs": "^1.2.8"
+  },
+  "dependencies": {
+    "pixi.js": "^4.8.5"
   }
 }

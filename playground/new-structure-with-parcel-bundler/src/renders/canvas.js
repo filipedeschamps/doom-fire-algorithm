@@ -5,11 +5,13 @@ let renderState = {
   canvas: document.createElement('canvas'),
   rendered: false
 }
+
+renderState.canvas.className = 'canvas-renderer'
 renderState.canvasCtx = renderState.canvas.getContext('2d')
 
 
 function startCanvas (config) {
-  if (!renderState.rendered || !document.querySelector("canvas")) {
+  if (!renderState.rendered || !document.querySelector(".canvas-renderer")) {
     renderState.canvas.width = config.fireWidth * pixelSize
     renderState.canvas.height = config.fireHeight * pixelSize
     document.querySelector(config.renderTargetId).innerHTML = ''
