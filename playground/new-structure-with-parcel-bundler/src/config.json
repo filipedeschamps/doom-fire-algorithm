@@ -1,9 +1,10 @@
 {
   "firePixelsArray": [],
-  "fireWidth": 60,
-  "fireHeight": 40,
+  "fireWidth": 45,
+  "fireHeight": 30,
   "debug": false,
   "interval": 50,
   "renderTargetId": "#fireCanvas",
-  "render": "table"
+  "render": "canvas",
+  "engine": "js"
 }

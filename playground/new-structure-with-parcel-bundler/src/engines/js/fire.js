@@ -1,12 +1,11 @@
-export function calculateFirePropagation () {
+export function calculateFirePropagation (config) {
   for (let column = 0; column < config.fireWidth; column++) {
     for (let row = 0; row < config.fireHeight; row++) {
       const pixelIndex = column + (config.fireWidth * row)
-      updateFireIntensityPerPixel(pixelIndex)
+      updateFireIntensityPerPixel(pixelIndex, config)
     }
   }
-
-  return renderFire(generateRenderedFireHtml(config))
+  return config
 }
 
 export function updateFireIntensityPerPixel (currentPixelIndex, config) {
@@ -24,10 +23,8 @@ export function updateFireIntensityPerPixel (currentPixelIndex, config) {
 
 export function createFireDataStructure (config) {
   const numberOfPixels = config.fireWidth * config.fireHeight
-
   for (let i = 0; i < numberOfPixels; i++) {
     config.firePixelsArray[i] = 0
   }
-
   return config
 }
