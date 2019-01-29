@@ -1,0 +1,92 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+body {
+  height: 100vh;
+  background-color: #63431c;
+  background-image: url('https://wallpapercave.com/wp/wp2909646.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  color: #fff;
+  font-family: 'Press Start 2P', cursive;
+}
+.row {
+  display: flex;
+  flex-direction: row;
+}
+.col {
+  display: flex;
+  flex-direction: column;
+}
+.btn {
+  width: 100%;
+  background: #f00;
+}
+.between {
+  justify-content: space-between;
+}
+.mt {
+  margin-top: 10px;
+}
+header {
+  background: #484848;
+  padding: 20px;
+  text-align: center;
+}
+header h1 {
+  text-transform: uppercase;
+  font-size: 2rem;
+}
+a {
+  color: #fff;
+}
+main {
+  margin-top: 5vmin;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+main .controls {
+  display: flex;
+  margin: 2vmin;
+  justify-content: space-between;
+}
+main .controls button {
+  margin: 0 20px;
+  background: #92cd41;
+  display: inline-block;
+  position: relative;
+  text-align: center;
+  font-size: 1.4rem;
+  padding: 10px 10px;
+  font-family: 'Press Start 2P', cursive;
+  text-decoration: none;
+  color: #fff;
+  box-shadow: inset -4px -4px 0px 0px #4aa52e;
+}
+main .controls button:hover {
+  background: #76c442;
+  box-shadow: inset -6px -6px 0px 0px #4aa52e;
+}
+canvas {
+  width: 80vmin;
+  height: 60vmin;
+}
+strong {
+  color: #000;
+  text-shadow: 0 0 1px #f00;
+}
+footer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 100%;
+  text-shadow: 0 0 1px black;
+}
+footer a {
+  padding: 10px 0;
+}
