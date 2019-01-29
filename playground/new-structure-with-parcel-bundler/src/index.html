@@ -6,6 +6,7 @@
   <body>
     <center>
       <h1>Doom Fire Effect</h1>
+      <h2><span id="engine-info"></span> using <span id="render-info"></span></h2>
       <a href="https://github.com/filipedeschamps/doom-fire-algorithm">https://github.com/filipedeschamps/doom-fire-algorithm</a>
       <div id="fireCanvas"></div>
       <div class="margin">
@@ -14,12 +15,22 @@
         <button id="createFireSource">Max Fire</button>
         <button id="increaseFireSource">+</button>
       </div>
-      <div class="margin">
-        <button id="toggleDebugMode">Toggle Debug Mode</button>
-      </div>
+      <section class="margin">
+        <h1>Renderers</h1>
+        <button id="toggleDebugMode">Table Debug</button>
+        <button id="toggleTableRender">Table</button>
+        <button id="toggleCanvasRender">Canvas</button>
+        <button id="togglePixi">Pixi</button>
+      </section>
+      <section class="margin">
+        <h1>Engines</h1>
+        <button id="toggleJSRender">JS</button>
+        <button id="toggleRustRender">Rust</button>
+        <button id="toggleElmRender" disabled>Elm</button>
+      </section>
     </center>
 
-    <script src="./js/main.js"></script>
+    <script src="./main.js"></script>
 
   </body>
 </html>

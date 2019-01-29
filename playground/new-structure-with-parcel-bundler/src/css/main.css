@@ -9,6 +9,16 @@ h1 {
   margin: 0;
   font-size: 35px;
   text-shadow: 0px -1px 0px rgba(255,225,31,0.4);
+  text-transform: uppercase;
+}
+
+h2 {
+  font-family: impact;
+  margin: 0;
+  font-size: 22px;
+  color: white;
+  text-shadow: 0px -1px 0px rgba(255,225,31,0.4);
+  text-transform: uppercase;
 }
 
 #fireCanvas {
@@ -56,4 +66,8 @@ a {
 
 .margin {
   margin: 5px;
+}
+
+section > h1 {
+  font-size: 24px;
 }

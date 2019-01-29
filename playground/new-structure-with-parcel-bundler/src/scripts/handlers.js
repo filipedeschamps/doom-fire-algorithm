@@ -1,4 +1,5 @@
-import { createFireDataStructure } from './fire'
+import { createFireDataStructure } from '../engines/js/fire'
+import defaultConfig from '../config.json'
 
 export function createFireSource (config) {
   for (let column = 0; column <= config.fireWidth; column++) {
@@ -52,18 +53,62 @@ export function decreaseFireSource (config) {
   return config
 }
 
-export function toggleDebugMode (config) {
-  if (config.debug === false) {
-    config.fireWidth = 25
-    config.fireHeight = 17
-    config.debug = true
-  } else {
-    config.fireWidth = 60
-    config.fireHeight = 40
-    config.debug = false
-  }
+export function toggleJSRender (config) {
+  document.getElementById('engine-info').innerHTML = 'js'
+  window.start({
+    ...config,
+    fireHeight: defaultConfig.fireHeight,
+    fireWidth: defaultConfig.fireWidth,
+    engine: 'js',
+  })
+}
 
-  createFireDataStructure(config)
-  createFireSource(config)
-  return config
+export function toggleRustRender (config) {
+  document.getElementById('engine-info').innerHTML = 'rust'
+  window.start({
+    ...config,
+    fireHeight: defaultConfig.fireHeight,
+    fireWidth: defaultConfig.fireWidth,
+    engine: 'rust',
+  })
+}
+
+export function toggleDebugMode (config) {
+  document.getElementById('render-info').innerHTML = 'table-debug'
+  window.start({
+    ...config,
+    render: 'table-debug',
+    fireHeight: 17,
+    fireWidth: 25,
+  })
+}
+
+export function toggleTableRender (config) {
+  document.getElementById('render-info').innerHTML = 'table'
+  window.start({
+    ...config,
+    fireHeight: defaultConfig.fireHeight,
+    fireWidth: defaultConfig.fireWidth,
+    render: 'table',
+  })
+}
+
+export function toggleCanvasRender (config) {
+  document.getElementById('render-info').innerHTML = 'canvas'
+  window.start({
+    ...config,
+    fireHeight: defaultConfig.fireHeight,
+    fireWidth: defaultConfig.fireWidth,
+    render: 'canvas',
+  })
+}
+
+export function togglePixi (config) {
+  document.getElementById('render-info').innerHTML = 'pixi'
+  window.start({
+    ...config,
+    fireHeight: defaultConfig.fireHeight,
+    fireWidth: defaultConfig.fireWidth,
+    render: 'pixi',
+  })
 }
