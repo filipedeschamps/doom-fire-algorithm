@@ -21,7 +21,10 @@
         <div class="row mt">
           <button class="btn" onclick="destroyFireSource()">Min fire</button>
           <button class="btn" onclick="createFireSource()">Max fire</button>
-        </div>
+		</div>
+		<div class="row mt">
+			<input class="chk" type="checkbox" checked="true" onchange="togglePointerInteraction(this)">Mouse/Touch interaction<br>
+		</div>
       </div>
     </main>
     <footer>
@@ -29,7 +32,8 @@
         >Original <strong>Github</strong> repository - Filipe Deschamps
       </a>
 
-      <a href="https://github.com/kevinbreaker">Modified by: kevin martin</a>
+	  <a href="https://github.com/kevinbreaker">Modified by: kevin martin</a>
+	  <a href="https://github.com/pivettamarcos">Mouse/touch interaction by: Marcos Pivetta</a>
     </footer>
     <script src="./fire.js"></script>
   </body>
