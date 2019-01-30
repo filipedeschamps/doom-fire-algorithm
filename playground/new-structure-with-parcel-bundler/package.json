@@ -5,7 +5,7 @@
   "main": "fire.js",
   "scripts": {
     "start": "parcel ./src/index.html --open",
-    "build": "parcel build ./src/index.html -d ./demo"
+    "build": "parcel build ./src/index.html -d ./demo --public-url ./"
   },
   "repository": {
     "type": "git",

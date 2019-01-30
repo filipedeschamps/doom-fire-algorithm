@@ -425,4 +425,4 @@ var n,e="/Users/lucianopf/git/doom-fire-algorithm/playground/new-structure-with-
 },{"fs":"70rD"}],0:[function(require,module,exports) {
 var b=require("21/1");b.register("wasm",require("fISM"));b.load([["doom_fire_algorithm_bg.918dd76b.wasm","Vb5f"]]).then(function(){require("epB2");});
 },{}]},{},[0], null)
-//# sourceMappingURL=/main.709cdfb9.map
+//# sourceMappingURL=main.709cdfb9.map
