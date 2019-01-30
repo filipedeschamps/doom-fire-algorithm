@@ -4,7 +4,7 @@ You should have SDL2 library installed in your system before run this code.
 
 [Simple DirectMedia Layer](https://www.libsdl.org/)
 
-If don't know how, I recommend you Lazy Foo tutorials
+If you don't know how, I recommend you Lazy Foo tutorials
 
 http://lazyfoo.net/tutorials/SDL/
 
