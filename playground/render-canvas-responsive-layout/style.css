@@ -28,6 +28,7 @@ body {
 }
 .mt {
   margin-top: 10px;
+  align-items: center;
 }
 header {
   background: #484848;
@@ -70,6 +71,28 @@ main .controls button:hover {
   background: #76c442;
   box-shadow: inset -6px -6px 0px 0px #4aa52e;
 }
+
+main .controls input[type=checkbox] {
+  cursor: pointer;
+  margin: 0 20px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: white;
+  height: 16px;
+  width: 16px;
+  border: 2px solid white;
+  padding: 10px 10px;
+}
+
+main .controls input[type=checkbox]:checked {
+	background: #92cd41;
+}
+
+main .controls input[type="checkbox"]:hover {
+	filter: brightness(90%);
+}
+
 canvas {
   width: 80vmin;
   height: 60vmin;
@@ -89,4 +112,5 @@ footer {
 }
 footer a {
   padding: 10px 0;
+  text-align: center
 }
