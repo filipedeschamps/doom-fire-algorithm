@@ -25,7 +25,7 @@ A playground of experiments related to the Doom fire effect implemented in JavaS
 - [Lua/Love2D Implementation](https://github.com/filipedeschamps/doom-fire-algorithm/tree/master/playground/lua-love2d-implementation) ([@wesleycsj](https://github.com/wesleycsj))
 - [Kotlin on Android Implementation](https://github.com/filipedeschamps/doom-fire-algorithm/tree/master/playground/android-implementation-kotlin) ([@kassiano](https://github.com/kassiano))
 - [Random Walker](https://filipedeschamps.github.io/doom-fire-algorithm/playground/random-walker/) ([@filipedeschamps](https://github.com/filipedeschamps))
-- [SDL2 Implementation](https://filipedeschamps.github.io/doom-fire-algorithm/playground/sdl2-implementation/) ([@mrcsxsiq](https://github.com/mrcsxsiq))
+- [SDL2 Implementation](https://github.com/filipedeschamps/doom-fire-algorithm/playground/sdl2-implementation/) ([@mrcsxsiq](https://github.com/mrcsxsiq))
 - [Android with Kotlin and Custom View](https://github.com/filipedeschamps/doom-fire-algorithm/tree/master/playground/android-customview-kotlin-implementation) ([@alvesleonardo](https://github.com/alvesleonardo))
 - [Render using Canvas, requestAnimationFrame and with a Responsive Layout](https://filipedeschamps.github.io/doom-fire-algorithm/playground/render-canvas-responsive-layout/) ([@kevinbreaker](https://github.com/kevinbreaker))
 - ['Pagar.me's logo on fire' edition](https://filipedeschamps.github.io/doom-fire-algorithm/playground/pagarme-logo-on-fire/) ([@igorantun](https://github.com/igorantun))
