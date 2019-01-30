@@ -12,7 +12,7 @@ A playground of experiments related to the Doom fire effect implemented in JavaS
 - [First implementation using plain JavaScript and a Table to render](https://filipedeschamps.github.io/doom-fire-algorithm/playground/1st-implementation-with-tables/) ([@filipedeschamps](https://github.com/filipedeschamps))
 - [Implementation using plain JavaScript and Canvas's `drawRect` to render](https://filipedeschamps.github.io/doom-fire-algorithm/playground/render-with-canvas-draw-rect/) ([@leocavalcante](https://github.com/leocavalcante))
 - [Implementation using plain JavaScript and Canvas's `putImageData` to render](https://filipedeschamps.github.io/doom-fire-algorithm/playground/render-with-canvas/) ([@mccraveiro](https://github.com/mccraveiro))
-- [Show case of JS + Rust (WebAssembly) + PixiJS + parcel-bundler + live-reload](https://filipedeschamps.github.io/doom-fire-algorithm/playground/new-structure-with-parcel-bundler/) ([@lucianopf](https://github.com/lucianopf))
+- [Show case of JS + Rust (WebAssembly) + PixiJS + parcel-bundler + live-reload](https://filipedeschamps.github.io/doom-fire-algorithm/playground/new-structure-with-parcel-bundler/demo) ([@lucianopf](https://github.com/lucianopf))
 - [Implementation using PixiJS Graphics](https://filipedeschamps.github.io/doom-fire-algorithm/playground/render-with-pixijs/) ([@leocavalcante](https://github.com/leocavalcante))
 - [Implementation using Rust and rendered in Terminal](https://github.com/filipedeschamps/doom-fire-algorithm/tree/master/playground/rust-algorithm-render-in-terminal) ([@moog](https://github.com/moog))
 - [First implementation at the upside down using plain JavaScript and a Table to render](https://filipedeschamps.github.io/doom-fire-algorithm/playground/1st-implementation-with-tables-upside-down) ([@lucianopf](https://github.com/lucianopf))
@@ -29,6 +29,7 @@ A playground of experiments related to the Doom fire effect implemented in JavaS
 - [Android with Kotlin and Custom View](https://github.com/filipedeschamps/doom-fire-algorithm/tree/master/playground/android-customview-kotlin-implementation) ([@alvesleonardo](https://github.com/alvesleonardo))
 - [Render using Canvas, requestAnimationFrame and with a Responsive Layout](https://filipedeschamps.github.io/doom-fire-algorithm/playground/render-canvas-responsive-layout/) ([@kevinbreaker](https://github.com/kevinbreaker))
 - ['Pagar.me's logo on fire' edition](https://filipedeschamps.github.io/doom-fire-algorithm/playground/pagarme-logo-on-fire/) ([@igorantun](https://github.com/igorantun))
+- [Mouse Follower algorithm](https://filipedeschamps.github.io/doom-fire-algorithm/playground/follow-mouse/) ([@filipedeschamps](https://github.com/filipedeschamps))
 
 ## Contributors
 

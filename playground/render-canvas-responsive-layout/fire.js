@@ -9,6 +9,13 @@ canvas.width = fireWidth
 canvas.height = fireHeight
 const context = canvas.getContext('2d')
 
+canvas.addEventListener("mousemove", pointerMove);
+canvas.addEventListener("touchmove", pointerMove);
+canvas.addEventListener("mouseup", pointerRelease);
+canvas.addEventListener("touchend", pointerRelease);
+pointerInteractionEnabled = true;
+pointerPositions = []
+
 const image = context.createImageData(fireWidth, fireHeight)
 const range = maxRange => [...Array(maxRange).keys()]
 const firePixelsArray = [...Array(numberOfPixels).fill(0)]
@@ -127,14 +134,66 @@ function decreaseFireSource () {
   })
 }
 
+function togglePointerInteraction (checkbox){
+	pointerInteractionEnabled = checkbox.checked
+}
+
+function decreaseIntensityAroundPointer(){
+	console.log(JSON.stringify(pointerPositions))
+	let pointerPositionLength = pointerPositions.length;
+
+	for(let i = 0; i< pointerPositionLength; i++){
+		let relativePointerPosition = {x: pointerPositions[i].x - canvas.offsetLeft, y: pointerPositions[i].y - canvas.offsetTop};
+		let pointerOnMatrix = {x: Math.round(relativePointerPosition.x / (canvas.clientWidth / fireWidth)) ,
+								y: Math.round(relativePointerPosition.y / (canvas.clientHeight / fireHeight))}
+
+		// HELL JUST LIKE DOOM
+		firePixelsArray[(pointerOnMatrix.y - 1 * fireWidth) + pointerOnMatrix.x] = 0 ;
+		firePixelsArray[(pointerOnMatrix.y - 1 * fireWidth) + pointerOnMatrix.x + 1] = 0 ;
+		firePixelsArray[(pointerOnMatrix.y * fireWidth) + pointerOnMatrix.x + 1] = 0 ;
+		firePixelsArray[(pointerOnMatrix.y + 1 * fireWidth) + pointerOnMatrix.x + 1] = 0 ;
+		firePixelsArray[(pointerOnMatrix.y + 1 * fireWidth) + pointerOnMatrix.x] = 0 ;
+		firePixelsArray[(pointerOnMatrix.y + 1 * fireWidth) + pointerOnMatrix.x - 1] = 0 ;
+		firePixelsArray[(pointerOnMatrix.y * fireWidth) + pointerOnMatrix.x - 1] = 0 ;
+		firePixelsArray[(pointerOnMatrix.y * fireWidth) + pointerOnMatrix.x] = 0 ;
+	}
+}
+
+function pointerMove(event){
+	event.preventDefault();
+
+	if(event instanceof MouseEvent){
+		pointerPositions[0] = {x: event.clientX, y: event.clientY};
+	}else if(event instanceof TouchEvent){
+		let touchesLength = event.touches.length;
+		for(let i = 0; i < touchesLength; i++)
+			pointerPositions[i] = {x: event.touches[event.changedTouches[i].identifier].clientX, y: event.touches[event.changedTouches[i].identifier].clientY};
+	}
+}
+
+function pointerRelease(event){
+	event.preventDefault();
+
+	if(event instanceof MouseEvent){
+		pointerPositions[0] = {};
+	}else if(event instanceof TouchEvent){
+		let changedTouchesLength = event.changedTouches.length;
+		for(let i = 0; i < changedTouchesLength; i++)
+			pointerPositions[event.changedTouches[i].identifier] = {};
+	}
+}
+
 function start () {
   createFireSource()
   calculateFirePropagation()
   renderFire()
   loop()
 }
+
 function loop () {
   window.requestAnimationFrame(loop, canvas)
+  if(pointerInteractionEnabled)
+  	decreaseIntensityAroundPointer();
   calculateFirePropagation()
   renderFire()
 }

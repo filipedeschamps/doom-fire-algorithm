@@ -3,5 +3,5 @@ function love.conf(t)
   t.author = "WesleyCSJ"
   t.version = "11.1"
 	t.window.width = 400
-	t.window.height = 600
+	t.window.height = 400
 end
