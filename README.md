@@ -30,6 +30,7 @@ A playground of experiments related to the Doom fire effect implemented in JavaS
 - [Android with Kotlin and Custom View](https://github.com/filipedeschamps/doom-fire-algorithm/tree/master/playground/android-customview-kotlin-implementation) ([@alvesleonardo](https://github.com/alvesleonardo))
 - [Render using Canvas, requestAnimationFrame and with a Responsive Layout](https://filipedeschamps.github.io/doom-fire-algorithm/playground/render-canvas-responsive-layout/) ([@kevinbreaker](https://github.com/kevinbreaker))
 - ['Pagar.me's logo on fire' edition](https://filipedeschamps.github.io/doom-fire-algorithm/playground/pagarme-logo-on-fire/) ([@igorantun](https://github.com/igorantun))
+- [Mouse Follower algorithm](https://filipedeschamps.github.io/doom-fire-algorithm/playground/follow-mouse/) ([@filipedeschamps](https://github.com/filipedeschamps))
 
 ## Contributors
 
