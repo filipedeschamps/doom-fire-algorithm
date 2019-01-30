@@ -1,0 +1,27 @@
+[package]
+name = "doom-fire-algorithm"
+version = "0.1.0"
+authors = ["Luciano <luciano.franca@pagar.me>"]
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies.wasm-bindgen]
+version = "0.2"
+features = ["serde-serialize"]
+
+[dependencies.web-sys]
+version = "0.3"
+features = [
+  'console',
+  'Document',
+  'Element',
+  'HtmlElement',
+  'Node',
+  'Window'
+]
+
+[dependencies]
+serde = "1.0.59"
+serde_derive = "1.0.59"
+lazy_static = "1.2.0"
