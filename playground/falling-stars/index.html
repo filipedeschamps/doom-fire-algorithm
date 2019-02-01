@@ -37,12 +37,18 @@
       label {
         font-size: 12px;
         font-weight: bold;
-        color: #F00;
+        color: #FFF;
         font-family: arial;
         position: absolute;
         left: 20px;
         top: 20px;
         display: inline-block;
+      }
+
+      label.shower-mode {
+        color: #F00;
+        left: 730px;
+        top: 20px;
       }
 
     </style>
@@ -51,6 +57,9 @@
 
     <canvas id="fireCanvas"></canvas>
     <label>
+      Click inside the Canvas
+    </label>
+    <label class="shower-mode">
       <input type="checkbox" id="showerModeCheckbox"> Shower Mode - WARNING! ADDICTIVE!
     </label>
 
