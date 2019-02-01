@@ -20,10 +20,9 @@ int main()
 {
 
     // Variables used in the fire algorithm
-    // TODO: Change fire effect to its own class
     const int fireWidth  = 240;
     const int fireHeight = 160;
-    float fireSize = 3.f;
+    const float fireSize = 3.f;
 
     // Configuration variables
     int windowWidth  = fireWidth  * fireSize;
