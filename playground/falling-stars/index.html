@@ -1,0 +1,66 @@
+<html>
+  <head>
+    <title>Doom Fire Effect</title>
+    <style>
+      body {
+        background-color: #63431c;
+        margin: 0;
+        padding: 0;
+      }
+
+      h1 {
+        font-family: impact;
+        margin-top: 25px;
+        margin-left: 15px;
+        margin-bottom: 5px;
+        font-size: 35px;
+        text-shadow: 0px -1px 0px rgba(255,225,31,0.4);
+      }
+
+      a {
+        color: #FFF;
+        font-size: 10px;
+        font-family: arial;
+      }
+
+      .margin {
+        margin: 15px;
+        margin-left: 15px;
+      }
+
+      #fireCanvas {
+        width: 1000px;
+        image-rendering: pixelated;
+        position: relative;
+      }
+
+      label {
+        font-size: 12px;
+        font-weight: bold;
+        color: #F00;
+        font-family: arial;
+        position: absolute;
+        left: 20px;
+        top: 20px;
+        display: inline-block;
+      }
+
+    </style>
+  </head>
+  <body>
+
+    <canvas id="fireCanvas"></canvas>
+    <label>
+      <input type="checkbox" id="showerModeCheckbox"> Shower Mode - WARNING! ADDICTIVE!
+    </label>
+
+    <h1>For more demos:</h1>
+    <div class="margin">
+      <a href="https://github.com/filipedeschamps/doom-fire-algorithm">https://github.com/filipedeschamps/doom-fire-algorithm</a>
+    </div>
+
+    <script src="fire.js"></script>
+
+  </body>
+</html>
+

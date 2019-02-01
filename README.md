@@ -32,6 +32,7 @@ A playground of experiments related to the Doom fire effect implemented in JavaS
 - [Mouse Follower algorithm](https://filipedeschamps.github.io/doom-fire-algorithm/playground/follow-mouse/) ([@filipedeschamps](https://github.com/filipedeschamps))
 - [PSP Homebrew Implementation](https://github.com/filipedeschamps/doom-fire-algorithm/playground/psp-homebrew-oslib-implementation/) ([@mrcsxsiq](https://github.com/mrcsxsiq)) 
 - [Render using Canvas and HSL colors](https://filipedeschamps.github.io/doom-fire-algorithm/playground/render-with-canvas-and-hsl-colors/) ([@felipe-pita](https://github.com/felipe-pita))
+- [Falling Stars (interactive demo)](https://filipedeschamps.github.io/doom-fire-algorithm/playground/falling-stars/) ([@filipedeschamps](https://github.com/filipedeschamps))
 
 ## Contributors
 
