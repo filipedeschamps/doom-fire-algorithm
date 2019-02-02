@@ -88,6 +88,9 @@ void Fire::render(sf::RenderWindow& window)
 {
     for (int i=0; i < m_height; i++) {
         for (int j=0; j < m_width; j++) {
+            if (m_values[i][j] == 0)
+                continue;
+
             currentPixel.setPosition(m_origin.x + j * m_pixelSize,
                                      m_origin.y + i * m_pixelSize);
             currentPixel.setFillColor(colorPalette[m_values[i][j]]);

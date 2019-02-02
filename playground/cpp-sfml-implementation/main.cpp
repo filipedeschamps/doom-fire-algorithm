@@ -85,9 +85,7 @@ int main()
 
         if (!paused) {
             // Clearing background
-            //window.clear(sf::Color::Black);
-            //  Clearing the background is not necessary
-            // in this program.
+            window.clear(sf::Color(7,7,7));
 
             fire->update();
             fire->render(window);
