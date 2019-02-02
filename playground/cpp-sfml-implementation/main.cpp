@@ -18,7 +18,6 @@ void testPrintFireValues(const Fire& fire)
 
 int main()
 {
-
     // Variables used in the fire algorithm
     const int fireWidth  = 240;
     const int fireHeight = 160;
@@ -27,7 +26,7 @@ int main()
     // Configuration variables
     int windowWidth  = fireWidth  * fireSize;
     int windowHeight = fireHeight * fireSize;
-    unsigned int fps = 45;
+    unsigned int fps = 60;
 
     Fire* fire = new Fire(fireSize, fireWidth, fireHeight, sf::Vector2f(0,0));
     fire->setFireSourceStrength(36);

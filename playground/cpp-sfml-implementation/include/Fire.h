@@ -12,6 +12,9 @@ class Fire {
         unsigned int** m_values;
         sf::Vector2f   m_origin;
 
+        sf::RectangleShape currentPixel;
+        // increases performance
+
     public:
         Fire(float, unsigned int, unsigned int, sf::Vector2f);
         virtual ~Fire();
