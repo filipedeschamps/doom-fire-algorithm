@@ -9,6 +9,8 @@ A playground of experiments related to the Doom fire effect implemented in JavaS
 
 ## Experiments
 
+These people are making this repository **MORE THAN AWESOME**.
+
 - [First implementation using plain JavaScript and a Table to render](https://filipedeschamps.github.io/doom-fire-algorithm/playground/1st-implementation-with-tables/) ([@filipedeschamps](https://github.com/filipedeschamps))
 - [Implementation using plain JavaScript and Canvas's `drawRect` to render](https://filipedeschamps.github.io/doom-fire-algorithm/playground/render-with-canvas-draw-rect/) ([@leocavalcante](https://github.com/leocavalcante))
 - [Implementation using plain JavaScript and Canvas's `putImageData` to render](https://filipedeschamps.github.io/doom-fire-algorithm/playground/render-with-canvas/) ([@mccraveiro](https://github.com/mccraveiro))
@@ -34,6 +36,7 @@ A playground of experiments related to the Doom fire effect implemented in JavaS
 - [Render using Canvas and HSL colors](https://filipedeschamps.github.io/doom-fire-algorithm/playground/render-with-canvas-and-hsl-colors/) ([@felipe-pita](https://github.com/felipe-pita))
 - [Falling Stars (interactive demo)](https://filipedeschamps.github.io/doom-fire-algorithm/playground/falling-stars/) ([@filipedeschamps](https://github.com/filipedeschamps))
 - [C++ SFML implementation](https://filipedeschamps.github.io/doom-fire-algorithm/playground/cpp-sfml-implementation/) ([@edusporto](https://github.com/edusporto))
+- [Elixir CLI for drawing doom fire effect in the terminal](https://github.com/filipedeschamps/doom-fire-algorithm/tree/master/playground/elixir-algorithm-render-in-terminal) ([@herbstrith](https://github.com/herbstrith))
 
 ## Contributors
 
@@ -41,7 +44,7 @@ A playground of experiments related to the Doom fire effect implemented in JavaS
 | :---: | :---: | :---: | :---: | :---: | :---: |
 | [<img src="https://avatars0.githubusercontent.com/u/4884974?s=115&v=4"><br><small>@moog</small>](https://github.com/moog) | [<img src="https://avatars0.githubusercontent.com/u/36895235?s=115&v=4"><br><small>@WhoisBsa</small>](https://github.com/WhoisBsa) | [<img src="https://avatars1.githubusercontent.com/u/15789323?s=115&v=4"><br><small>@mmoraisa</small>](https://github.com/mmoraisa) | [<img src="https://avatars3.githubusercontent.com/u/17105737?s=115&v=4"><br><small>@SharkSharp</small>](https://github.com/SharkSharp) | [<img src="https://avatars1.githubusercontent.com/u/14901075?s=115&v=4" width=115><br><small>@agaelema</small>](https://github.com/agaelema) | [<img src="https://avatars3.githubusercontent.com/u/15989467?s=115&v=4"><br><small>@hfabio</small>](https://github.com/hfabio) |
 | [<img src="https://avatars1.githubusercontent.com/u/8799608?s=115&v=4"><br><small>@wesleycsj</small>](https://github.com/wesleycsj) | [<img src="https://avatars1.githubusercontent.com/u/1576341?s=115&v=4"><br><small>@kassiano</small>](https://github.com/kassiano) | [<img src="https://avatars1.githubusercontent.com/u/993608?s=115&v=4"><br><small>@mrcsxsiq</small>](https://github.com/mrcsxsiq) | [<img src="https://avatars3.githubusercontent.com/u/5604321?s=115&v=4"><br><small>@alvesleonardo</small>](https://github.com/alvesleonardo) | [<img src="https://avatars0.githubusercontent.com/u/25128546?s=115&v=4"><br><small>@kevinbreaker</small>](https://github.com/kevinbreaker) | [<img src="https://avatars3.githubusercontent.com/u/5935946?s=115&v=4"><br><small>@igorantun</small>](https://github.com/igorantun) |
-| [<img src="https://avatars1.githubusercontent.com/u/1231655?s=115&v=4"><br><small>@felipe-pita</small>](https://github.com/felipe-pita) | [<img src="https://avatars0.githubusercontent.com/u/30930225?s=115&v=4"><br><small>@edusporto</small>](https://github.com/edusporto) |
+| [<img src="https://avatars1.githubusercontent.com/u/1231655?s=115&v=4"><br><small>@felipe-pita</small>](https://github.com/felipe-pita) | [<img src="https://avatars0.githubusercontent.com/u/30930225?s=115&v=4"><br><small>@edusporto</small>](https://github.com/edusporto) | [<img src="https://avatars3.githubusercontent.com/u/7833473?s=115&v=4"><br><small>@herbstrith</small>](https://github.com/herbstrith) |
 
 
 ## Author
