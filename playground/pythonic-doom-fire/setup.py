@@ -1,11 +1,11 @@
 from setuptools import setup
 
 setup(
-    name='doom-fire-algorithm-pygame',
+    name='pythonic-doom-fire',
     version='1.0',
-    description='Doom fire algorithm implemented with pygame',
+    description='A Python Doom fire algorithm implementation',
     author='Filipe Alves',
     author_email='filipe.alvesdefernando@hotmail.com',
-    packages=['doom-fire-algorithm-pygame'],
+    packages=['pythonic-doom-fire'],
     install_requires=['pygame'],
 )
