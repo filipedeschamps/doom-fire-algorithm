@@ -49,7 +49,6 @@ class DoomFire(ABC):
         for i, f in enumerate(fire_source_row):
             if f == 0:
                 continue
-            updated = True
             dec = randint(self.fire_source_inc[0], self.fire_source_inc[1])
             fire_source_row[i] -= dec if f - dec >= 0 else f
         self.pixels_array[-self.width:] = fire_source_row
