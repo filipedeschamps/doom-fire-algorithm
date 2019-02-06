@@ -7,8 +7,8 @@ rendering library. For doing this you have to create a child class of `DoomFire`
 abstract base class and reimplement the `render` method.
 
 <p align="center">
-    <img src="https://github.com/alvesfilipe/doom-fire-algorithm/blob/filipealves-pythonic-doom-fire/playground/pythonic-doom-fire/pythonic-doom-fire.gif?raw=true">
-    <img src="https://github.com/alvesfilipe/doom-fire-algorithm/blob/filipealves-pythonic-doom-fire/playground/pythonic-doom-fire/pythonic-doom-fire-blue.gif?raw=true">
+    <img src="https://github.com/filipealvesdef/doom-fire-algorithm/blob/filipealves-pythonic-doom-fire-fix/playground/pythonic-doom-fire/pythonic-doom-fire.gif?raw=true">
+    <img src="https://github.com/filipealvesdef/doom-fire-algorithm/blob/filipealves-pythonic-doom-fire-fix/playground/pythonic-doom-fire/pythonic-doom-fire-blue.gif?raw=true">
 </p>
 
 ## Requirements
