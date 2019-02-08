@@ -1,6 +1,7 @@
 package main
 
 import (
+	"image/color"
 	"log"
 	"math/rand"
 	"time"
@@ -9,124 +10,114 @@ import (
 )
 
 const (
-	screenWidth  = 100 // 320
-	screenHeight = 50  // 240
+	screenWidth  = 100
+	screenHeight = 50
 )
-
-type palete struct {
-	r uint8
-	g uint8
-	b uint8
-}
 
 var (
-	screenSize        = screenWidth * screenHeight
-	pixels            = make([]byte, screenSize*4)
-	firePixelsArray   = make([]byte, screenSize)
-	fireColorsPalette = []palete{
-		{r: 7, g: 7, b: 7},       //  0
-		{r: 31, g: 7, b: 7},      //  1
-		{r: 47, g: 15, b: 7},     //  2
-		{r: 71, g: 15, b: 7},     //  3
-		{r: 87, g: 23, b: 7},     //  4
-		{r: 103, g: 31, b: 7},    //  5
-		{r: 119, g: 31, b: 7},    //  6
-		{r: 143, g: 39, b: 7},    //  7
-		{r: 159, g: 47, b: 7},    //  8
-		{r: 175, g: 63, b: 7},    //  9
-		{r: 191, g: 71, b: 7},    // 10
-		{r: 199, g: 71, b: 7},    // 11
-		{r: 223, g: 79, b: 7},    // 12
-		{r: 223, g: 87, b: 7},    // 13
-		{r: 223, g: 87, b: 7},    // 14
-		{r: 215, g: 95, b: 7},    // 15
-		{r: 215, g: 95, b: 7},    // 16
-		{r: 215, g: 103, b: 15},  // 17
-		{r: 207, g: 111, b: 15},  // 18
-		{r: 207, g: 119, b: 15},  // 19
-		{r: 207, g: 127, b: 15},  // 20
-		{r: 207, g: 135, b: 23},  // 21
-		{r: 199, g: 135, b: 23},  // 22
-		{r: 199, g: 143, b: 23},  // 23
-		{r: 199, g: 151, b: 31},  // 24
-		{r: 191, g: 159, b: 31},  // 25
-		{r: 191, g: 159, b: 31},  // 26
-		{r: 191, g: 167, b: 39},  // 27
-		{r: 191, g: 167, b: 39},  // 28
-		{r: 191, g: 175, b: 47},  // 29
-		{r: 183, g: 175, b: 47},  // 30
-		{r: 183, g: 183, b: 47},  // 31
-		{r: 183, g: 183, b: 55},  // 32
-		{r: 207, g: 207, b: 111}, // 33
-		{r: 223, g: 223, b: 159}, // 34
-		{r: 239, g: 239, b: 199}, // 35
-		{r: 255, g: 255, b: 255}, // 36
+	screenSize  = screenWidth * screenHeight
+	pixels      = make([]byte, screenSize*4)
+	firePixels  = make([]byte, screenSize)
+	firePalette = []color.RGBA{
+		{R: 7, G: 7, B: 7},       //  0
+		{R: 31, G: 7, B: 7},      //  1
+		{R: 47, G: 15, B: 7},     //  2
+		{R: 71, G: 15, B: 7},     //  3
+		{R: 87, G: 23, B: 7},     //  4
+		{R: 103, G: 31, B: 7},    //  5
+		{R: 119, G: 31, B: 7},    //  6
+		{R: 143, G: 39, B: 7},    //  7
+		{R: 159, G: 47, B: 7},    //  8
+		{R: 175, G: 63, B: 7},    //  9
+		{R: 191, G: 71, B: 7},    // 10
+		{R: 199, G: 71, B: 7},    // 11
+		{R: 223, G: 79, B: 7},    // 12
+		{R: 223, G: 87, B: 7},    // 13
+		{R: 223, G: 87, B: 7},    // 14
+		{R: 215, G: 95, B: 7},    // 15
+		{R: 215, G: 95, B: 7},    // 16
+		{R: 215, G: 103, B: 15},  // 17
+		{R: 207, G: 111, B: 15},  // 18
+		{R: 207, G: 119, B: 15},  // 19
+		{R: 207, G: 127, B: 15},  // 20
+		{R: 207, G: 135, B: 23},  // 21
+		{R: 199, G: 135, B: 23},  // 22
+		{R: 199, G: 143, B: 23},  // 23
+		{R: 199, G: 151, B: 31},  // 24
+		{R: 191, G: 159, B: 31},  // 25
+		{R: 191, G: 159, B: 31},  // 26
+		{R: 191, G: 167, B: 39},  // 27
+		{R: 191, G: 167, B: 39},  // 28
+		{R: 191, G: 175, B: 47},  // 29
+		{R: 183, G: 175, B: 47},  // 30
+		{R: 183, G: 183, B: 47},  // 31
+		{R: 183, G: 183, B: 55},  // 32
+		{R: 207, G: 207, B: 111}, // 33
+		{R: 223, G: 223, B: 159}, // 34
+		{R: 239, G: 239, B: 199}, // 35
+		{R: 255, G: 255, B: 255}, // 36
 	}
 )
 
-func createFireSource() {
+func init() {
 	for i := screenSize - screenWidth; i < screenSize; i++ {
-		firePixelsArray[i] = 36
+		firePixels[i] = 36
 	}
 }
 
-func calculateFirePropagation() {
-	for column := 0; column < screenWidth; column++ {
-		for row := 0; row < screenHeight; row++ {
-			pixelIndex := column + (screenWidth * row)
-			updateFireIntensityPerPixel(pixelIndex)
+func updateFirePixels() {
+	for i := 0; i < screenWidth; i++ {
+		for j := 0; j < screenHeight; j++ {
+			idx := i + (screenWidth * j)
+			updateFireIntensityPerPixel(idx)
 		}
 	}
 }
 
 func updateFireIntensityPerPixel(currentPixelIndex int) {
-	belowPixelIndex := currentPixelIndex + screenWidth
-	if belowPixelIndex >= screenSize {
+	below := currentPixelIndex + screenWidth
+	if below >= screenSize {
 		return
 	}
 
-	decay := rand.Intn(3)
-	belowPixelFireIntensity := int(firePixelsArray[belowPixelIndex])
-	newFireIntensity := belowPixelFireIntensity - decay
-	if newFireIntensity < 0 {
-		newFireIntensity = 0
+	d := rand.Intn(3)
+	newI := int(firePixels[below]) - d
+	if newI < 0 {
+		newI = 0
 	}
 
-	if currentPixelIndex-decay < 0 {
+	if currentPixelIndex-d < 0 {
 		return
 	}
-	firePixelsArray[currentPixelIndex-decay] = byte(newFireIntensity)
+	firePixels[currentPixelIndex-d] = byte(newI)
 }
 
 func renderFire() {
-	for pos, v := range firePixelsArray {
-		p := fireColorsPalette[v]
-		pixels[pos*4] = p.r
-		pixels[pos*4+1] = p.g
-		pixels[pos*4+2] = p.b
-		pixels[pos*4+3] = 0xff
+	for i, v := range firePixels {
+		p := firePalette[v]
+		pixels[i*4] = p.R
+		pixels[i*4+1] = p.G
+		pixels[i*4+2] = p.B
+		pixels[i*4+3] = 0xff
 	}
 }
 
 func update(screen *ebiten.Image) error {
-
-	calculateFirePropagation()
+	updateFirePixels()
 	renderFire()
 
 	if ebiten.IsDrawingSkipped() {
 		return nil
 	}
 
-	err := screen.ReplacePixels(pixels)
-	return err
+	_ = screen.ReplacePixels(pixels)
+	return nil
 }
 
 func main() {
 	rand.Seed(time.Now().UnixNano())
-	createFireSource()
 
-	err := ebiten.Run(update, screenWidth, screenHeight, 6, "Fire")
-	if err != nil {
+	if err := ebiten.Run(update, screenWidth, screenHeight, 6, "Doom Fire (Ebiten Demo)"); err != nil {
 		log.Fatal(err)
 	}
 }
