@@ -68,5 +68,5 @@ dist
 .cache
 
 # igonre bin java
-playground/doom-fire-algorithm-java/bin
+playground/doom-fire-algorithm-java/bin/
 
