@@ -67,9 +67,11 @@ dist
 
 .cache
 
+# igonre bin java
+playground/doom-fire-algorithm-java/bin/
+
 # Eclipse
 target/
 .settings
 .project
 .classpath
-
