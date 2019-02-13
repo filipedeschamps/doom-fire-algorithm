@@ -15,6 +15,8 @@ Creating the fire effect from DOOM in Java using Graphics2D API.
     -   `git clone https://github.com/fabiodelabruna/doom-fire-algorithm.git`
 -   Enter the directory
     -   `cd playground/java-graphics2d-implementation/`
+-   Build the project
+    -   `mvn install`
 -   Run the program
     -   `mvn exec:java`
     
