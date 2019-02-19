@@ -103,8 +103,9 @@ void DoomFire::propagateFire()
             int new_value = d->firevalue[d->getIdx(i, j+1)] - (decay > 1 ? 1 : 0);
             if (new_value < 0)
                 new_value = 0;
-            int new_i = i;
-            int new_j = j;
+
+            // change pixel direction
+            int new_i = i + (rand()%3 -1);
 
             // lateral effect (wind)
             if (d->wind_speed > 0 && rand()%2) {
@@ -114,11 +115,7 @@ void DoomFire::propagateFire()
                 new_i += d->wind_speed;
             }
 
-            // vertical space effect
-            //if (new_j > 0 && (rand()%d->vertical_randomness)==0)
-            //    new_j--;
-
-            d->setIdx(new_i, new_j, static_cast<uchar>(new_value));
+            d->setIdx(new_i, j, static_cast<uchar>(new_value));
         }
     }
 }
