@@ -654,6 +654,7 @@ GameObject:
   - component: {fileID: 534669905}
   - component: {fileID: 534669904}
   - component: {fileID: 534669903}
+  - component: {fileID: 534669906}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -725,6 +726,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &534669906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 534669902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa3a07ae258913c428b1b698665d552c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 52077083}
+  distance: 0.1
 --- !u!1 &611938834
 GameObject:
   m_ObjectHideFlags: 0
@@ -1506,6 +1521,7 @@ GameObject:
   - component: {fileID: 1050202811}
   - component: {fileID: 1050202810}
   - component: {fileID: 1050202809}
+  - component: {fileID: 1050202808}
   m_Layer: 0
   m_Name: Capsule Player
   m_TagString: Untagged
@@ -1513,6 +1529,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1050202808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1050202807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62a3dd3093ab1984c9582db43b218a85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 4
+  turnSpeed: 9
 --- !u!54 &1050202809
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1615,7 +1645,7 @@ GameObject:
   - component: {fileID: 1069977458}
   - component: {fileID: 1069977457}
   m_Layer: 5
-  m_Name: Text
+  m_Name: Info
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1956,6 +1986,7 @@ GameObject:
   - component: {fileID: 1253022409}
   - component: {fileID: 1253022411}
   - component: {fileID: 1253022410}
+  - component: {fileID: 1253022412}
   m_Layer: 0
   m_Name: Particle System
   m_TagString: Untagged
@@ -6643,6 +6674,18 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!114 &1253022412
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1253022408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5892e4cd2727a624a8b339a74fe56f07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1267532504
 GameObject:
   m_ObjectHideFlags: 0
@@ -7644,6 +7687,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1832661546}
+  - component: {fileID: 1832661545}
   m_Layer: 0
   m_Name: Config
   m_TagString: Untagged
@@ -7651,6 +7695,25 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1832661545
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1832661544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9999edad8beb1e46811d6f3fbacc35b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  particle: {fileID: 1253022408}
+  buttonUpdate: {fileID: 1147314702}
+  sliderRateOverTime: {fileID: 491414698}
+  toggleEdge: {fileID: 728588017}
+  colorStart: {fileID: 1267532506}
+  colorMid: {fileID: 1286803422}
+  colorEnd: {fileID: 1424201929}
 --- !u!4 &1832661546
 Transform:
   m_ObjectHideFlags: 0
