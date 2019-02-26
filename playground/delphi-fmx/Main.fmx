@@ -1,0 +1,84 @@
+object frmMain: TfrmMain
+  Left = 0
+  Top = 0
+  Caption = 'Doom Fire'
+  ClientHeight = 519
+  ClientWidth = 839
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  OnShow = FormShow
+  DesignerMasterStyle = 0
+  object Button1: TButton
+    Position.X = 752.000000000000000000
+    Position.Y = 32.000000000000000000
+    TabOrder = 0
+    Text = 'Min Fire'
+    OnClick = Button1Click
+  end
+  object GroupBox1: TGroupBox
+    Position.X = 752.000000000000000000
+    Position.Y = 104.000000000000000000
+    Size.Width = 81.000000000000000000
+    Size.Height = 100.000000000000000000
+    Size.PlatformDefault = False
+    Text = 'Direction'
+    TabOrder = 2
+    object RadioButton1: TRadioButton
+      Position.X = 16.000000000000000000
+      Position.Y = 24.000000000000000000
+      Size.Width = 58.000000000000000000
+      Size.Height = 19.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 3
+      Text = 'Left'
+      OnClick = RadioButton1Click
+    end
+    object RadioButton2: TRadioButton
+      Tag = 1
+      IsChecked = True
+      Position.X = 16.000000000000000000
+      Position.Y = 47.000000000000000000
+      Size.Width = 58.000000000000000000
+      Size.Height = 19.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 2
+      Text = 'Up'
+      OnClick = RadioButton1Click
+    end
+    object RadioButton3: TRadioButton
+      Tag = 2
+      Position.X = 17.000000000000000000
+      Position.Y = 70.000000000000000000
+      Size.Width = 58.000000000000000000
+      Size.Height = 19.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 1
+      Text = 'Right'
+      OnClick = RadioButton1Click
+    end
+  end
+  object Button2: TButton
+    Position.X = 752.000000000000000000
+    Position.Y = 56.000000000000000000
+    TabOrder = 3
+    Text = 'Max Fire'
+    OnClick = Button2Click
+  end
+  object Button3: TButton
+    Position.X = 752.000000000000000000
+    Position.Y = 80.000000000000000000
+    TabOrder = 4
+    Text = '+'
+    OnClick = Button3Click
+  end
+  object Button4: TButton
+    Position.X = 752.000000000000000000
+    Position.Y = 8.000000000000000000
+    TabOrder = 5
+    Text = '-'
+    OnClick = Button4Click
+  end
+end
