@@ -1,8 +1,3 @@
-<p align="center">
-  <a href="https://filipedeschamps.github.io/doom-fire-algorithm/playground/follow-mouse/">
-    <img src="https://github.com/filipedeschamps/doom-fire-algorithm/blob/master/demo.gif?raw=true" width="600">
-  </a>
-</p>
 
 # Doom-fire-Dart
 ### Simple verion of Doom fire using Dart
