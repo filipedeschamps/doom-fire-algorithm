@@ -1,0 +1,48 @@
+<html>
+    <head>
+        <style>
+            table{
+                border-collapse: collapse;
+                border: 1px solid #000;
+            }
+            td {
+                width: 10px;
+                height: 10px;
+                border: 1px solid #000;
+                text-align: center;
+                vertical-align: center;
+                font-family: monospace;
+                font-size: 14;
+                position: relative;
+            }
+
+            .pixel-index {
+                font-size: 10px;
+                display: inline-block;
+                position: absolute;
+                top: 2px;
+                right: 2px;
+                color: #999;
+            }
+
+            td.pixel{
+                width: 10px;
+                height: 10px;
+                border: 0;
+            }
+            #fireCanvas {
+                margin: 100px;
+            }
+            margin {
+                margin: 5px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="fireCanvas"></div>
+        <script src="fire.dart.js"></script>
+        <div class="margin">
+            
+        </div>
+    </body>
+</html>
