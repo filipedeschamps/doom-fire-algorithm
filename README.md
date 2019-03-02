@@ -46,9 +46,8 @@ These people are making this repository **MORE THAN AWESOME**.
 - [First Go Terminal Implementation](https://github.com/ayang64/doomfire) ([@ayang64](https://github.com/ayang64))
 - [C and Allegro 5](https://github.com/filipedeschamps/doom-fire-algorithm/tree/master/playground/allegro5-c-fire) ([@lucasew](https://github.com/lucasew))
 - [Python 3 with PyGame](https://github.com/filipedeschamps/doom-fire-algorithm/tree/master/playground/python3-pygame-implementation) ([@DayllonXavier](https://github.com/DayllonXavier))
+- [Implementation using Unity 3D with Particle System](https://github.com/MainDuelo/doom-fire-algorithm/tree/master/playground/c%23-unity-3d) ([@MainDuelo](https://github.com/MainDuelo))
 - [Dart 2.0 Implementation](https://github.com/filipedeschamps/doom-fire-algorithm/tree/master/playground/Dart-Doom-Fire) ([@viniSaab](https://github.com/vinisaab))
-
-
 
 ## Contributors
 
@@ -58,7 +57,7 @@ These people are making this repository **MORE THAN AWESOME**.
 | [<img src="https://avatars1.githubusercontent.com/u/8799608?s=115&v=4"><br><small>@wesleycsj</small>](https://github.com/wesleycsj) | [<img src="https://avatars1.githubusercontent.com/u/1576341?s=115&v=4"><br><small>@kassiano</small>](https://github.com/kassiano) | [<img src="https://avatars1.githubusercontent.com/u/993608?s=115&v=4"><br><small>@mrcsxsiq</small>](https://github.com/mrcsxsiq) | [<img src="https://avatars3.githubusercontent.com/u/5604321?s=115&v=4"><br><small>@alvesleonardo</small>](https://github.com/alvesleonardo) | [<img src="https://avatars0.githubusercontent.com/u/25128546?s=115&v=4"><br><small>@kevinbreaker</small>](https://github.com/kevinbreaker) | [<img src="https://avatars3.githubusercontent.com/u/5935946?s=115&v=4"><br><small>@igorantun</small>](https://github.com/igorantun) |
 | [<img src="https://avatars1.githubusercontent.com/u/1231655?s=115&v=4"><br><small>@felipe-pita</small>](https://github.com/felipe-pita) | [<img src="https://avatars0.githubusercontent.com/u/30930225?s=115&v=4"><br><small>@edusporto</small>](https://github.com/edusporto) | [<img src="https://avatars3.githubusercontent.com/u/7833473?s=115&v=4"><br><small>@herbstrith</small>](https://github.com/herbstrith) | [<img src="https://avatars0.githubusercontent.com/u/10976512?s=115&v=4"><br><small>@filipealvesdef</small>](https://github.com/filipealvesdef) | [<img src="https://avatars3.githubusercontent.com/u/834772?s=115&v=4"><br><small>@crgimenes</small>](https://github.com/crgimenes) | [<img src="https://avatars1.githubusercontent.com/u/10141812?s=115&v=4"><br><small>@vinidg</small>](https://github.com/vinidg) |
 | [<img src="https://avatars0.githubusercontent.com/u/1847558?s=115&v=4"><br><small>@fabiodelabruna</small>](https://github.com/fabiodelabruna) | [<img src="https://avatars0.githubusercontent.com/u/28392040?s=115&v=4"><br><small>@rattones</small>](https://github.com/rattones) | [<img src="https://avatars1.githubusercontent.com/u/6698381?v=4&s=115"><br><small>@guidefloripa</small>](https://github.com/guidefloripa) | [<img src="https://avatars1.githubusercontent.com/u/1615303?s=460&v=4" width='115px'><br><small>@ayang64</small>](https://github.com/ayang64) | [<img src="https://avatars1.githubusercontent.com/u/15693688?s=115&v=4" width='115px'><br><small>@lucasew</small>](https://github.com/lucasew) | [<img src="https://avatars1.githubusercontent.com/u/34678695?s=115&v=4" width='115px'><br><small>@DayllonXavier</small>](https://github.com/DayllonXavier) 
-| [<img src="https://avatars3.githubusercontent.com/u/13907634?s=460&v=4"><br><small>@viniSaab</small>](https://github.com/vinisaab) |
+| [<img src="https://avatars.githubusercontent.com/MainDuelo?s=115&v=4"><br><small>@MainDuelo</small>](https://github.com/MainDuelo) | [<img src="https://avatars3.githubusercontent.com/u/13907634?s=460&v=4"><br><small>@viniSaab</small>](https://github.com/vinisaab) |
 
 ## Author
 
