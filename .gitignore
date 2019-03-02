@@ -75,3 +75,13 @@ target/
 .settings
 .project
 .classpath
+
+# Unity
+playground/c#-unity-3d/Library
+
+# Visual Studio
+playground/c#-unity-3d/.vs
+playground/c#-unity-3d/**/*.sln
+playground/c#-unity-3d/Temp
+playground/c#-unity-3d/obj
+playground/c#-unity-3d/**/*.csproj
