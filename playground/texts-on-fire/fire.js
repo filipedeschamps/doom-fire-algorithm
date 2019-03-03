@@ -1,5 +1,3 @@
-let logo
-
 const palette = ['rgb(7, 7, 7)', 'rgb(31, 7, 7)', 'rgb(47, 15, 7)', 'rgb(71, 15, 7)', 'rgb(87, 23, 7)', 'rgb(103, 31, 7)', 'rgb(119, 31, 7)', 'rgb(143, 39, 7)', 'rgb(159, 47, 7)', 'rgb(175, 63, 7)', 'rgb(191, 71, 7)', 'rgb(199, 71, 7)', 'rgb(223, 79, 7)', 'rgb(223, 87, 7)', 'rgb(223, 87, 7)', 'rgb(215, 95, 7)', 'rgb(215, 95, 7)', 'rgb(215, 103, 15)', 'rgb(207, 111, 15)', 'rgb(207, 119, 15)', 'rgb(207, 127, 15)', 'rgb(207, 135, 23)', 'rgb(199, 135, 23)', 'rgb(199, 143, 23)', 'rgb(199, 151, 31)', 'rgb(191, 159, 31)', 'rgb(191, 159, 31)', 'rgb(191, 167, 39)', 'rgb(191, 167, 39)', 'rgb(191, 175, 47)', 'rgb(183, 175, 47)', 'rgb(183, 183, 47)', 'rgb(183, 183, 55)', 'rgb(207, 207, 111)', 'rgb(223, 223, 159)', 'rgb(239, 239, 199)', 'rgb(255, 255, 255)']
 const canvas = document.createElement('canvas')
 const canvasCtx = canvas.getContext('2d')
@@ -16,42 +14,46 @@ const pixels = {
   array: [],
 }
 
+let textDataStructure = []
+
 const bottomMargin = 5
 let decayMultiplier = 3
 
-let logoHeight, topMargin
+let textDataStructureHeight, topMargin
 
-document.querySelector('#text-on-fire').addEventListener('blur', start)
+document.getElementById('text-on-fire').addEventListener('blur', start)
 
-function writeTextOnCanvas() {
-  let text = document.querySelector('#text-on-fire').value
-
+function writeTextOnCanvas(text) {
   canvasCtx.font = '30px Helvetica'
   canvasCtx.fillStyle = "#fff"
   canvasCtx.fillText(text, 1, 50)
 
   textData = canvasCtx.getImageData(-10, 1, canvas.width, canvas.height).data
+  createTextDataStructure(textData)
 
-  logo = []
+  textDataStructureHeight = (textDataStructure.length) / fire.width
+  topMargin = fire.width * (fire.height - textDataStructureHeight - bottomMargin)
+}
+
+function createTextDataStructure(textData) {
+  textDataStructure = []
   for(let i = 0; i < textData.length; i += 4) {
     if (textData[i] == 255 && textData[i+1] == 255 && textData[i+2] == 255) {
-      logo.push(1)
+      textDataStructure.push(1)
     }
 
     if (textData[i] == 0 && textData[i+1] == 0 && textData[i+2] == 0) {
-      logo.push(0)
+      textDataStructure.push(0)
     }
   }
-
-  logoHeight = (logo.length) / fire.width
-  topMargin = fire.width * (fire.height - logoHeight - bottomMargin)
 }
 
 function start() {
   canvas.width = 200
   canvas.height = 50
 
-  writeTextOnCanvas()
+  const userInput = document.getElementById('text-on-fire').value
+  writeTextOnCanvas(userInput)
 
   canvas.width = fire.width * pixels.size
   canvas.height = fire.height * pixels.size
@@ -73,7 +75,7 @@ function createFireDataStructure() {
 
 function createFireSource() {
   for (let index = topMargin; index < area; index++) {
-    pixels.array[index] = logo[index - topMargin] * 30
+    pixels.array[index] = textDataStructure[index - topMargin] * 30
   }
 }
 
@@ -106,7 +108,7 @@ function updateFireIntensityPerPixel(pixel) {
     newIntensity = 0
   }
 
-  if (logo[(pixel - decay) - topMargin] > 0) {
+  if (textDataStructure[(pixel - decay) - topMargin] > 0) {
     return
   }
 
