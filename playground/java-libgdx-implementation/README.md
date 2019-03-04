@@ -1,5 +1,5 @@
 
-# doom-fire-algorithm - JAVA
+# doom-fire-algorithm - LIBGDX (Java)
 
 Creating the fire effect from DOOM in Java using [LibGdx](https://github.com/libgdx/libgdx).
 
