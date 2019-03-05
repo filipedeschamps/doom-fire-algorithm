@@ -10,6 +10,7 @@
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<libgdx.version>1.9.9</libgdx.version>
 	</properties>
 
 	<build>
@@ -36,20 +37,20 @@
 		<dependency>
 			<groupId>com.badlogicgames.gdx</groupId>
 			<artifactId>gdx</artifactId>
-			<version>1.9.9</version>
+			<version>${libgdx.version}</version>
 		</dependency>
 		
 		<dependency>
 			<groupId>com.badlogicgames.gdx</groupId>
 			<artifactId>gdx-backend-lwjgl</artifactId>
-			<version>1.9.9</version>
+			<version>${libgdx.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.badlogicgames.gdx</groupId>
 			<artifactId>gdx-platform</artifactId>
 			<classifier>natives-desktop</classifier>
-			<version>1.9.9</version>
+			<version>${libgdx.version}</version>
 		</dependency>
 	</dependencies>
 </project>
