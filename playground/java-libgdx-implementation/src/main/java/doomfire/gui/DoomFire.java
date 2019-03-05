@@ -27,8 +27,6 @@ public class DoomFire {
 	public void start() {
 		createFireDataStructure();
 		createFireSource();
-		
-		new ThreadWorker().start();
 	}
 
 	private void createFireDataStructure() {
@@ -69,43 +67,24 @@ public class DoomFire {
 	}
 
 	public void render(SpriteBatch batch) {
-		
-        Pixmap pixmap = new Pixmap(fireWidth, fireHeight, Format.RGBA8888);
-		
+
+		Pixmap pixmap = new Pixmap(fireWidth, fireHeight, Format.RGBA8888);
+
 		for (int row = 0; row < fireHeight; row++) {
 
 			for (int column = 0; column < fireWidth; column++) {
 
 				int pixelIndex = column + (fireWidth * row);
 				int fireIntensity = firePixelsArray[pixelIndex];
-				
-                pixmap.drawPixel(column, row, colorPalette[fireIntensity].toIntBits());
+
+				pixmap.drawPixel(column, row, colorPalette[fireIntensity].toIntBits());
 			}
 		}
-		
+
 		Texture texture = new Texture(pixmap);
-        pixmap.dispose();
-        batch.begin();
-        batch.draw(texture, 0, 0);
-        batch.end();
-	}
-	
-	class ThreadWorker extends Thread {
-
-		@Override
-		public void run() {
-			while (true) {
-				calculateFirePropagation();
-				sleep();
-			}
-		}
-
-		private void sleep() {
-			try {
-				Thread.sleep(50);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
+		pixmap.dispose();
+		batch.begin();
+		batch.draw(texture, 0, 0);
+		batch.end();
 	}
 }
