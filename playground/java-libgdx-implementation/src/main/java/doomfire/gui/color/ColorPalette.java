@@ -2,9 +2,9 @@ package doomfire.gui.color;
 
 import com.badlogic.gdx.graphics.Color;
 
-public class ColorPalette {
+public abstract class ColorPalette {
 	
-	public static final Color[] colorPalette = { 
+	public static final Color[] PALETA_CORES = { 
 			Color.valueOf("070707ff"),
 			Color.valueOf("1f0707ff"),
 			Color.valueOf("2f0f07ff"),
@@ -41,6 +41,6 @@ public class ColorPalette {
 			Color.valueOf("cfcf6fff"),
 			Color.valueOf("dfdf9fff"),
 			Color.valueOf("efefc7ff"),
-			Color.valueOf("ffffffff"),
-		};
+			Color.valueOf("ffffffff")
+	};
 }

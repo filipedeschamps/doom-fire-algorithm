@@ -1,11 +1,12 @@
 package doomfire.gui;
 
-import static doomfire.gui.color.ColorPalette.colorPalette;
+import static doomfire.gui.color.ColorPalette.PALETA_CORES;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.Batch;
 
 public class DoomFire {
 
@@ -66,7 +67,7 @@ public class DoomFire {
 		firePixelsArray[windPixel] = newFireIntensity;
 	}
 
-	public void render(SpriteBatch batch) {
+	public void render(Batch batch) {
 
 		Pixmap pixmap = new Pixmap(fireWidth, fireHeight, Format.RGBA8888);
 
@@ -77,7 +78,7 @@ public class DoomFire {
 				int pixelIndex = column + (fireWidth * row);
 				int fireIntensity = firePixelsArray[pixelIndex];
 
-				pixmap.drawPixel(column, row, colorPalette[fireIntensity].toIntBits());
+				pixmap.drawPixel(column, row, Color.rgba8888(PALETA_CORES[fireIntensity]));
 			}
 		}
 

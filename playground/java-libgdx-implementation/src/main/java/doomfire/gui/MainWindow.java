@@ -15,7 +15,7 @@ public class MainWindow implements ApplicationListener {
 	// time elapsed in milliseconds
 	private long time;
 	// how long to wait between ticks, in milliseconds
-	private long ticktime = 50l;
+	private static final long TICK_TIME = 50L;
 	// when did we last send a tick?
 	private long lastTick;
 
@@ -30,6 +30,7 @@ public class MainWindow implements ApplicationListener {
 
 	@Override
 	public void dispose() {
+		batch.dispose();
 	}
 
 	@Override
@@ -51,16 +52,9 @@ public class MainWindow implements ApplicationListener {
 		time += (long) (delta * 1000);
 		
 		// Simple substraction to see if enough time passed for calculateFirePropagation
-		if (time - ticktime > lastTick) {
+		if (time - TICK_TIME > lastTick) {
 			doomFire.calculateFirePropagation();
-			long elapsed = time - lastTick;
-			if (elapsed > ticktime) {
-				long missed = elapsed / ticktime;
-				if (missed > 3l) {
-					System.err.println("Warning: skipping " + missed + " ticks");
-				}
-			}
-			lastTick = time - (time % ticktime);
+			lastTick = time - (time % TICK_TIME);
 		}
 
 		doomFire.render(batch);
