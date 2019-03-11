@@ -1,6 +1,6 @@
-# Doom Fire Algorithm
+# Text on fire
 
-Fire effect from Doom implemented in plain JavaScript and using Canvas's drawRect to render the final effect.
-Also, Pagar.me's logo is on fire. For whatever reason.
+## How this is working?
+Maybe there's a better way to do that, but this implementation just get the text from input, write the text on canvas element. After that, using the getImageData method the text is retrieved as an image which allow me to parse its colorized pixels transforming them to an array and then apply the algorithm
 
-- [Click here for the Demo page](https://filipedeschamps.github.io/doom-fire-algorithm/playground/pagarme-logo-on-fire/)
+- [Click here for the Demo page](https://filipedeschamps.github.io/doom-fire-algorithm/playground/texts-on-fire/)
