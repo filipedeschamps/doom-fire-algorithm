@@ -1,0 +1,60 @@
+<html>
+  <head>
+    <title>Doom Fire Effect</title>
+    <style>
+      body {
+        background-color: #63431c;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      h1 {
+        font-family: impact;
+        margin: 0;
+        font-size: 35px;
+        text-shadow: 0px -1px 0px rgba(255,225,31,0.4);
+      }
+
+      h2, h3 {
+        font-family: impact;
+        margin-top: 0;
+        text-shadow: 0px -1px 0px rgba(255,225,31,0.4);
+
+      }
+
+      a {
+        color: #FFF;
+        font-size: 10px;
+        font-family: arial;
+      }
+
+      #canvas {
+        margin: 10px;
+      }
+
+      .margin {
+        margin: 5px;
+      }
+    </style>
+  </head>
+  <body>
+
+    <center>
+      <h1>Doom Fire Effect</h1>
+      <h2>"Textos dinâmicos pegando fogo" edition</h2>
+      <h3>"Inspirado no Logo do Pagar.me pegando fogo"</h3>
+      <a href="https://github.com/filipedeschamps/doom-fire-algorithm">https://github.com/filipedeschamps/doom-fire-algorithm</a>
+      <div id="canvas"></div>
+      <div class="margin">
+        <input type="text" id="text-on-fire" value="Hello World">
+        <button onclick="decreaseFire()">-</button>
+        <button onclick="minimumFire()">Min Fire</button>
+        <button onclick="maximumFire()">Max Fire</button>
+        <button onclick="increaseFire()">+</button>
+      </div>
+    </center>
+
+    <script src="fire.js"></script>
+  </body>
+</html>
