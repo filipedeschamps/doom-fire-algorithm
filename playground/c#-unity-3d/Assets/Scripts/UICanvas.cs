@@ -15,28 +15,34 @@ public class UICanvas : MonoBehaviour
     [SerializeField]
     private InputField colorStart, colorMid, colorEnd;
 
-    ParticleSystemController particleSystemController;
+    private ParticleSystemController particleSystemController;
+    private ParticleSystemMidController particleSystemMidController;
+    private ParticleSystemController[] particles;
 
-    void Start()
+    private void Start()
     {
-        particleSystemController = particle.GetComponent<ParticleSystemController>();
+        particleSystemMidController = particle.GetComponent<ParticleSystemMidController>();
+        particles = (ParticleSystemController[])FindObjectsOfType(typeof(ParticleSystemController));
         buttonUpdate.onClick = new Button.ButtonClickedEvent();
         buttonUpdate.onClick.AddListener(() => clickUpdate());
     }
 
-    void clickUpdate()
+    private void clickUpdate()
     {
         shape();
-        particleSystemController.setEmissionRateOverTime(Convert.ToInt32(sliderRateOverTime.value));
-        particleSystemController.alterColorOverLifeTime(convertStringColor(colorStart.text), convertStringColor(colorMid.text), convertStringColor(colorEnd.text));
+        particleSystemMidController.setEmissionRateOverTime(Convert.ToInt32(sliderRateOverTime.value));
+        foreach (ParticleSystemController particle in particles)
+        {
+            particle.alterColorOverLifeTime(convertStringColor(colorStart.text), convertStringColor(colorMid.text), convertStringColor(colorEnd.text));
+        }
     }
 
     private void shape()
     {
         if (toggleEdge.isOn)
-            particleSystemController.shapeEdge();
+            particleSystemMidController.shapeEdge();
         else
-            particleSystemController.shapeCone();
+            particleSystemMidController.shapeCone();
     }
 
     private Color convertStringColor(string colorRGB)

@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody rigiBody;
 
-    void Start()
+    private void Start()
     {
         rigiBody = GetComponent<Rigidbody>();
         cam = Camera.main.transform;

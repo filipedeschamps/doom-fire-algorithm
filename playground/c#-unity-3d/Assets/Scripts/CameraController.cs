@@ -12,7 +12,7 @@ public class CameraController : MonoBehaviour
     private float currentX = 0.0f;
     private float currentY = 0.0f;
 
-    void Update()
+    private void Update()
     {
         currentX += Input.GetAxis("Mouse X");
         currentY += Input.GetAxis("Mouse Y");
