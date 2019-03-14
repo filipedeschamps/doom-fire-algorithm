@@ -33,7 +33,7 @@ public class UICanvas : MonoBehaviour
         particleSystemMidController.setEmissionRateOverTime(Convert.ToInt32(sliderRateOverTime.value));
         foreach (ParticleSystemController particle in particles)
         {
-            particle.alterColorOverLifeTime(convertStringColor(colorStart.text), convertStringColor(colorMid.text), convertStringColor(colorEnd.text));
+            particle.alterColorOverLifeTime(Support.convertStringColor(colorStart.text), Support.convertStringColor(colorMid.text), Support.convertStringColor(colorEnd.text));
         }
     }
 
@@ -43,20 +43,5 @@ public class UICanvas : MonoBehaviour
             particleSystemMidController.shapeEdge();
         else
             particleSystemMidController.shapeCone();
-    }
-
-    private Color convertStringColor(string colorRGB)
-    {
-        string[] rgb = colorRGB.Split(',');
-        Color color;
-        try
-        {
-            color = new Color(Convert.ToInt32(rgb[0]), Convert.ToInt32(rgb[1]), Convert.ToInt32(rgb[2]));
-        }
-        catch (Exception e)
-        {
-            return Color.white;
-        }
-        return color;
     }
 }
