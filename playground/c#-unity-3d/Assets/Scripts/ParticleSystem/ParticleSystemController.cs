@@ -2,7 +2,7 @@
 
 public class ParticleSystemController : MonoBehaviour
 {
-    private ParticleSystem particleSystem;
+    public ParticleSystem particleSystem;
 
     private void Start()
     {
@@ -25,5 +25,4 @@ public class ParticleSystemController : MonoBehaviour
         gradient.SetKeys(new GradientColorKey[] { new GradientColorKey(colorStart, 0.0f), new GradientColorKey(colorMid, 0.5f), new GradientColorKey(colorEnd, 1.0f) }, new GradientAlphaKey[] { new GradientAlphaKey(1.0f, 0f), new GradientAlphaKey(1.0f, 0.5f), new GradientAlphaKey(1.0f, 1.0f) });
         colorOverLifeTime.color = gradient;
     }
-
 }

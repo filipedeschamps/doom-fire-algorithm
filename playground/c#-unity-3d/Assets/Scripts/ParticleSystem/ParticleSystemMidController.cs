@@ -2,9 +2,13 @@
 
 public class ParticleSystemMidController : MonoBehaviour
 {
-    private ParticleSystem particleSystem;
+    public ParticleSystem particleSystem;
 
-    private void Start()
+    public const int ANGLE = 10;
+    public const float CONE_RADIUS = 0.3f;
+    public const float EDGE_RADIUS = 2f;
+
+    public void Start()
     {
         particleSystem = GetComponent<ParticleSystem>();
         shapeCone();
@@ -14,8 +18,8 @@ public class ParticleSystemMidController : MonoBehaviour
     {
         var shape = particleSystem.shape;
         shape.shapeType = ParticleSystemShapeType.Cone;
-        shape.angle = 10;
-        shape.radius = 0.3f;
+        shape.angle = ANGLE;
+        shape.radius = CONE_RADIUS;
         setRotationX(-90);
     }
 
@@ -23,7 +27,7 @@ public class ParticleSystemMidController : MonoBehaviour
     {
         var shape = particleSystem.shape;
         shape.shapeType = ParticleSystemShapeType.SingleSidedEdge;
-        shape.radius = 2;
+        shape.radius = EDGE_RADIUS;
         setRotationX(0);
     }
 

@@ -1,7 +1,11 @@
 {
-    "name": "ReferenceScripts",
-    "references": [],
-    "optionalUnityReferences": [],
+    "name": "PlayMode",
+    "references": [
+        "ReferenceScripts"
+    ],
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

@@ -7041,7 +7041,7 @@ GameObject:
   - component: {fileID: 1253022413}
   m_Layer: 0
   m_Name: Particle System
-  m_TagString: Untagged
+  m_TagString: FireMid
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11750,6 +11750,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48d1ece9d0ccc414e9185aa329b8d027, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  particleSystem: {fileID: 0}
 --- !u!1 &1267532504
 GameObject:
   m_ObjectHideFlags: 0
