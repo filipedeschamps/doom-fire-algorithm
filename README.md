@@ -53,6 +53,7 @@ These people are making this repository **MORE THAN AWESOME**.
 - [Texts on Fire](https://github.com/filipedeschamps/doom-fire-algorithm/tree/master/playground/texts-on-fire) ([@leonampd](https://github.com/leonampd))
 - [Java and LibGdx](https://github.com/filipedeschamps/doom-fire-algorithm/tree/master/playground/java-libgdx-implementation) ([@leonampd](https://github.com/leonampd))
 - [Extinguish the fire by the mouseover](https://filipedeschamps.github.io/doom-fire-algorithm/playground/doom-fire-with-extinguish-fire-function/fire.html) ([@jotave42](https://github.com/jotave42))
+- [React implementation](https://github.com/filipedeschamps/doom-fire-algorithm/tree/master/playground/react-implementation) ([@urielkdev](https://github.com/urielkdev))
 
 ## Contributors
 
@@ -63,7 +64,7 @@ These people are making this repository **MORE THAN AWESOME**.
 | [<img src="https://avatars1.githubusercontent.com/u/1231655?s=115&v=4"><br><small>@felipe-pita</small>](https://github.com/felipe-pita) | [<img src="https://avatars0.githubusercontent.com/u/30930225?s=115&v=4"><br><small>@edusporto</small>](https://github.com/edusporto) | [<img src="https://avatars3.githubusercontent.com/u/7833473?s=115&v=4"><br><small>@herbstrith</small>](https://github.com/herbstrith) | [<img src="https://avatars0.githubusercontent.com/u/10976512?s=115&v=4"><br><small>@filipealvesdef</small>](https://github.com/filipealvesdef) | [<img src="https://avatars3.githubusercontent.com/u/834772?s=115&v=4"><br><small>@crgimenes</small>](https://github.com/crgimenes) | [<img src="https://avatars1.githubusercontent.com/u/10141812?s=115&v=4"><br><small>@vinidg</small>](https://github.com/vinidg) |
 | [<img src="https://avatars0.githubusercontent.com/u/1847558?s=115&v=4"><br><small>@fabiodelabruna</small>](https://github.com/fabiodelabruna) | [<img src="https://avatars0.githubusercontent.com/u/28392040?s=115&v=4"><br><small>@rattones</small>](https://github.com/rattones) | [<img src="https://avatars1.githubusercontent.com/u/6698381?v=4&s=115"><br><small>@guidefloripa</small>](https://github.com/guidefloripa) | [<img src="https://avatars1.githubusercontent.com/u/1615303?s=460&v=4" width='115px'><br><small>@ayang64</small>](https://github.com/ayang64) | [<img src="https://avatars1.githubusercontent.com/u/15693688?s=115&v=4" width="115"><br><small>@lucasew</small>](https://github.com/lucasew) | [<img src="https://avatars1.githubusercontent.com/u/34678695?s=115&v=4" width='115px'><br><small>@DayllonXavier</small>](https://github.com/DayllonXavier) 
 | [<img src="https://avatars.githubusercontent.com/MainDuelo?s=115&v=4"><br><small>@MainDuelo</small>](https://github.com/MainDuelo) | [<img src="https://avatars3.githubusercontent.com/u/13907634?s=115&v=4" width="115"><br><small>@viniSaab</small>](https://github.com/vinisaab) | [<img src="https://avatars0.githubusercontent.com/u/10985896?s=115&v=4" width="115"><br><small>@pogist</small>](https://github.com/pogist) | [<img src="https://avatars3.githubusercontent.com/u/32219462?s=115&v=4" width="115"><br><small>@FelipeAngelini</small>](https://github.com/FelipeAngelini) | [<img src="https://avatars0.githubusercontent.com/u/1620107?s=460&v=4" width="115"><br><small>@leonampd</small>](https://github.com/leonampd) | [<img src="https://avatars2.githubusercontent.com/u/284147?s=400&v=4" width="115"><br><small>@osmarjunior</small>](https://github.com/osmarjunior) | 
- | [<img src="https://avatars0.githubusercontent.com/u/18374028?s=400&v=4" width="115"><br><small>@jotave42</small>](https://github.com/jotave42) | 
+ | [<img src="https://avatars0.githubusercontent.com/u/18374028?s=400&v=4" width="115"><br><small>@jotave42</small>](https://github.com/jotave42) | [<img src="https://avatars0.githubusercontent.com/u/39094194?s=400&u=90d0197ecad492898eda852c33b35e5597f9879b&v=4" width="115"><br><small>@urielkdev</small>](https://github.com/urielkdev) | 
 
 
 
@@ -71,4 +72,3 @@ These people are making this repository **MORE THAN AWESOME**.
 
 | [<img src="https://avatars0.githubusercontent.com/u/4248081?v=3&s=115"><br><sub>@filipedeschamps</sub>](https://github.com/filipedeschamps) |
 | :---: |
-
