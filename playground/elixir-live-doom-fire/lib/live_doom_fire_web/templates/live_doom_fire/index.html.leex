@@ -1,0 +1,21 @@
+
+<div style="text-align: center;">
+    <h1>DOOM's fire</h1>
+    <%= @width %> x <%= @height %> <br>
+    made with <a href="https://github.com/phoenixframework/phoenix_live_view">Elixir Phoenix LiveView</a>
+    <br>
+    based on <a href="https://github.com/filipedeschamps/doom-fire-algorithm">Doom Fire Algorithm</a><br>
+    <b><a href="https://github.com/allmonty/elixir-live-doom-fire">Source</a></b>
+
+    <table cellpadding=0 cellspacing=0 style="margin: 10px auto;">
+    <%= for y <- 0..(@height-1) do %>
+        <tr>
+        <%= for x <- 0..(@width-1) do %>
+            <td class="pixel <%= "color_#{@fire[{x, y}]}" %>"></td>
+        <% end %>
+        </tr>
+    <% end %>
+    </table>
+
+    created by: <b><a href="https://github.com/allmonty">Allmonty</a></b>
+</div>

@@ -1,0 +1,172 @@
+/* This file is for your main application css. */
+
+body {
+    background-color: #270000 !important;
+    color: rgb(191, 159, 31) !important;
+}
+
+td {
+    width: 32px;
+    height: 32px;
+    color: #FFF;
+    border: 1px solid #000;
+    text-align: center;
+    vertical-align: center;
+    font-family: arial;
+    font-size: 10px;
+    position: relative;
+    font-weight: bold;
+}
+
+td.pixel {
+    width: 8px;
+    height: 8px;
+}
+
+.color_0 {
+    background-color: rgb(7, 7, 7)
+}
+
+.color_1 {
+    background-color: rgb(31, 7, 7)
+}
+
+.color_2 {
+    background-color: rgb(47, 15, 7)
+}
+
+.color_3 {
+    background-color: rgb(71, 15, 7)
+}
+
+.color_4 {
+    background-color: rgb(87, 23, 7)
+}
+
+.color_5 {
+    background-color: rgb(103, 31, 7)
+}
+
+.color_6 {
+    background-color: rgb(119, 31, 7)
+}
+
+.color_7 {
+    background-color: rgb(143, 39, 7)
+}
+
+.color_8 {
+    background-color: rgb(159, 47, 7)
+}
+
+.color_9 {
+    background-color: rgb(175, 63, 7)
+}
+
+.color_10 {
+    background-color: rgb(191, 71, 7)
+}
+
+.color_11 {
+    background-color: rgb(199, 71, 7)
+}
+
+.color_12 {
+    background-color: rgb(223, 79, 7)
+}
+
+.color_13 {
+    background-color: rgb(223, 87, 7)
+}
+
+.color_14 {
+    background-color: rgb(223, 87, 7)
+}
+
+.color_15 {
+    background-color: rgb(215, 95, 7)
+}
+
+.color_16 {
+    background-color: rgb(215, 95, 7)
+}
+
+.color_17 {
+    background-color: rgb(215, 103, 15)
+}
+
+.color_18 {
+    background-color: rgb(207, 111, 15)
+}
+
+.color_19 {
+    background-color: rgb(207, 119, 15)
+}
+
+.color_20 {
+    background-color: rgb(207, 127, 15)
+}
+
+.color_21 {
+    background-color: rgb(207, 135, 23)
+}
+
+.color_22 {
+    background-color: rgb(199, 135, 23)
+}
+
+.color_23 {
+    background-color: rgb(199, 143, 23)
+}
+
+.color_24 {
+    background-color: rgb(199, 151, 31)
+}
+
+.color_25 {
+    background-color: rgb(191, 159, 31)
+}
+
+.color_26 {
+    background-color: rgb(191, 159, 31)
+}
+
+.color_27 {
+    background-color: rgb(191, 167, 39)
+}
+
+.color_28 {
+    background-color: rgb(191, 167, 39)
+}
+
+.color_29 {
+    background-color: rgb(191, 175, 47)
+}
+
+.color_30 {
+    background-color: rgb(183, 175, 47)
+}
+
+.color_31 {
+    background-color: rgb(183, 183, 47)
+}
+
+.color_32 {
+    background-color: rgb(183, 183, 55)
+}
+
+.color_33 {
+    background-color: rgb(207, 207, 111)
+}
+
+.color_34 {
+    background-color: rgb(223, 223, 159)
+}
+
+.color_35 {
+    background-color: rgb(239, 239, 199)
+}
+
+.color_36 {
+    background-color: rgb(255, 255, 255)
+}
