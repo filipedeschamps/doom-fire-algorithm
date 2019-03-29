@@ -63,14 +63,6 @@ config :logger, level: :info
 #     config :live_doom_fire, LiveDoomFireWeb.Endpoint, server: true
 #
 
-# Configure your database
-config :live_doom_fire, LiveDoomFire.Repo,
-  adapter: Ecto.Adapters.Postgres,
-  username: "postgres",
-  password: "postgres",
-  database: "live_doom_fire_prod",
-  pool_size: 15
-
 # Finally import the config/prod.secret.exs
 # which should be versioned separately.
 # import_config "prod.secret.exs"

@@ -8,12 +8,3 @@ config :live_doom_fire, LiveDoomFireWeb.Endpoint,
 
 # Print only warnings and errors during test
 config :logger, level: :warn
-
-# Configure your database
-config :live_doom_fire, LiveDoomFire.Repo,
-  adapter: Ecto.Adapters.Postgres,
-  username: "postgres",
-  password: "postgres",
-  database: "live_doom_fire_test",
-  hostname: "localhost",
-  pool: Ecto.Adapters.SQL.Sandbox

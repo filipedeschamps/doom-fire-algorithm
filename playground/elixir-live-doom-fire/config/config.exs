@@ -5,10 +5,6 @@
 # is restricted to this project.
 use Mix.Config
 
-# General application configuration
-config :live_doom_fire,
-  ecto_repos: [LiveDoomFire.Repo]
-
 # Configures the endpoint
 config :live_doom_fire, LiveDoomFireWeb.Endpoint,
   url: [host: "localhost"],
