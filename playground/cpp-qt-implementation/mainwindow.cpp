@@ -61,6 +61,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->mainToolBar->addWidget(UpdateIntervalLabel);
     ui->mainToolBar->addWidget(IncreaseInvervalButton);
 
+
+
     fireWidget = new FireWidget(centralWidget()->width(), centralWidget()->height());
     setCentralWidget(fireWidget);
 

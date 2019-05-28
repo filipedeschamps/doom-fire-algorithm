@@ -41,6 +41,26 @@ public:
             firevalue[getIdx(i, j)] = value;
     }
 
+    void resize(int w, int h)
+    {
+        this->w = w;
+        this->h = h;
+        delete firevalue;
+
+        if (w % FIRE_ALIGN)
+            aligned_w = w + FIRE_ALIGN - (w % FIRE_ALIGN);
+        else
+            aligned_w = w;
+
+        vector_len = aligned_w * h;
+        firevalue = new uchar[vector_len];
+        wind_speed = 1;
+        vertical_randomness = 3;
+
+        resetFire();
+    }
+
+
     int w;
     int h;
     int aligned_w;
@@ -75,6 +95,7 @@ int DoomFire::height()
 {
     return d->h;
 }
+
 
 int DoomFire::windSpeed()
 {
@@ -146,4 +167,10 @@ void DoomFire::printFire()
         fprintf(stderr, "\n");
     }
     fprintf(stderr, "\n");
+}
+
+void DoomFire::resize(int w, int h)
+{
+    d->resize(w, h);
+    createFire();
 }
