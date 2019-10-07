@@ -1,6 +1,6 @@
 <p align="center">
-  <a href="https://filipedeschamps.github.io/doom-fire-algorithm/playground/1st-implementation-with-tables/">
-    <img src="https://github.com/filipedeschamps/doom-fire-algorithm/blob/master/doom-fire.gif?raw=true" width="490">
+  <a href="https://github.com/valescaf/doom-fire-algorithm/blob/add-pink/playground/1st-implementation-with-tables-pinkedition/doom-pinkedition.PNG">
+    <img src="https://github.com/valescaf/doom-fire-algorithm/blob/add-pink/playground/1st-implementation-with-tables-pinkedition/doom-pinkedition.PNG" width="490">
   </a>
 </p>
 
@@ -15,5 +15,5 @@ This project was inspired by [this article](http://fabiensanglard.net/doom_fire_
 
 ## Author
 
-| [<img src="https://avatars2.githubusercontent.com/u/20388235?v=3&s=115"><br><sub>@filipedeschamps</sub>](https://github.com/valescaf) |
+| [<img src="https://avatars2.githubusercontent.com/u/20388235?v=3&s=115"><br><sub>@valescaf</sub>](https://github.com/valescaf) |
 | :---: |
