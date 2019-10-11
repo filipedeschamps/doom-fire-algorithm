@@ -184,7 +184,5 @@ void FireWidget::resizeEvent(QResizeEvent *event)
     int w = event->size().width();
     int h = event->size().height();
     d->df->resize(w, h);
-    //qDebug() << w;
-    //qDebug() << h;
-
+    emit statusUpdated();
 }
