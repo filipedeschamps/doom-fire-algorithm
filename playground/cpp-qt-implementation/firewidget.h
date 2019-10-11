@@ -22,7 +22,6 @@ protected:
    Priv *d;
    QTimer *timer;
 
-   void paintEvent(QPaintEvent *event);
 
 signals:
    void statusUpdated();
@@ -38,6 +37,12 @@ public slots:
 
    void onIncreaseIntervalPressed();
    void onDecreaseIntervalPressed();
+
+   // QWidget interface
+protected:
+   void resizeEvent(QResizeEvent *event);
+   void paintEvent(QPaintEvent *event);
+
 };
 
 #endif // FIREWIDGET_H

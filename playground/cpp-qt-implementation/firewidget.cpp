@@ -4,6 +4,9 @@
 
 #include <QColor>
 #include <QPainter>
+#include <QResizeEvent>
+
+#include <QDebug>
 
 class FireWidget::Priv{
 
@@ -174,4 +177,14 @@ void FireWidget::onDecreaseIntervalPressed()
         timer->setInterval(d->updateInterval);
     }
     emit statusUpdated();
+}
+
+void FireWidget::resizeEvent(QResizeEvent *event)
+{
+    int w = event->size().width();
+    int h = event->size().height();
+    d->df->resize(w, h);
+    //qDebug() << w;
+    //qDebug() << h;
+
 }

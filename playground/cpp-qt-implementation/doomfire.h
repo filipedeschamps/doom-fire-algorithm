@@ -25,6 +25,8 @@ public:
     void resetFire();
     void printFire();
 
+    void resize(int w, int h);
+
 private:
     class Priv;
     Priv *d;
