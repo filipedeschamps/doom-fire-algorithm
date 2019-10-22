@@ -1,0 +1,91 @@
+<html>
+  <head>
+    <title>Doom Fire Effect</title>
+    <style>
+      body {
+        background-color: #63431c;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      h1 {
+        font-family: impact;
+        margin: 0;
+        font-size: 35px;
+        text-shadow: 0px -1px 0px rgba(255, 225, 31, 0.4);
+      }
+      #fireCanvas {
+        position: absolute;
+        bottom: 50px;
+        left: 38px;
+      }
+      table {
+        border-collapse: collapse;
+      }
+      td {
+        width: 32px;
+        height: 32px;
+        color: #fff;
+        border: 1px solid #000;
+        text-align: center;
+        vertical-align: center;
+        font-family: arial;
+        font-size: 10px;
+        position: relative;
+        font-weight: bold;
+      }
+      td.pixel {
+        width: 4px;
+        height: 4px;
+        border: 0;
+      }
+      .pixel-index {
+        font-size: 7px;
+        display: inline-block;
+        position: absolute;
+        top: 1px;
+        right: 1px;
+        color: #927450;
+      }
+      a {
+        color: #fff;
+        font-size: 10px;
+        font-family: arial;
+      }
+      .margin {
+        margin: 5px;
+      }
+
+      div.faustao {
+        height: 250px;
+        width: 400px;
+        background-image: url('./assets/faustao.jpg');
+        background-position: center; /* Center the image */
+        background-repeat: no-repeat; /* Do not repeat the image */
+        background-size: cover;
+        position: relative;
+      }
+    </style>
+  </head>
+  <body>
+    <center>
+      <h1>Doom Fire Effect</h1>
+      <a href="https://github.com/filipedeschamps/doom-fire-algorithm"
+        >https://github.com/filipedeschamps/doom-fire-algorithm</a
+      >
+      <div class="faustao">
+        <div id="fireCanvas"></div>
+        <audio id="fogobixo" src="./assets/fogo.mp3"></audio>
+      </div>
+
+      <div class="margin">
+        <button onclick="decreaseFireSource()">-</button>
+        <button onclick="destroyFireSource()">Min Fire</button>
+        <button onclick="createFireSource()">Max Fire</button>
+        <button onclick="increaseFireSource()">+</button>
+      </div>
+    </center>
+
+    <script src="fire.js"></script>
+  </body>
+</html>
