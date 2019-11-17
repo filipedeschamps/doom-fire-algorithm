@@ -1,29 +1,31 @@
-extends Node2D
+extends Sprite
 
 
 export(Vector2) var size = Vector2(40, 40)
+export(int) var pixel_scale = 10
 
 const COLORS = [Color.white, Color.black]
 
-var pixel_scale = 10
-
-var texture = ImageTexture.new()
-
 
 func _ready():
+	centered = false
+	scale = Vector2(pixel_scale, pixel_scale)
 	render()
-
-
-func _draw():
-	draw_texture(texture, Vector2())
 
 
 func render():
 	var img = Image.new()
-	img.create(size.x, size.y, true, Image.FORMAT_RGBA8)
-	img.fill(Color.black)
-	img.lock()
-	img.set_pixel(0, 0, Color.white)
-	img.unlock()
+	img.create(size.x, size.y, false, Image.FORMAT_RGB8)
 	
-	texture.create_from_image(img)
+	for x in range(img.get_width()):
+		for y in range(img.get_height()):
+			randomize()
+			img.lock()
+			img.set_pixel(x, y, Color(randf(), randf(), randf()))
+			img.unlock()
+	
+	var tex = ImageTexture.new()
+	tex.create_from_image(img)
+	tex.flags = 0
+	texture = tex
+	update()
