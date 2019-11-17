@@ -9,6 +9,8 @@ const COLORS = [Color.white, Color.black]
 
 var timer = Timer.new()
 
+var target
+
 
 func _ready():
 	centered = false
@@ -38,9 +40,8 @@ func render():
 	
 	for x in range(img.get_width()):
 		for y in range(img.get_height()):
-			randomize()
 			img.lock()
-			img.set_pixel(x, y, Color(randf(), randf(), randf()))
+			img.set_pixel(x, y, COLORS[target.get_pixel(Vector2(x, y))])
 			img.unlock()
 	
 	var tex = ImageTexture.new()
