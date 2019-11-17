@@ -5,7 +5,8 @@ var map = []
 
 export(int) var width = 40 setget , get_width
 export(int) var height = 40 setget , get_height
-export(int) var decay = 1
+
+const max_id = 27
 
 
 var timer = Timer.new()
@@ -13,6 +14,12 @@ var timer = Timer.new()
 
 func _ready():
 	fill()
+	
+	timer.connect("timeout", self, "generate_fire")
+	timer.wait_time = 0.5
+	timer.one_shot = false
+	timer.autostart = true
+	add_child(timer)
 
 
 func fill():
@@ -24,12 +31,23 @@ func fill():
 func generate_fire():
 	for x in range(width):
 		for y in range(height):
-			map[get_map_id(Vector2(x, y))]
+			update_fire_intensity(Vector2(x, y))
 
 
-func update_fire_intensity(pixel):
+func update_fire_intensity(vec):
 	randomize()
-	map[get_map_id(Vector2(39, 39))] = randi()%10
+	var decay = randi()%3+1
+	
+	var below_pixel = get_pixel(Vector2(vec.x - 1, vec.y))
+	map[below_pixel] = get_pixel(vec) - decay
+	
+	if get_pixel(vec) - decay >= 0:
+		map[get_map_id(vec)] = max_id - decay
+	
+#	if currentPixelIndex - decay >= 0:
+#		firePixelsArray[currentPixelIndex - decay] = newIntensity
+#    else:
+#		firePixelsArray[0] = newIntensity
 
 
 func get_map_id(vec):
