@@ -1,6 +1,8 @@
 extends Node2D
 
 
+export(Vector2) var size = Vector2(40, 40)
+
 const COLORS = [Color.white, Color.black]
 
 var pixel_scale = 10
@@ -18,7 +20,7 @@ func _draw():
 
 func render():
 	var img = Image.new()
-	img.create(32, 32, true, Image.FORMAT_RGBA8)
+	img.create(size.x, size.y, true, Image.FORMAT_RGBA8)
 	img.fill(Color.black)
 	img.lock()
 	img.set_pixel(0, 0, Color.white)

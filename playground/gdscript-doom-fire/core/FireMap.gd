@@ -3,8 +3,8 @@ extends Node
 
 var map = []
 
-var width = 8 setget , get_width
-var height = 8 setget , get_height
+var width = 40 setget , get_width
+var height = 40 setget , get_height
 
 
 func _ready():
