@@ -13,6 +13,10 @@ func _ready():
 			map.append(0)
 
 
+func generate():
+	pass
+
+
 func get_size():
 	return map.size()
 
