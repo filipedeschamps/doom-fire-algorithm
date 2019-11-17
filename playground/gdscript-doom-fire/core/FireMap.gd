@@ -17,6 +17,10 @@ func generate():
 	pass
 
 
+func get_pixel(vec):
+	return map[vec.x + (height * vec.y)]
+
+
 func get_size():
 	return map.size()
 
