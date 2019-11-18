@@ -6,7 +6,7 @@ var fire_pixels_array = []
 export(int) var width = 40 setget , get_width
 export(int) var height = 40 setget , get_height
 
-const max_id = 27
+var max_id = 36
 
 
 var timer = Timer.new()
@@ -43,8 +43,14 @@ func update_fire_intensity(current_pixel):
 	randomize()
 	var decay = randi()%3+1
 	
-	var below_pixel = get_id(current_pixel - Vector2(0, 1))
-	fire_pixels_array[below_pixel] = get_pixel(current_pixel) - decay
+	if get_id(current_pixel + Vector2(0, 1)) > width * height:
+		return
+	elif get_id(current_pixel - Vector2(0, 1)) < 0:
+		return
+	
+	if current_pixel - Vector2(0, 1) > Vector2(0, 0):
+		var below_pixel = get_id(current_pixel - Vector2(0, 1))
+		fire_pixels_array[below_pixel] = get_pixel(current_pixel) - decay
 	
 	if get_pixel(current_pixel) - decay >= 0:
 		fire_pixels_array[get_id(current_pixel)] = max_id - decay

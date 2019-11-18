@@ -27,7 +27,7 @@ func render(target):
 	
 	for x in range(size.x):
 		for y in range(size.y):
-			var col = COLORS[target.get_pixel(Vector2(x, y))]
+			var col = COLORS[clamp(abs(target.get_pixel(Vector2(x, y))), 0, target.max_id)]
 			
 			img.lock()
 			img.set_pixel(x, y, Color(col.r / 255.0, col.g / 255.0, col.b / 255))
