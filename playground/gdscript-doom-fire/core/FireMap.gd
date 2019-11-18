@@ -3,8 +3,8 @@ extends Node
 
 var fire_pixels_array = []
 
-export(int) var width = 40 setget , get_width
-export(int) var height = 40 setget , get_height
+export(int) var width = 50 setget , get_width
+export(int) var height = 50 setget , get_height
 
 var max_id = 36
 
@@ -41,7 +41,7 @@ func calculate_fire_propagation():
 
 func update_fire_intensity(current_pixel):
 	randomize()
-	var decay = randi()%3+1
+	var decay = randi()%2+1
 	
 	if get_id(current_pixel + Vector2(0, 1)) > width * height:
 		return
@@ -49,16 +49,11 @@ func update_fire_intensity(current_pixel):
 		return
 	
 	if current_pixel - Vector2(0, 1) > Vector2(0, 0):
-		var below_pixel = get_id(current_pixel - Vector2(0, 1))
+		var below_pixel = get_id(current_pixel - Vector2(randi()%3+0, 1))
 		fire_pixels_array[below_pixel] = get_pixel(current_pixel) - decay
 	
 	if get_pixel(current_pixel) - decay >= 0:
 		fire_pixels_array[get_id(current_pixel)] = max_id - decay
-	
-#	if currentPixelIndex - decay >= 0:
-#		firePixelsArray[currentPixelIndex - decay] = newIntensity
-#    else:
-#		firePixelsArray[0] = newIntensity
 
 
 func get_id(vec):

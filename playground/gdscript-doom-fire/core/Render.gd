@@ -1,7 +1,6 @@
 extends Sprite
 
 
-export(Vector2) var size = Vector2(40, 40)
 export(int) var pixel_scale = 10
 
 const COLORS = [
@@ -14,7 +13,7 @@ const COLORS = [
 
 
 func _ready():
-	centered = false
+	global_position = Vector2(1024, 500) / 2.0
 	scale = Vector2(pixel_scale, pixel_scale)
 
 
@@ -23,10 +22,10 @@ func render(target):
 		texture = null
 	
 	var img = Image.new()
-	img.create(size.x, size.y, false, Image.FORMAT_RGBA8)
+	img.create(target.width, target.height, false, Image.FORMAT_RGBA8)
 	
-	for x in range(size.x):
-		for y in range(size.y):
+	for x in range(target.width):
+		for y in range(target.height):
 			var col = COLORS[clamp(abs(target.get_pixel(Vector2(x, y))), 0, target.max_id)]
 			
 			img.lock()

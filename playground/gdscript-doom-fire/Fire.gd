@@ -10,6 +10,8 @@ func _ready():
 	
 	add_child(FireMap)
 	add_child(Render)
+	
+	FireMap.max_id = $bar.value
 
 
 func _on_bar_value_changed(value):
