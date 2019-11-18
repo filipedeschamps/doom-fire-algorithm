@@ -6,8 +6,7 @@ var Render = preload("res://core/Render.gd").new()
 
 
 func _ready():
+	FireMap.target = Render
+	
 	add_child(FireMap)
-	
-	Render.target = FireMap
-	
 	add_child(Render)
