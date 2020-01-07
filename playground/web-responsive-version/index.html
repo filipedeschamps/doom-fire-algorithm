@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>Doom Fire</title>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, user-scalable=yes, initial-scale=1"/>
+
+        <!-- Status bar  -->
+        <meta name="theme-color" content="rgb(32, 32, 32)"/>
+        <meta name="apple-mobile-web-app-capable" content="yes"/>
+        <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+
+        <style>
+            body {
+                width: 100vw;
+                height: 100vh;
+                margin: 0px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                color: rgb(255, 255, 255);
+                background-color: rgb(32, 32, 32);
+                
+                font-family: Arial;
+                font-size: 16px;
+            }
+            table {
+                margin: 8px;
+
+                border: none;
+                border-collapse: collapse;
+
+                font-size: 4px;
+            }
+            th, td {
+                width: 8px;
+                height: 8px;
+                padding: 0px;
+            }
+            button {
+                width: 150px;
+                height: 36px;
+                padding: 0px 16px;
+                margin: 8px;
+                
+                color: rgb(255, 255, 255);
+                background-color: rgb(255, 87, 34);
+                border: none;
+                border-radius: 2px;
+                outline: none;
+                
+                text-transform: uppercase;
+                font-size: 14px;
+                font-weight: bold;
+                letter-spacing: 0.08rem;
+                
+                cursor: pointer;
+
+                -webkit-user-select: none;
+                -ms-user-select: none;
+                -moz-user-select: none;
+                -o-user-select: none;
+                user-select: none;
+
+                -webkit-transition: all 0.2s;
+                -moz-transition: all 0.2s;
+                -ms-transition: all 0.2s;
+                -o-transition: all 0.2s;
+                transition: all 0.2s;
+            }
+                button:active {
+                    -webkit-transform: scale(0.96);
+                    -moz-transform: scale(0.96);
+                    -ms-transform: scale(0.96);
+                    -o-transform: scale(0.96);
+                    transform: scale(0.96);
+                }
+        </style>
+    </head>
+
+    <body>
+        <div>
+            <div id="fireCanvas"></div>
+            
+            <button id="showFire">fire</button>
+            <button id="showMatrix">matrix</button>
+        </div>
+
+        <script src="script.js"></script>
+    </body>
+</html>
