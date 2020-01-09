@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Doom Fire</title>
+	<link rel="stylesheet" type="text/css" href="./style.css">
+</head>
+<body>
+	<div class="center">
+		<h1>Doom Fire</h1>
+		<a href="https://github.com/gustavo-tp/doom-fire-algorithm-canvas">https://github.com/gustavo-tp/doom-fire-algorithm-canvas</a>
+		<table id="fireTable"></table>
+		<canvas id="fireCanvas"></canvas>
+		<button onclick="toggleDebugMode();">Toogle Degub Mode</button>
+		<label>Fire Base: <input type="range" name="fireBase" min="0" max="36" value="36" onchange="changeFireBase(this.value)"></label>
+		<label>Píxel Dimension: <input type="range" name="pixelDimension" min="2" max="14" value="4" onchange="changePixelDimension(this.value)"></label>
+		<label>Fire Width: <input type="number" name="fireWidth" onchange="changeFireWidth(this.value)" min="0" value="20"></label>
+		<label>Fire Height: <input type="number" name="fireHeight" onchange="changeFireHeight(this.value)" min="0" value="14"></label>
+	</div>
+
+	<script type="text/javascript" src="./fire.js"></script>
+</body>
+</html>
