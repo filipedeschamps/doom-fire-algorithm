@@ -5,7 +5,7 @@ Baseado no [video](https://www.youtube.com/watch?v=fxm8cadCqbs) do Felipe Descha
 ## 🚀 Inicio rápidos
 1. Use o comando a seguir para isso
 ```shell
-git clone https://github.com/jpalvesl/Doom-fire.git
+https://github.com/filipedeschamps/doom-fire-algorithm.git
 ```
 
 3. **Instale a biblioteca com o seguinte comando**  
@@ -16,7 +16,7 @@ git clone https://github.com/jpalvesl/Doom-fire.git
 2. **Navegue até a pasta com os arquivos fonte**  
 
 ```shell
-cd src
+cd doom-fire-algorithm/playground/python3-pygame-with-matrix/src
 ```
 
 3. **Execute o comando** 
