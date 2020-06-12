@@ -1,0 +1,128 @@
+#version 310 es
+
+/*
+    OpenGL compute shader created by Gabriel Henrique Pereira Soares (https://github.com/ghsoares).
+    uses same algorithm logic from Filipe Deschamps's video (https://www.youtube.com/watch?v=fxm8cadCqbs),
+The only difference is that the point coordinate is given from the shader itself (gl_GlobalInvocationID.xy).
+    The main aim to use Compute Shader is to transfer all the algorithm logic to GPU, because the GPU.
+processes more tasks than CPU, so it makes faster to process the logic and then render the result on screen,
+this means that you can create a high-resolution fire grid without too many performance lose.
+*/
+
+layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
+
+layout(std430, binding = 0) buffer SSBO1 {
+    float grid[];
+};
+
+layout(std430, binding = 1) buffer SSBO2 {
+    float heat_gradient[];
+};
+
+layout(std430, binding = 2) buffer SSBO3 {
+    float cooling_map[];
+};
+
+layout (rgba8, binding = 0) writeonly uniform highp image2D destTex;
+
+uniform float cool_factor;
+uniform float time;
+uniform float wind_speed;
+uniform float base_fire_heat;
+
+// Get heat color from heat gradient
+vec3 getHeat(float white) {
+    white = clamp(white, 0.0, 1.0);
+    white = 1.0 - white;
+    int size = heat_gradient.length() / 3;
+    int idx = int( white * float(size) ) * 3;
+    float r = heat_gradient[idx + 0];
+    float g = heat_gradient[idx + 1];
+    float b = heat_gradient[idx + 2];
+    return vec3(r, g, b);
+}
+
+// Get decay from cooling map at pixel with offset
+float getDecay(ivec2 pixel, vec2 offset) {
+    int size_x = int(grid[0]);
+    int size_y = int(grid[1]);
+
+    ivec2 dPixel = pixel + ivec2(offset);
+
+    dPixel.x = (dPixel.x + size_x) % size_x;
+    dPixel.y = (dPixel.y + size_y) % size_y;
+
+    int i = dPixel.x + dPixel.y * size_x;
+
+    return cooling_map[i];
+}
+
+// Gets grid pixel, offsets two because the first two elements from grid is the grid size
+int idx(int x, int y) {
+    int size_x = int(grid[0]);
+
+    if (x <= 1) {
+        if (y == 0) x = 2;
+    } 
+
+    return 2 + x + y * size_x;
+}
+
+// Propagates fire
+void propagation() {
+    int size_x = int(grid[0]);
+    int size_y = int(grid[1]);
+
+    ivec2 pos = ivec2(gl_GlobalInvocationID.xy);
+
+    int i = idx(pos.x, pos.y);
+
+    if (pos.y == size_y - 1) {
+        grid[i] = base_fire_heat;
+    } else {
+        int gX = pos.x; 
+
+        int bellow_idx = idx(gX, pos.y + 1);
+
+        float decay = getDecay(pos, vec2(time * -wind_speed, time));
+
+        int sX = gX + int(wind_speed * decay);
+
+        while (sX < 0) {
+            sX += size_x;
+        }
+        while (sX >= size_x) {
+            sX -= size_x;
+        }
+
+        int this_idx = idx(sX, pos.y);
+
+        grid[this_idx] = clamp(grid[bellow_idx] * (1.0 - cool_factor * decay), 0.0, 1.0);
+    }
+}
+
+// Renders to texture
+void render() {
+    int size_y = int(grid[1]);
+
+    ivec2 storePos = ivec2(gl_GlobalInvocationID.xy);
+
+    int i = idx(storePos.x, storePos.y);
+
+    float white = grid[i];
+
+    vec3 color = getHeat(white);
+    
+    storePos.y = (size_y - 1) - storePos.y;
+    
+    imageStore(destTex, storePos, vec4(color, 1.0));
+}
+
+// Main program
+void main() {
+    int size_x = int(grid[0]);
+    int size_y = int(grid[1]);
+
+    propagation();
+    render();
+}

@@ -1,0 +1,61 @@
+body, html, #contents {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    font-family: sans-serif;
+    background-color: #54391B;
+    color: white;
+}
+
+a {
+    color: white;
+}
+
+#experiment {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#fps {
+    margin-top: 8px;
+}
+
+.option {
+    margin-top: 16px;
+    display: flex;
+    width: 256px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+table {
+    border-spacing: 0;
+}
+
+td {
+    width: 2px;
+    height: 2px;
+}
+
+#canvas {
+    image-rendering: pixelated;
+}
+
+#error {
+    margin: 32px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+h2 {
+    margin: 0;
+}
