@@ -3,15 +3,19 @@ var gl;
 var compProgram;
 var gridSSBO, heatGradientSSBO, coolingMapSSBO;
 var grid, heatGradient, coolingMap;
-var coolFactorUniform, timeUniform, windSpeedUniform, baseFireHeatUniform;
+var coolFactorUniform, timeUniform, windSpeedUniform, baseFireHeatUniform, secondaryFireSource;
 var time = 0.0;
 var baseHeatSlider, coolFactorSlider, windSpeedSlider;
 
 // Constants
-const FPS = 60;
+const FPS = 80;
 const GRID_SIZE_X = 256;
 const GRID_SIZE_Y = 256;
 const SCALE = 2;
+const INITIAL_GRADIENT = [
+    [[1.0, 1.0, 1.0], [1.0, 1.0, 0.0], [1.0, 0.0, 0.0], [0.0, 0.0, 0.0]],
+    [0.0, 0.25, 0.65, 1.0]
+];
 
 // Clamps value between range
 Math.clamp = function(a, b, c) {
@@ -46,12 +50,12 @@ function getGradient(colors = [], offsets = [], t = 0.0) {
     let color1 = colors[idx];
     let color2 = colors[idx + 1];
 
-    let r = lerp(color1.r, color2.r, color_t);
-    let g = lerp(color1.g, color2.g, color_t);
-    let b = lerp(color1.b, color2.b, color_t);
+    let r = lerp(color1[0], color2[0], color_t);
+    let g = lerp(color1[1], color2[1], color_t);
+    let b = lerp(color1[2], color2[2], color_t);
     //let a = lerp(color1.a, color2.a, color_t);
 
-    return {r, g, b};
+    return [r, g, b];
 }
 
 // Generate Float32Array with rgb values from input colors, offset and resolution defined by width
@@ -60,41 +64,64 @@ function generateFloat32ArrayGradient(colors = [], offsets = [], width = 64) {
     const step = 1.0 / (width - 1);
     for (let i = 0; i < width; i++) {
         let color = getGradient(colors, offsets, i * step);
-        result[i * 3 + 0] = color.r;
-        result[i * 3 + 1] = color.g;
-        result[i * 3 + 2] = color.b;
+        result[i * 3 + 0] = color[0];
+        result[i * 3 + 1] = color[1];
+        result[i * 3 + 2] = color[2];
     }
     return result;
 }
 
 // Gets noise and remap value from [-1, 1] to [0, 1]
 function getNoise(x, y) {
-    return Math.pow((noise.simplex2(x, y) + 1.0) / 2.0, 2.0)
+    return (noise.simplex2(x, y) + 1.0) / 2.0
+}
+
+// Gets seamless noise
+function getSeamlessNoise(x, y, w, h) {
+    return (
+        getNoise(x, y) * (w - x) * (h - y) +
+        getNoise(x - w, y) * (x) * (h - y) +
+        getNoise(x - w, y - h) * (x) * (y) +
+        getNoise(x, y - h) * (w - x) * (y)
+    ) / (w * h)
 }
 
 // Generates cooling map using simplex noise
 function generateCoolingMap() {
     const result = new Float32Array(GRID_SIZE_X * GRID_SIZE_Y);
+    const scale = 0.5;
 
     noise.seed(Math.random());
+
+    let size_x = GRID_SIZE_X * scale;
+    let size_y = GRID_SIZE_Y * scale;
 
     // Pass for every pixel and generate noise seamless
     for (let x = 0; x < GRID_SIZE_X; x++) {
         for (let y = 0; y < GRID_SIZE_Y; y++) {
-            var value = (
-                getNoise(x, y) * (GRID_SIZE_X - x) * (GRID_SIZE_Y - y) +
-                getNoise(x - GRID_SIZE_X, y) * (x) * (GRID_SIZE_Y - y) +
-                getNoise(x - GRID_SIZE_X, y - GRID_SIZE_Y) * (x) * (y) +
-                getNoise(x, y - GRID_SIZE_Y) * (GRID_SIZE_X - x) * (y)
-            ) / (GRID_SIZE_X * GRID_SIZE_Y);
-            result[x + y * GRID_SIZE_Y] = value;
+            let nX = x * scale;
+            let nY = y * scale;
+            result[x + y * GRID_SIZE_X] = getSeamlessNoise(nX, nY, size_x, size_y);
         }
     }
 
     return result;
 }
 
-const execute = async () => {
+// Sets fire gradient
+function setFireGradient(gradient = [], updateBuffer = false) {
+    let grad = JSON.parse(JSON.stringify(gradient));
+    heatGradient = generateFloat32ArrayGradient(grad[0], grad[1], 32);
+    if (updateBuffer) {
+        heatGradientSSBO = gl.createBuffer();
+        gl.bindBuffer(gl.SHADER_STORAGE_BUFFER, heatGradientSSBO);
+        gl.bufferData(gl.SHADER_STORAGE_BUFFER, heatGradient, gl.DYNAMIC_COPY);
+        gl.bindBufferBase(gl.SHADER_STORAGE_BUFFER, 1, heatGradientSSBO);
+    }
+}
+
+// Starts simulation execution
+async function execute() {
     // Get some elements
     baseHeatSlider = document.getElementById("base-heat");
     coolFactorSlider = document.getElementById("cool-factor");
@@ -131,16 +158,43 @@ const execute = async () => {
         document.getElementById("experiment").classList.remove("hidden")
     }
 
+    initGradientSlider();
+
+    let mouseDown = false;
+
+    glCanvas.addEventListener("mousedown", function(ev) {
+        mouseDown = true;
+    });
+
+    glCanvas.addEventListener("mouseup", function() {
+        mouseDown = false;
+        gl.uniform3f(secondaryFireSource, 0, 0, 0);
+    });
+
+    glCanvas.addEventListener("mousemove", function(ev) {
+        if (mouseDown) {
+            let x = ev.offsetX;
+            let y = ev.offsetY;
+            x /= SCALE;
+            y /= SCALE;
+
+            x = Math.floor(x);
+            y = Math.floor(y);
+
+            x = Math.clamp(x, 0, GRID_SIZE_X - 1);
+            y = Math.clamp(y, 0, GRID_SIZE_X - 1);
+
+            gl.uniform3f(secondaryFireSource, x, y, 1);
+        }
+    });
+
     // Initialize fire grid
     grid = new Float32Array(GRID_SIZE_X * GRID_SIZE_Y + 2).fill(0.0);
     grid[0] = GRID_SIZE_X;
     grid[1] = GRID_SIZE_Y;
 
     // Initialize heat gradient
-    heatGradient = generateFloat32ArrayGradient(
-        [{r: 1.0, g: 1.0, b: 1.0}, {r: 1.0, g: 1.0, b: 0.0}, {r: 1.0, g: 0.0, b: 0.0}, {r: 0.0, g: 0.0, b: 0.0}],
-        [0.0, 0.25, 0.65, 1.0], 32
-    );
+    setFireGradient(INITIAL_GRADIENT);
 
     // Initialize cooling map
     coolingMap = generateCoolingMap();
@@ -176,6 +230,7 @@ const execute = async () => {
     timeUniform = gl.getUniformLocation(compProgram, "time");
     windSpeedUniform = gl.getUniformLocation(compProgram, "wind_speed");
     baseFireHeatUniform = gl.getUniformLocation(compProgram, "base_fire_heat");
+    secondaryFireSource = gl.getUniformLocation(compProgram, "secondary_fire_source");
 
     // Initialize some uniforms
     gl.useProgram(compProgram);
@@ -216,6 +271,165 @@ const execute = async () => {
     gl.framebufferTexture2D(gl.READ_FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, texture, 0);
 
     setTimeout(frame, 1000 / FPS);
+}
+
+// Creates DOM element from code
+function createElementFromHTML(htmlString) {
+    var div = document.createElement('div');
+    div.innerHTML = htmlString.trim();
+  
+    // Change this to div.childNodes to support multiple top-level nodes
+    return div.firstChild; 
+}
+
+// Initialize gradient slider
+function initGradientSlider() {
+    var sliders = [];
+    var currentColorSlider;
+
+    const ROOT_SLIDER = document.getElementById("gradient-slider");
+    const COLOR_PICKER_ROOT = document.getElementById("color-picker");
+    const COLOR_PICKER_OFFSET = COLOR_PICKER_ROOT.querySelector("#offset");
+    const COLOR_PICKER_COLOR_DISPLAY = COLOR_PICKER_ROOT.querySelector("#color");
+    const COLOR_PICKER_RED = COLOR_PICKER_ROOT.querySelector("#color-r");
+    const COLOR_PICKER_GREEN = COLOR_PICKER_ROOT.querySelector("#color-g");
+    const COLOR_PICKER_BLUE = COLOR_PICKER_ROOT.querySelector("#color-b");
+
+    // Gets all offsets and colors
+    function getOffsetsAndColors() {
+        let result = [];
+        for (let slider of sliders) {
+            result.push([slider.colorOffset, slider.color]);
+        }
+        result.sort((a, b) => a[0] - b[0]);
+        return result;
+    }
+
+    // Gets all offsets and colors as separated arrays
+    function getOffsetAndColorsSeparated() {
+        let cols = getOffsetsAndColors();
+        let offsets = [];
+        let colors = [];
+
+        for (let col of cols) {
+            offsets.push(col[0]);
+            colors.push(col[1]);
+        }
+        
+        return [offsets, colors];
+    }
+
+    // Updates slider gradient preview
+    function updateSliderGradient() {
+        const offsetsAndColors = getOffsetsAndColors();
+        let stops = [];
+        for (let col of offsetsAndColors) {
+            let percent = `${col[0] * 100}%`;
+            let color = `rgb(${col[1][0] * 255}, ${col[1][1] * 255}, ${col[1][2] * 255})`;
+            stops.push(`${color} ${percent}`);
+        }
+        let gradientCSS = `linear-gradient(to top, ${stops.join(", ")})`;
+        ROOT_SLIDER.style.background = gradientCSS;
+
+        focusColorSlider();
+    }
+
+    // Changes current color slider
+    function changeCurrentColorSlider(slider) {
+        if (currentColorSlider) {
+            currentColorSlider.classList.remove("focused");
+        }
+        currentColorSlider = slider;
+        currentColorSlider.classList.add("focused");
+        focusColorSlider();
+    }
+
+    // Focus color picker to a slider
+    function focusColorSlider() {
+        let color_r = (currentColorSlider.color[0] * 255).toFixed(0);
+        let color_g = (currentColorSlider.color[1] * 255).toFixed(0);
+        let color_b = (currentColorSlider.color[2] * 255).toFixed(0);
+
+        COLOR_PICKER_OFFSET.innerHTML = `offset: ${(currentColorSlider.colorOffset * 100).toFixed(2)}%`;
+        COLOR_PICKER_COLOR_DISPLAY.style.backgroundColor = `rgb(${color_r}, ${color_g}, ${color_b})`;
+    
+        COLOR_PICKER_RED.querySelector("input").value = color_r;
+        COLOR_PICKER_GREEN.querySelector("input").value = color_g;
+        COLOR_PICKER_BLUE.querySelector("input").value = color_b;
+
+        COLOR_PICKER_RED.querySelector("span").innerHTML = color_r;
+        COLOR_PICKER_GREEN.querySelector("span").innerHTML = color_g;
+        COLOR_PICKER_BLUE.querySelector("span").innerHTML = color_b;
+    }
+
+    // Creates thumb
+    function createThumb(offset, color) {
+        var code = `<input type="range" class="gradient-step" min="0" max="1" step="0.01" value="${offset}"/>`;
+        var slider = createElementFromHTML(code);
+
+        slider.colorOffset = offset;
+        slider.color = color;
+
+        sliders.push(slider);
+
+        ROOT_SLIDER.appendChild(slider);
+
+        slider.addEventListener('mousedown', function(ev) {
+            if (!ev.shiftKey) {
+                changeCurrentColorSlider(slider);
+            } else if (sliders.length > 2) {
+                let idx = sliders.indexOf(this);
+                sliders.splice(idx, 1);
+                if (currentColorSlider == this) {
+                    changeCurrentColorSlider(sliders[0]);
+                }
+                this.remove();
+                updateSliderGradient();
+            }
+            ev.stopPropagation();
+        });
+
+        slider.addEventListener('input', function(ev) {
+            this.colorOffset = this.value;
+            updateSliderGradient();
+            ev.stopPropagation();
+        });
+
+        changeCurrentColorSlider(slider);
+    }
+
+    ROOT_SLIDER.addEventListener('mousedown', function(ev) {
+        let offset = 1.0 - ev.offsetY / this.offsetHeight;
+        let colors = getOffsetAndColorsSeparated();
+        let color = getGradient(colors[1], colors[0], offset);
+        createThumb(offset, color);
+        updateSliderGradient();
+    });
+
+    COLOR_PICKER_RED.querySelector("input").addEventListener('input', function() {
+        currentColorSlider.color[0] = this.value / 255;
+        updateSliderGradient();
+    });
+
+    COLOR_PICKER_GREEN.querySelector("input").addEventListener('input', function() {
+        currentColorSlider.color[1] = this.value / 255;
+        updateSliderGradient();
+    });
+
+    COLOR_PICKER_BLUE.querySelector("input").addEventListener('input', function() {
+        currentColorSlider.color[2] = this.value / 255;
+        updateSliderGradient();
+    });
+
+    for (let i = 0; i < INITIAL_GRADIENT[0].length; i++) {
+        createThumb(INITIAL_GRADIENT[1][i], INITIAL_GRADIENT[0][i].slice());
+    }
+
+    document.getElementById("update").addEventListener('click', function() {
+        setFireGradient(getOffsetAndColorsSeparated().reverse(), true);
+    });
+
+    updateSliderGradient();
 }
 
 // Executed every frame defined by FPS

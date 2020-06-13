@@ -29,6 +29,7 @@ uniform float cool_factor;
 uniform float time;
 uniform float wind_speed;
 uniform float base_fire_heat;
+uniform vec3 secondary_fire_source;
 
 // Get heat color from heat gradient
 vec3 getHeat(float white) {
@@ -42,6 +43,11 @@ vec3 getHeat(float white) {
     return vec3(r, g, b);
 }
 
+// Wraps value between a range without clamping (loop value)
+int wrapi(int x, int x_min, int x_max) {
+    return (((x - x_min) % (x_max - x_min)) + (x_max - x_min)) % (x_max - x_min) + x_min;
+}
+
 // Get decay from cooling map at pixel with offset
 float getDecay(ivec2 pixel, vec2 offset) {
     int size_x = int(grid[0]);
@@ -49,8 +55,8 @@ float getDecay(ivec2 pixel, vec2 offset) {
 
     ivec2 dPixel = pixel + ivec2(offset);
 
-    dPixel.x = (dPixel.x + size_x) % size_x;
-    dPixel.y = (dPixel.y + size_y) % size_y;
+    dPixel.x = dPixel.x % size_x;
+    dPixel.y = dPixel.y % size_y;
 
     int i = dPixel.x + dPixel.y * size_x;
 
@@ -75,29 +81,26 @@ void propagation() {
 
     ivec2 pos = ivec2(gl_GlobalInvocationID.xy);
 
+    if (wind_speed < 0.0) {
+        pos.x = (size_x - 1) - pos.x;
+    }
+
     int i = idx(pos.x, pos.y);
 
     if (pos.y == size_y - 1) {
         grid[i] = base_fire_heat;
     } else {
-        int gX = pos.x; 
+        int bellow_idx = idx(pos.x, pos.y + 1);
 
-        int bellow_idx = idx(gX, pos.y + 1);
+        float cool = getDecay(pos, vec2(time * abs(wind_speed), time));
 
-        float decay = getDecay(pos, vec2(time * -wind_speed, time));
+        int thisX = pos.x + int(wind_speed * cool);
+        thisX = (thisX + size_x) % size_x;
+        int thisI = idx(thisX, pos.y);
+        grid[thisI] = grid[bellow_idx] * (1.0 - cool_factor * cool);
 
-        int sX = gX + int(wind_speed * decay);
-
-        while (sX < 0) {
-            sX += size_x;
-        }
-        while (sX >= size_x) {
-            sX -= size_x;
-        }
-
-        int this_idx = idx(sX, pos.y);
-
-        grid[this_idx] = clamp(grid[bellow_idx] * (1.0 - cool_factor * decay), 0.0, 1.0);
+        float dist_source = 1.0 - clamp(distance(vec2(pos), vec2(secondary_fire_source.x, secondary_fire_source.y)) / 4.0, 0.0, 1.0);
+        grid[i] += dist_source * secondary_fire_source.z;
     }
 }
 
