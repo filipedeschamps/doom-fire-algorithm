@@ -46,6 +46,8 @@ td {
 
 #canvas {
     image-rendering: pixelated;
+    width: 512px;
+    height: 512px;
 }
 
 #error {

@@ -29,7 +29,7 @@ uniform float cool_factor;
 uniform float time;
 uniform float wind_speed;
 uniform float base_fire_heat;
-uniform vec3 secondary_fire_source;
+uniform vec4 secondary_fire_source;
 
 // Get heat color from heat gradient
 vec3 getHeat(float white) {
@@ -99,8 +99,9 @@ void propagation() {
         int thisI = idx(thisX, pos.y);
         grid[thisI] = grid[bellow_idx] * (1.0 - cool_factor * cool);
 
-        float dist_source = 1.0 - clamp(distance(vec2(pos), vec2(secondary_fire_source.x, secondary_fire_source.y)) / 4.0, 0.0, 1.0);
-        grid[i] += dist_source * secondary_fire_source.z;
+        float dist_source = 1.0 - clamp(distance(vec2(pos), vec2(secondary_fire_source.x, secondary_fire_source.y)) / secondary_fire_source.z, 0.0, 1.0);
+        dist_source = round(dist_source);
+        grid[i] += dist_source * secondary_fire_source.w;
     }
 }
 

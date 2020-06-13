@@ -6,12 +6,13 @@ var grid, heatGradient, coolingMap;
 var coolFactorUniform, timeUniform, windSpeedUniform, baseFireHeatUniform, secondaryFireSource;
 var time = 0.0;
 var baseHeatSlider, coolFactorSlider, windSpeedSlider;
+var scaleX = 1.0, scaleY = 1.0;
+var secondaryFireScale = 8.0;
 
 // Constants
-const FPS = 80;
-const GRID_SIZE_X = 256;
-const GRID_SIZE_Y = 256;
-const SCALE = 2;
+const FPS = 60;
+const GRID_SIZE_X = 128;
+const GRID_SIZE_Y = 128;
 const INITIAL_GRADIENT = [
     [[1.0, 1.0, 1.0], [1.0, 1.0, 0.0], [1.0, 0.0, 0.0], [0.0, 0.0, 0.0]],
     [0.0, 0.25, 0.65, 1.0]
@@ -89,7 +90,7 @@ function getSeamlessNoise(x, y, w, h) {
 // Generates cooling map using simplex noise
 function generateCoolingMap() {
     const result = new Float32Array(GRID_SIZE_X * GRID_SIZE_Y);
-    const scale = 0.5;
+    const scale = 0.25;
 
     noise.seed(Math.random());
 
@@ -111,7 +112,7 @@ function generateCoolingMap() {
 // Sets fire gradient
 function setFireGradient(gradient = [], updateBuffer = false) {
     let grad = JSON.parse(JSON.stringify(gradient));
-    heatGradient = generateFloat32ArrayGradient(grad[0], grad[1], 32);
+    heatGradient = generateFloat32ArrayGradient(grad[0], grad[1], 16);
     if (updateBuffer) {
         heatGradientSSBO = gl.createBuffer();
         gl.bindBuffer(gl.SHADER_STORAGE_BUFFER, heatGradientSSBO);
@@ -148,8 +149,8 @@ async function execute() {
     gl = glCanvas.getContext("webgl2-compute", {antialias: false});
     glCanvas.width = GRID_SIZE_X;
     glCanvas.height = GRID_SIZE_Y;
-    glCanvas.style.width = GRID_SIZE_X * SCALE + "px";
-    glCanvas.style.height = GRID_SIZE_Y * SCALE + "px";
+    scaleX = 512 / GRID_SIZE_X;
+    scaleY = 512 / GRID_SIZE_Y;
 
     if (!gl) {
         document.getElementById("error").classList.remove("hidden")
@@ -161,31 +162,41 @@ async function execute() {
     initGradientSlider();
 
     let mouseDown = false;
+    let mouseX = 0, mouseY = 0;
 
-    glCanvas.addEventListener("mousedown", function(ev) {
-        mouseDown = true;
-    });
-
-    glCanvas.addEventListener("mouseup", function() {
-        mouseDown = false;
-        gl.uniform3f(secondaryFireSource, 0, 0, 0);
-    });
-
-    glCanvas.addEventListener("mousemove", function(ev) {
+    function mouseHold() {
         if (mouseDown) {
-            let x = ev.offsetX;
-            let y = ev.offsetY;
-            x /= SCALE;
-            y /= SCALE;
-
-            x = Math.floor(x);
-            y = Math.floor(y);
+            let x = mouseX / scaleX;
+            let y = mouseY / scaleY;
 
             x = Math.clamp(x, 0, GRID_SIZE_X - 1);
             y = Math.clamp(y, 0, GRID_SIZE_X - 1);
 
-            gl.uniform3f(secondaryFireSource, x, y, 1);
+            gl.uniform4f(secondaryFireSource, x, y, secondaryFireScale, 1);
+
+            setTimeout(mouseHold, 1);
+        } else {
+            gl.uniform4f(secondaryFireSource, 0, 0, 0, 0);
         }
+    }
+
+    glCanvas.addEventListener("wheel", function(ev) {
+        secondaryFireScale += ev.deltaY * -0.01;
+        secondaryFireScale = Math.max(secondaryFireScale, 1.0);
+    });
+
+    glCanvas.addEventListener("mousedown", function(ev) {
+        mouseDown = true;
+        setTimeout(mouseHold, 1);
+    });
+
+    document.addEventListener("mouseup", function() {
+        mouseDown = false;
+    });
+
+    glCanvas.addEventListener("mousemove", function(ev) {
+        mouseX = ev.offsetX;
+        mouseY = ev.offsetY;
     });
 
     // Initialize fire grid
@@ -469,7 +480,7 @@ function frame() {
 }
 
 // Initialize program
-execute();
+document.addEventListener('DOMContentLoaded', execute);
 
 // Just to debug cooling map to table
 /*
