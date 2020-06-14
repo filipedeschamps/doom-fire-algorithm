@@ -9,6 +9,7 @@ body {
     font-family: sans-serif;
     background-color: #54391B;
     color: white;
+    user-select: none;
 }
 
 a {

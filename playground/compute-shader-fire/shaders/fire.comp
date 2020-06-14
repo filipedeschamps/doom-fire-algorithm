@@ -15,33 +15,15 @@ layout(std430, binding = 0) buffer SSBO1 {
     float grid[];
 };
 
-layout(std430, binding = 1) buffer SSBO2 {
-    float heat_gradient[];
-};
-
-layout(std430, binding = 2) buffer SSBO3 {
+layout(std430, binding = 1) buffer SSBO3 {
     float cooling_map[];
 };
-
-layout (rgba8, binding = 0) writeonly uniform highp image2D destTex;
 
 uniform float cool_factor;
 uniform float time;
 uniform float wind_speed;
 uniform float base_fire_heat;
 uniform vec4 secondary_fire_source;
-
-// Get heat color from heat gradient
-vec3 getHeat(float white) {
-    white = clamp(white, 0.0, 1.0);
-    white = 1.0 - white;
-    int size = heat_gradient.length() / 3;
-    int idx = int( white * float(size) ) * 3;
-    float r = heat_gradient[idx + 0];
-    float g = heat_gradient[idx + 1];
-    float b = heat_gradient[idx + 2];
-    return vec3(r, g, b);
-}
 
 // Wraps value between a range without clamping (loop value)
 int wrapi(int x, int x_min, int x_max) {
@@ -105,28 +87,10 @@ void propagation() {
     }
 }
 
-// Renders to texture
-void render() {
-    int size_y = int(grid[1]);
-
-    ivec2 storePos = ivec2(gl_GlobalInvocationID.xy);
-
-    int i = idx(storePos.x, storePos.y);
-
-    float white = grid[i];
-
-    vec3 color = getHeat(white);
-    
-    storePos.y = (size_y - 1) - storePos.y;
-    
-    imageStore(destTex, storePos, vec4(color, 1.0));
-}
-
 // Main program
 void main() {
     int size_x = int(grid[0]);
     int size_y = int(grid[1]);
 
     propagation();
-    render();
 }

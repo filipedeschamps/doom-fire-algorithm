@@ -1,6 +1,6 @@
 var glCanvas;
 var gl;
-var compProgram;
+var compProgram, renderProgram;
 var gridSSBO, heatGradientSSBO, coolingMapSSBO;
 var grid, heatGradient, coolingMap;
 var coolFactorUniform, timeUniform, windSpeedUniform, baseFireHeatUniform, secondaryFireSource;
@@ -11,6 +11,7 @@ var secondaryFireScale = 8.0;
 
 // Constants
 const FPS = 60;
+const RENDER_FPS = 30;
 const GRID_SIZE_X = 128;
 const GRID_SIZE_Y = 128;
 const INITIAL_GRADIENT = [
@@ -110,15 +111,15 @@ function generateCoolingMap() {
 }
 
 // Sets fire gradient
-function setFireGradient(gradient = [], updateBuffer = false) {
+function setFireGradient(gradient = []) {
     let grad = JSON.parse(JSON.stringify(gradient));
-    heatGradient = generateFloat32ArrayGradient(grad[0], grad[1], 16);
-    if (updateBuffer) {
-        heatGradientSSBO = gl.createBuffer();
-        gl.bindBuffer(gl.SHADER_STORAGE_BUFFER, heatGradientSSBO);
-        gl.bufferData(gl.SHADER_STORAGE_BUFFER, heatGradient, gl.DYNAMIC_COPY);
-        gl.bindBufferBase(gl.SHADER_STORAGE_BUFFER, 1, heatGradientSSBO);
-    }
+    heatGradient = generateFloat32ArrayGradient(grad[0], grad[1], 128);
+
+    gl.useProgram(renderProgram);
+    heatGradientSSBO = gl.createBuffer();
+    gl.bindBuffer(gl.SHADER_STORAGE_BUFFER, heatGradientSSBO);
+    gl.bufferData(gl.SHADER_STORAGE_BUFFER, heatGradient, gl.DYNAMIC_COPY);
+    gl.bindBufferBase(gl.SHADER_STORAGE_BUFFER, 2, heatGradientSSBO);
 }
 
 // Starts simulation execution
@@ -131,16 +132,19 @@ async function execute() {
     // Sliders change
     baseHeatSlider.addEventListener('input', function() {
         let value = this.value;
+        gl.useProgram(compProgram);
         gl.uniform1f(baseFireHeatUniform, value);
     });
 
     coolFactorSlider.addEventListener('input', function() {
         let value = this.value;
+        gl.useProgram(compProgram);
         gl.uniform1f(coolFactorUniform, value);
     });
 
     windSpeedSlider.addEventListener('input', function() {
         let value = this.value;
+        gl.useProgram(compProgram);
         gl.uniform1f(windSpeedUniform, value);
     });
 
@@ -159,8 +163,6 @@ async function execute() {
         document.getElementById("experiment").classList.remove("hidden")
     }
 
-    initGradientSlider();
-
     let mouseDown = false;
     let mouseX = 0, mouseY = 0;
 
@@ -172,10 +174,12 @@ async function execute() {
             x = Math.clamp(x, 0, GRID_SIZE_X - 1);
             y = Math.clamp(y, 0, GRID_SIZE_X - 1);
 
+            gl.useProgram(compProgram);
             gl.uniform4f(secondaryFireSource, x, y, secondaryFireScale, 1);
 
             setTimeout(mouseHold, 1);
         } else {
+            gl.useProgram(compProgram);
             gl.uniform4f(secondaryFireSource, 0, 0, 0, 0);
         }
     }
@@ -204,16 +208,8 @@ async function execute() {
     grid[0] = GRID_SIZE_X;
     grid[1] = GRID_SIZE_Y;
 
-    // Initialize heat gradient
-    setFireGradient(INITIAL_GRADIENT);
-
     // Initialize cooling map
     coolingMap = generateCoolingMap();
-
-    for (let x = 0; x < GRID_SIZE_X; x++) {
-        let idx = 2 + x + (GRID_SIZE_Y - 1.0) * GRID_SIZE_X;
-        grid[idx] = 1.0;
-    }
 
     // Compute shader
     const compCodeFetch = await fetch('shaders/fire.comp');
@@ -233,6 +229,40 @@ async function execute() {
     gl.linkProgram(compProgram);
     if (!gl.getProgramParameter(compProgram, gl.LINK_STATUS)) {
         console.log(gl.getProgramInfoLog(compProgram));
+        return;
+    }
+
+    // Vertex shader
+    const vertCodeFetch = await fetch('shaders/fire.vert');
+    const vertCode = await vertCodeFetch.text();
+
+    const vertShader = gl.createShader(gl.VERTEX_SHADER);
+    gl.shaderSource(vertShader, vertCode);
+    gl.compileShader(vertShader);
+    if (!gl.getShaderParameter(vertShader, gl.COMPILE_STATUS)) {
+        console.warn(gl.getShaderInfoLog(vertShader));
+        return;
+    }
+
+    // Fragment shader
+    const fragCodeFetch = await fetch('shaders/fire.frag');
+    const fragCode = await fragCodeFetch.text();
+
+    const fragShader = gl.createShader(gl.FRAGMENT_SHADER);
+    gl.shaderSource(fragShader, fragCode);
+    gl.compileShader(fragShader);
+    if (!gl.getShaderParameter(fragShader, gl.COMPILE_STATUS)) {
+        console.warn(gl.getShaderInfoLog(fragShader));
+        return;
+    }
+
+    // Render program
+    renderProgram = gl.createProgram();
+    gl.attachShader(renderProgram, vertShader);
+    gl.attachShader(renderProgram, fragShader);
+    gl.linkProgram(renderProgram);
+    if (!gl.getProgramParameter(renderProgram, gl.LINK_STATUS)) {
+        console.log(gl.getProgramInfoLog(renderProgram));
         return;
     }
     
@@ -257,31 +287,42 @@ async function execute() {
     gl.bindBuffer(gl.SHADER_STORAGE_BUFFER, gridSSBO);
     gl.bufferData(gl.SHADER_STORAGE_BUFFER, grid, gl.DYNAMIC_COPY);
     gl.bindBufferBase(gl.SHADER_STORAGE_BUFFER, 0, gridSSBO);
-
-    // Create heat gradient buffer;
-    heatGradientSSBO = gl.createBuffer();
-    gl.bindBuffer(gl.SHADER_STORAGE_BUFFER, heatGradientSSBO);
-    gl.bufferData(gl.SHADER_STORAGE_BUFFER, heatGradient, gl.DYNAMIC_COPY);
-    gl.bindBufferBase(gl.SHADER_STORAGE_BUFFER, 1, heatGradientSSBO);
-
+    
     // Create cooling map buffer;
     coolingMapSSBO = gl.createBuffer();
     gl.bindBuffer(gl.SHADER_STORAGE_BUFFER, coolingMapSSBO);
     gl.bufferData(gl.SHADER_STORAGE_BUFFER, coolingMap, gl.DYNAMIC_COPY);
-    gl.bindBufferBase(gl.SHADER_STORAGE_BUFFER, 2, coolingMapSSBO);
+    gl.bindBufferBase(gl.SHADER_STORAGE_BUFFER, 1, coolingMapSSBO);
 
-    // Create texture
-    const texture = gl.createTexture();
-    gl.bindTexture(gl.TEXTURE_2D, texture);
-    gl.texStorage2D(gl.TEXTURE_2D, 1, gl.RGBA8, GRID_SIZE_X, GRID_SIZE_Y);
-    gl.bindImageTexture(0, texture, 0, false, 0, gl.WRITE_ONLY, gl.RGBA8);
+    // Create vertex array buffer
+    const vertBuffer = gl.createBuffer();
+    var vertices = [
+        -1,-1,
+        1,-1,
+        -1,1,
+        
+        1,-1,
+        1,1,
+        -1,1
+    ];
 
-    // Create frame buffer
-    const frameBuffer = gl.createFramebuffer();
-    gl.bindFramebuffer(gl.READ_FRAMEBUFFER, frameBuffer);
-    gl.framebufferTexture2D(gl.READ_FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, texture, 0);
+    // Binds the vertex array buffer
+    gl.bindBuffer(gl.ARRAY_BUFFER, vertBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.DYNAMIC_COPY);
+    gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
+    gl.enableVertexAttribArray(0);
 
-    setTimeout(frame, 1000 / FPS);
+    // Sets the fire gradient to the initial fire gradient
+    setFireGradient(INITIAL_GRADIENT);
+
+    // Initialize gradient slider
+    initGradientSlider();
+
+    // Adjust the viewport
+    gl.viewport(0,0,glCanvas.width,glCanvas.height);
+
+    setTimeout(logic, 1000 / FPS);
+    setTimeout(render, 1000 / RENDER_FPS);
 }
 
 // Creates DOM element from code
@@ -443,8 +484,8 @@ function initGradientSlider() {
     updateSliderGradient();
 }
 
-// Executed every frame defined by FPS
-function frame() {
+// Executed every frame defined by FPS (logic)
+function logic() {
     // Increase time
     time += 1;
 
@@ -460,24 +501,24 @@ function frame() {
     // Dispatch
     gl.dispatchCompute(GRID_SIZE_X, GRID_SIZE_Y, 1);
 
-    // IDK
-    gl.memoryBarrier(gl.SHADER_IMAGE_ACCESS_BARRIER_BIT);
-    
-    // Renders result to canvas
-    gl.blitFramebuffer(
-        0, 0, GRID_SIZE_X, GRID_SIZE_Y,
-        0, 0, GRID_SIZE_X, GRID_SIZE_Y,
-        gl.COLOR_BUFFER_BIT, gl.NEAREST
-    );
-
     // Get the delta time from computation
     var delta = performance.now() - t0;
 
     // Displays delta time
     document.getElementById("fps").innerHTML = "elapsed computation time: " + delta.toFixed(2) + " milliseconds"
 
-    setTimeout(frame, 1000 / FPS);
+    setTimeout(logic, 1000 / FPS);
 }
+
+function render() {
+    // Renders result to canvas using vertex and fragment shader
+    gl.useProgram(renderProgram);
+    gl.drawArrays(gl.TRIANGLES, 0, 6);
+
+    setTimeout(render, 1000 / RENDER_FPS);
+}
+
+// Executed every frame defined by FPS (rendering)
 
 // Initialize program
 document.addEventListener('DOMContentLoaded', execute);
