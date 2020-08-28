@@ -1,6 +1,7 @@
 const firePallete = ['░', '░', '░', '░', '░', '░', '░', '░', '░', '░', '░', '░', '▒', '▒', '▒', '▒', '▒', '▒', '▓', '▓', '▓', '▓', '▓', '▓', '▓', '▓', '█', '█', '█', '█', '█', '█', '█', '█', '█', '█'];
 const width = 100;
 const height = 42;
+const decayDelta = 3;
 
 const pixelsArray = [];
 
@@ -23,7 +24,7 @@ const calculatePropagation = () => {
 const updatePixelIntensity = (index) => {
   const belowIndex = index + width;
   if (belowIndex < width * height) {
-    const decay = Math.floor(Math.random() * 3);
+    const decay = Math.floor(Math.random() * decayDelta);
     const belowIntensity = pixelsArray[belowIndex];
     const newIntensity = belowIntensity - decay;
 
