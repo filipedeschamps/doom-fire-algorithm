@@ -64,7 +64,7 @@ These people are making this repository **MORE THAN AWESOME**.
 - [GDScript Implementation (Godot Engine)](https://github.com/filipedeschamps/doom-fire-algorithm/tree/master/playground/gdscript-doom-fire/) ([@jshlw](https://github.com/jshlw))
 - [Flutter with Painter](https://github.com/filipedeschamps/doom-fire-algorithm/tree/master/playground/flutter_fire/) ([@aschiavon91](https://github.com/aschiavon91))
 - [Using multidimensional array + Controls to interact](https://filipedeschamps.com.br/doom-fire-algorithm/playground/implementation-with-canvas-manual-variable-dimension-and-power) ([@gustavo-tp](https://github.com/gustavo-tp))
-- [Ascii Art Version](https://filipedeschamps.com.br/doom-fire-algorithm/playground/doom-fire-algorithm-ascii-art) ([@aldrie](https://github.com/Aldrie))
+- [Ascii Art Version](https://github.com/filipedeschamps/doom-fire-algorithm/tree/master/playground/doom-fire-algorithm-ascii-art) ([@aldrie](https://github.com/Aldrie))
 
 
 
