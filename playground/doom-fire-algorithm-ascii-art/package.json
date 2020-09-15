@@ -1,0 +1,11 @@
+{
+  "name": "doom-fire-algorithm-ascii-art",
+  "version": "1.0.0",
+  "description": "Doom fire effect implemented in Node.js using Ascii Art!",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "Aldriê Mizobuti",
+  "license": "MIT"
+}
