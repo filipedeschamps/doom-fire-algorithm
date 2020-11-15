@@ -68,7 +68,7 @@ These people are making this repository **MORE THAN AWESOME**.
 - [Meteor](https://filipedeschamps.github.io/doom-fire-algorithm/playground/meteor/) ([@felipe-pita](https://github.com/felipe-pita))
 - [CSS Grid Doom Fire](https://filipedeschamps.github.io/doom-fire-algorithm/playground/css-grid-doom-fire/) ([@thadeucity](https://github.com/thadeucity))
 - [Render Using GPU](https://filipedeschamps.github.io/doom-fire-algorithm/playground/render-using-gpu/) ([@thadeucity](https://github.com/thadeucity))
-- [FogoDOOM-Control screen resizing](https://filipedeschamps.github.io/doom-fire-algorithm/playground/FogoDOOM-Control-screen-resizing/) ([@thadeucity](https://github.com/jhonathan93))
+- [FogoDOOM-Control screen resizing](https://filipedeschamps.github.io/doom-fire-algorithm/playground/FogoDOOM-Control-screen-resizing/) ([@jhonathan](https://github.com/jhonathan93))
 
 
 ## Contributors
