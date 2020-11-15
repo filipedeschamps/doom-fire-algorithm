@@ -1,6 +1,6 @@
 <p align="center">
-  <a href="https://github.com/jhonathan93/doom-fire-algorithm/tree/master/playground/FogoDOOM-Control%20screen%20resizing/">
-    <img src="https://raw.githubusercontent.com/jhonathan93/doom-fire-algorithm/master/playground/FogoDOOM-Control%20screen%20resizing/FogoDoom.gif" width="490">
+  <a href="https://github.com/jhonathan93/doom-fire-algorithm/tree/master/playground/fogodoom-control-screen-resizing">
+    <img src="https://github.com/jhonathan93/doom-fire-algorithm/blob/master/playground/fogodoom-control-screen-resizing/FogoDoom.gif" width="490">
   </a>
 </p>
 
