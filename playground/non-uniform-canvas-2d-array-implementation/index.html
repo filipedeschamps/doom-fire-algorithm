@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Doom Fire</title>
+
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      height: 98vh;
+      background-color: #63431c;
+      font-family: monospace;
+    }
+
+    .title {
+      margin: 0 0 10px;
+    }
+
+    .subtitle {
+      margin: 0 0 20px;
+    }
+
+    .controls {
+      margin: 20px 0 0;
+    }
+  </style>
+</head>
+<body>
+  <h1 class="title">Non-uniform Doom fire effect</h1>
+  <p class="subtitle">Made with canvas, requestFrameAnimation and two-dimensional array</p>
+
+  <canvas id="canvas"></canvas>
+
+  <div class="controls" id="controls">
+    <button type="button" id="decrease">-</button>
+    <button type="button" id="min">Min Fire</button>
+    <button type="button" id="debug">Debug</button>
+    <button type="button" id="max">Max Fire</button>
+    <button type="button" id="increase">+</button>
+  </div>
+
+  <!-- <script src="./fire-canvas.js"></script> -->
+  <script src="./fire-algorithm.js"></script>
+  <script src="./controls.js"></script>
+</body>
+</html>
