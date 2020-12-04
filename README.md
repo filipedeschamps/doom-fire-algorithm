@@ -69,7 +69,7 @@ These people are making this repository **MORE THAN AWESOME**.
 - [CSS Grid Doom Fire](https://filipedeschamps.github.io/doom-fire-algorithm/playground/css-grid-doom-fire/) ([@thadeucity](https://github.com/thadeucity))
 - [Render Using GPU](https://filipedeschamps.github.io/doom-fire-algorithm/playground/render-using-gpu/) ([@thadeucity](https://github.com/thadeucity))
 - [FogoDoom-Control screen resizing](https://github.com/jhonathan93/doom-fire-algorithm/tree/master/playground/fogodoom-control-screen-resizing/) ([@jhonathan](https://github.com/jhonathan93))
-
+- [Non-uniform canvas 2d array implementation](https://filipedeschamps.github.io/doom-fire-algorithm/playground/non-uniform-canvas-2d-array-implementation/) ([@caioferrarezi](https://github.com/caioferrarezi))
 
 ## Contributors
 

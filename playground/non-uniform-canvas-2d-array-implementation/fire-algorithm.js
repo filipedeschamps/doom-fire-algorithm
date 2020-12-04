@@ -47,7 +47,10 @@ const windDelta = 2;
 
 let pixelSize = 5;
 let decayDelta = 3;
+
 let debug = false;
+
+let canvas;
 let context;
 
 function start() {
@@ -59,7 +62,7 @@ function start() {
 }
 
 function setCanvas() {
-  const canvas = document.querySelector("#canvas");
+  canvas = document.querySelector("#canvas");
 
   canvas.width = fireWidth * pixelSize;
   canvas.height = fireHeight * pixelSize;
