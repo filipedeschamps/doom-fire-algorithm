@@ -1,0 +1,111 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    outline: 0;
+}
+
+html {
+    font-size: 62.5%;
+}
+
+html, body {
+    height: 100vh;
+    font-family: "Source Sans Pro";
+    text-rendering: optimizelegibility;
+    -webkit-font-smoothing: antialiased;
+    background-color: azure;
+}
+
+#fireCanvas {
+    display: flex;
+    justify-content: center;
+    margin-top: 6%;
+}
+
+.Painel {
+    display: flex;
+    justify-content: center;
+    margin: 1%;
+}
+
+.Painel .Dimension {
+    width: 10%;
+}
+
+.Painel .Dimension h3  {
+    text-align: center;
+    font-size: 1.4rem;
+    margin-bottom: 2%;
+}
+
+.Painel .Dimension input {
+    width: 48%;
+}
+
+.Painel .Dimension button {
+    width: 50%;
+    display: block;
+    margin: 0 auto;
+    margin-top: 3%;
+}
+
+.Painel input.width {
+    float: left;
+    margin-right: 3%;
+}
+
+.Painel .DebugMode {
+    width: 10%;
+}
+
+.Painel .DebugMode h3 {
+    text-align: center;
+}
+
+.Painel .DebugMode button {
+    width: 50%;
+    display: block;
+    margin: 0 auto;
+    margin-top: 3%;
+}
+
+
+.Dimension {
+    margin-right: 2%;
+}
+
+input.width::-webkit-inner-spin-button, input.height::-webkit-inner-spin-button, input.time::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+table {
+    border-collapse: collapse;
+    border: 1px solid #000000;
+}
+
+td {
+    width: 50px;
+    height: 50px;
+    border: 1px solid #ffffff;
+    text-align: center;
+    font-family: monospace;
+    font-size: 18px;
+    position: relative;
+}
+
+.pixel-index {
+    font-size: 10px;
+    display: inline-block;
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    color: #999999;
+}
+
+td.pixel {
+    width: 4px;
+    height: 4px;
+    border: 0;
+}
