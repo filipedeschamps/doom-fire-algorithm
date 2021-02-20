@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>csharp_console_implementation</RootNamespace>
+    <StartupObject>csharp_console_implementation.Program</StartupObject>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+
+  <ItemGroup>
+	  <PackageReference Include="OrbitalShell-Kernel" Version="1.0.2">
+		  <ExcludeAssets>contentfiles</ExcludeAssets>
+	  </PackageReference>
+  </ItemGroup>
+
+</Project>
