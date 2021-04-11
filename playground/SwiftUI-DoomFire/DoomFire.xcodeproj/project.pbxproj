@@ -1,0 +1,373 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		B900112D261F5A7D00E3EB5F /* DoomFireApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B900112C261F5A7D00E3EB5F /* DoomFireApp.swift */; };
+		B900112F261F5A7D00E3EB5F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B900112E261F5A7D00E3EB5F /* ContentView.swift */; };
+		B9001131261F5A8000E3EB5F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B9001130261F5A8000E3EB5F /* Assets.xcassets */; };
+		B9001134261F5A8000E3EB5F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B9001133261F5A8000E3EB5F /* Preview Assets.xcassets */; };
+		B96F3C9D26210CDA00F01549 /* FireLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96F3C9C26210CDA00F01549 /* FireLogic.swift */; };
+		B96F3CA32621130A00F01549 /* ColorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96F3CA22621130A00F01549 /* ColorManager.swift */; };
+		B96F3CA726221B1800F01549 /* FireGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96F3CA626221B1800F01549 /* FireGridView.swift */; };
+		B96F3CB226223AB900F01549 /* ColorValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96F3CB126223AB900F01549 /* ColorValue.swift */; };
+		B96F3CB526223AD500F01549 /* colors.json in Resources */ = {isa = PBXBuildFile; fileRef = B96F3CB426223AD500F01549 /* colors.json */; };
+		B96F3CB826223D0D00F01549 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96F3CB726223D0D00F01549 /* Extensions.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		B9001129261F5A7D00E3EB5F /* DoomFire.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DoomFire.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B900112C261F5A7D00E3EB5F /* DoomFireApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoomFireApp.swift; sourceTree = "<group>"; };
+		B900112E261F5A7D00E3EB5F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		B9001130261F5A8000E3EB5F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B9001133261F5A8000E3EB5F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		B9001135261F5A8000E3EB5F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B96F3C9C26210CDA00F01549 /* FireLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireLogic.swift; sourceTree = "<group>"; };
+		B96F3CA22621130A00F01549 /* ColorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorManager.swift; sourceTree = "<group>"; };
+		B96F3CA626221B1800F01549 /* FireGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireGridView.swift; sourceTree = "<group>"; };
+		B96F3CB126223AB900F01549 /* ColorValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorValue.swift; sourceTree = "<group>"; };
+		B96F3CB426223AD500F01549 /* colors.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = colors.json; sourceTree = "<group>"; };
+		B96F3CB726223D0D00F01549 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		B9001126261F5A7D00E3EB5F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		B9001120261F5A7D00E3EB5F = {
+			isa = PBXGroup;
+			children = (
+				B900112B261F5A7D00E3EB5F /* DoomFire */,
+				B900112A261F5A7D00E3EB5F /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		B900112A261F5A7D00E3EB5F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B9001129261F5A7D00E3EB5F /* DoomFire.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B900112B261F5A7D00E3EB5F /* DoomFire */ = {
+			isa = PBXGroup;
+			children = (
+				B900112C261F5A7D00E3EB5F /* DoomFireApp.swift */,
+				B96F3CAD262232B100F01549 /* Views */,
+				B9001130261F5A8000E3EB5F /* Assets.xcassets */,
+				B9001135261F5A8000E3EB5F /* Info.plist */,
+				B9001132261F5A8000E3EB5F /* Preview Content */,
+				B96F3CAF262232C100F01549 /* Workers */,
+				B96F3CB426223AD500F01549 /* colors.json */,
+			);
+			path = DoomFire;
+			sourceTree = "<group>";
+		};
+		B9001132261F5A8000E3EB5F /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				B9001133261F5A8000E3EB5F /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		B96F3CAD262232B100F01549 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				B900112E261F5A7D00E3EB5F /* ContentView.swift */,
+				B96F3CA626221B1800F01549 /* FireGridView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		B96F3CAF262232C100F01549 /* Workers */ = {
+			isa = PBXGroup;
+			children = (
+				B96F3CB726223D0D00F01549 /* Extensions.swift */,
+				B96F3C9C26210CDA00F01549 /* FireLogic.swift */,
+				B96F3CA22621130A00F01549 /* ColorManager.swift */,
+				B96F3CB126223AB900F01549 /* ColorValue.swift */,
+			);
+			path = Workers;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		B9001128261F5A7D00E3EB5F /* DoomFire */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B9001138261F5A8000E3EB5F /* Build configuration list for PBXNativeTarget "DoomFire" */;
+			buildPhases = (
+				B9001125261F5A7D00E3EB5F /* Sources */,
+				B9001126261F5A7D00E3EB5F /* Frameworks */,
+				B9001127261F5A7D00E3EB5F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DoomFire;
+			productName = DoomFire;
+			productReference = B9001129261F5A7D00E3EB5F /* DoomFire.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		B9001121261F5A7D00E3EB5F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1240;
+				LastUpgradeCheck = 1240;
+				TargetAttributes = {
+					B9001128261F5A7D00E3EB5F = {
+						CreatedOnToolsVersion = 12.4;
+					};
+				};
+			};
+			buildConfigurationList = B9001124261F5A7D00E3EB5F /* Build configuration list for PBXProject "DoomFire" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = B9001120261F5A7D00E3EB5F;
+			productRefGroup = B900112A261F5A7D00E3EB5F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				B9001128261F5A7D00E3EB5F /* DoomFire */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		B9001127261F5A7D00E3EB5F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B96F3CB526223AD500F01549 /* colors.json in Resources */,
+				B9001134261F5A8000E3EB5F /* Preview Assets.xcassets in Resources */,
+				B9001131261F5A8000E3EB5F /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		B9001125261F5A7D00E3EB5F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B96F3CA726221B1800F01549 /* FireGridView.swift in Sources */,
+				B900112F261F5A7D00E3EB5F /* ContentView.swift in Sources */,
+				B900112D261F5A7D00E3EB5F /* DoomFireApp.swift in Sources */,
+				B96F3CA32621130A00F01549 /* ColorManager.swift in Sources */,
+				B96F3C9D26210CDA00F01549 /* FireLogic.swift in Sources */,
+				B96F3CB226223AB900F01549 /* ColorValue.swift in Sources */,
+				B96F3CB826223D0D00F01549 /* Extensions.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		B9001136261F5A8000E3EB5F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		B9001137261F5A8000E3EB5F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		B9001139261F5A8000E3EB5F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "\"DoomFire/Preview Content\"";
+				DEVELOPMENT_TEAM = 2D9YSKR59P;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = DoomFire/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "Adriano-Rodrigues-Vieira.DoomFire";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		B900113A261F5A8000E3EB5F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "\"DoomFire/Preview Content\"";
+				DEVELOPMENT_TEAM = 2D9YSKR59P;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = DoomFire/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "Adriano-Rodrigues-Vieira.DoomFire";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		B9001124261F5A7D00E3EB5F /* Build configuration list for PBXProject "DoomFire" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B9001136261F5A8000E3EB5F /* Debug */,
+				B9001137261F5A8000E3EB5F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B9001138261F5A8000E3EB5F /* Build configuration list for PBXNativeTarget "DoomFire" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B9001139261F5A8000E3EB5F /* Debug */,
+				B900113A261F5A8000E3EB5F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = B9001121261F5A7D00E3EB5F /* Project object */;
+}

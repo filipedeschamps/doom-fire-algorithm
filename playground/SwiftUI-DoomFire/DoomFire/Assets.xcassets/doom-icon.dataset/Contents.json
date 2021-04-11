@@ -1,0 +1,12 @@
+{
+  "data" : [
+    {
+      "filename" : "doom-logo.ico",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
