@@ -73,6 +73,7 @@ These people are making this repository **MORE THAN AWESOME**.
 - [Led matrix, with arduino](https://github.com/filipedeschamps/doom-fire-algorithm/tree/master/playground/doom-fire-matrix-led-arduino) ([@SamuelNunes](https://github.com/SamueldaCostaAraujoNunes))
 - [C# Console Implementation](https://github.com/filipedeschamps/doom-fire-algorithm/tree/master/playground/csharp-console-implementation) ([@franck-gaspoz](https://github.com/franck-gaspoz))
 - [Swift UI Version](https://github.com/filipedeschamps/doom-fire-algorithm/tree/master/playground/SwiftUI-DoomFire)([@AdrianoAntoniev](https://github.com/AdrianoAntoniev))
+- [Python version: fire-doom-simulator with interactive menu and color changing functionality](https://github.com/FranciscoCharles/doom-fire-simulator)([@FranciscoCharles](https://github.com/FranciscoCharles))
 
 ## Contributors
 
