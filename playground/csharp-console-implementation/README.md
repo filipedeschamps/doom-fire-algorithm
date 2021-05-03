@@ -26,13 +26,13 @@ a simple console application running the famous doom fire algorithm (C# ANSI ver
 
 compile with **dotnet**:
 ```shell
-> cd charp-console-implementation
+> cd csharp-console-implementation
 > dotnet build
 ```
 run the command:
 ```shell
 > cd bin/debug/netcoreapp3.1
-> charp-console-implementation.exe
+> csharp-console-implementation.exe
 ```
 <br>
 
