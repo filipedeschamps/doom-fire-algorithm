@@ -1,0 +1,63 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Doom_Fire/doom_fire.shader" type="Shader" id=1]
+[ext_resource path="res://pal.png" type="Texture" id=3]
+
+[sub_resource type="StreamTexture" id=4]
+flags = 2
+load_path = "res://.import/icon.png-487276ed1e3a0c39cad0279d744ee560.stex"
+
+[sub_resource type="ShaderMaterial" id=1]
+shader = ExtResource( 1 )
+shader_param/px = 10.0
+shader_param/doBottom = 1.0
+shader_param/palette = ExtResource( 3 )
+
+[sub_resource type="ViewportTexture" id=2]
+viewport_path = NodePath("Viewport")
+
+[sub_resource type="ViewportTexture" id=3]
+viewport_path = NodePath("Viewport")
+
+[node name="Control" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -32.0
+margin_top = -32.0
+margin_right = 32.0
+margin_bottom = 32.0
+texture = SubResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Viewport" type="Viewport" parent="."]
+size = Vector2( 1600, 900 )
+transparent_bg = true
+handle_input_locally = false
+usage = 0
+render_target_clear_mode = 2
+
+[node name="Sprite" type="Sprite" parent="Viewport"]
+material = SubResource( 1 )
+scale = Vector2( 4, 4 )
+texture = SubResource( 2 )
+
+[node name="Display" type="TextureRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = 0.00012207
+margin_bottom = 6.10352e-05
+texture = SubResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
