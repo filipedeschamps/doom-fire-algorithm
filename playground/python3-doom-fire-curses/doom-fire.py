@@ -91,19 +91,18 @@ def render_fire(stdscr):
     curses.curs_set(0)
 
     while True:
-        for i in range(fire_height):
-            calculate_fire_propagation()
+        calculate_fire_propagation()
 
-            for row in range(fire_height):
-                for column in range(fire_width):
-                    pixel_index = column + (fire_width * row)
-                    # fire_intensity = fire_pixels_array[pixel_index]
-                    fire_intensity_ascii = gradient_map[fire_pixels_array[pixel_index]]
-                    # stdscr.addstr(row, column, str(fire_intensity))
-                    stdscr.addstr(row, column, str(fire_intensity_ascii))
-                    stdscr.refresh()
+        for row in range(fire_height):
+            for column in range(fire_width):
+                pixel_index = column + (fire_width * row)
+                # fire_intensity = fire_pixels_array[pixel_index]
+                fire_intensity_ascii = gradient_map[fire_pixels_array[pixel_index]]
+                # stdscr.addstr(row, column, str(fire_intensity))
+                stdscr.addstr(row, column, str(fire_intensity_ascii))
+                stdscr.refresh()
 
-            time.sleep(.05)
+        time.sleep(.05)
 
 
 curses.wrapper(render_fire)
