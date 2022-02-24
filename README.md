@@ -75,6 +75,7 @@ These people are making this repository **MORE THAN AWESOME**.
 - [Swift UI Version](https://github.com/filipedeschamps/doom-fire-algorithm/tree/master/playground/SwiftUI-DoomFire)([@AdrianoAntoniev](https://github.com/AdrianoAntoniev))
 - [Python version: fire-doom-simulator with interactive menu and color changing functionality](https://github.com/FranciscoCharles/doom-fire-simulator)([@FranciscoCharles](https://github.com/FranciscoCharles))
 - [Godot Implementation with Shaders (Godot Engine)](https://github.com/filipedeschamps/doom-fire-algorithm/tree/master/playground/godot-shaders-doom-fire)([@RisingThumb](https://github.com/RisingThumb))
+- [Python Curses with ASCII characters version](https://github.com/filipedeschamps/doom-fire-algorithm/tree/master/playground/python3-doom-fire-curses)([@pserey](https://github.com/pserey))
 
 ## Contributors
 
