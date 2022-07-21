@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>DOOM Fire Effect</title>
+    <style>
+        body {
+    background-color: rgb(28, 23, 23);
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+h1 {
+    text-align: center;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 30px;
+    color: black;
+    text-shadow: 0px -1px 0px rgba(255, 255, 31, 0.4);
+    width: 230px;
+    margin: 18px auto;
+    background-color: #554d42;
+    border-radius: 5px;
+}
+
+#fireCanvas, h3, p, a {
+    margin: 8px;
+    text-align: center;
+    color: white;
+}
+
+button, input, footer {
+    margin: 5px auto;
+}
+
+table {
+    font-family: Arial, Helvetica, sans-serif;
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+td {
+    border: 1px solid black;
+    color: white;
+    width: 32px;
+    height: 32px;
+    font-size: 10px;
+    text-align: center;
+    vertical-align: center;
+    position: relative;
+    font-weight: bold;
+}
+
+td.pixel {
+    width: 7px;
+    height: 7px;
+    border: 0;
+}
+
+.pixel-Index {
+    font-size: 7px;
+    display: inline-block;
+    position: absolute;
+    top: 1px;
+    right: 1px;
+    color: #999;
+}
+
+/* Div's styles */
+
+section#controlsContainer {
+    margin: auto;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+div#controlBoxes {
+    display: flex;
+    flex-flow: wrap row;
+}
+
+div.controls {
+    border: 1px solid whitesmoke;
+    text-align: center;
+    width: 150px;
+    margin: 10px;
+    padding: 5px;
+    text-align: center;
+    vertical-align: auto;
+}
+    </style>
+</head>
+<body>
+    <header>
+    <h1>DOOM Fire Effect</h1>
+    <p><a href="https://github.com/filipedeschamps/doom-fire-algorithm">https://github.com/filipedeschamps/doom-fire-algorithm</a></p>
+    </header>
+
+    <section>
+        <div id="fireCanvas"></div>
+    </section>
+
+    <section id="controlsContainer">
+        <div id="controlBoxes">
+        <div class="controls" id="windEffect">
+            <h3>Wind Effect</h3>
+            <button id="leftWind" onclick="changeWindDirection(0)">To the left</button>
+            <button id="noWind" onclick="changeWindDirection(1)">No wind</button>
+            <button id="rightWind" onclick="changeWindDirection(2)">To the right</button>
+        </div>
+
+        <div class="controls" id="changeColor">
+            <h3>Change Fire Colors</h3>
+            <input type="range" name="hueInput" id="hueInput" value="0" min="0" max="360">
+        </div>
+
+        <div class="controls" id="fireControl">
+            <h3>Fire Control</h3>
+            <button onclick="destroyFireSource()">Min Fire</button>
+            <button onclick="createFireSource()">Max Fire</button>
+            <button onclick="decreaseFireSource()">-</button>
+            <button onclick="increaseFireSource()">+</button>
+        </div>
+        </div>
+        <button id="debug" onclick="toggleDebugMode()">Toggle Debug Mode</button>
+    </section>
+
+    <footer>
+        <p>I'm SO happy and proud of this project! :')</p>
+    </footer>
+
+    <script src="Fire.js"></script>
+</body>
+</html>
