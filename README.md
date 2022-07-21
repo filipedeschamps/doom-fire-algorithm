@@ -77,7 +77,7 @@ These people are making this repository **MORE THAN AWESOME**.
 - [Godot Implementation with Shaders (Godot Engine)](https://github.com/filipedeschamps/doom-fire-algorithm/tree/master/playground/godot-shaders-doom-fire)([@RisingThumb](https://github.com/RisingThumb))
 - [Python Curses with ASCII characters version](https://github.com/filipedeschamps/doom-fire-algorithm/tree/master/playground/python3-doom-fire-curses)([@pserey](https://github.com/pserey))
 - [Controllers RGB and scale in pure javascript ](https://github.com/filipedeschamps/doom-fire-algorithm/tree/master/playground/controllers-rgb-and-scale-in-pure-javascript)([@mak213k](https://github.com/mak213k))
-- [First implementation with an input to change fire color (using HSL)](https://github.com/BeatrizAguillera/doom-fire-algorithm/tree/master/playground/1st-implementation-with-tables-manual-color-changer) ([@BeatrizAguillera](https://github.com/BeatrizAguillera))
+- [First implementation with an input to change fire color (using HSL)](https://filipedeschamps.github.io/doom-fire-algorithm/playground/1st-implementation-with-tables-manual-color-changer) ([@BeatrizAguillera](https://github.com/BeatrizAguillera))
 
 ## Contributors
 
