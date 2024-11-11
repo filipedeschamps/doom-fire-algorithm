@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Doom Fire Effect</title>
+
+    <style type='text/css'>
+        /*
+        global
+        */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            box-sizing: border-box;
+        }
+
+        *:focus {
+            outline: none;
+        }
+
+        body {
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        canvas {
+            touch-action: none;
+        }
+
+    </style>
+
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.9/dat.gui.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/stats.js/r11/Stats.js'></script>
+    <script>
+
+        //---
+
+        'use strict';
+
+        //---
+
+        console.clear();
+
+        //---
+
+        let w = 0;
+        let h = 0;
+
+        let animationFrame = null;
+        let isTouchDevice = false;
+
+        const canvas = document.createElement( 'canvas' );
+        const context = canvas.getContext( '2d', { willReadFrequently: false, alpha: false } );
+
+        let imageData = null;
+        let data = null;
+
+        const center = { x: w / 2, y: h / 2 };
+
+        let pointerPos = { x: center.x, y: center.y };
+        let pointerPosSave = { x: pointerPos.x, y: pointerPos.y };
+        let pointerDownButton = -1;
+
+        //---
+
+        const FLAME_COLORS = [
+
+            255, 255, 255,
+            230, 230, 250,
+            255, 255, 0,
+            255, 215, 0,
+            255, 105, 180,
+            255, 99, 71,
+            72, 61, 139,
+            34, 34, 34,
+            26, 26, 26,
+            17, 17, 17,
+
+        ];
+
+        let flameColorDepth = 39;
+        let flameColorTable = createGradient( FLAME_COLORS, flameColorDepth );
+        let flameColorTableLength = Math.round( flameColorTable.length / 3 ) - 1;
+
+        let gridWidth = 0;
+        let gridHeight = 0;
+
+        let windStrength = 0;
+        let windDirection = 0;
+
+        let pixelSize = 2;
+        let pixelSizeSquared = pixelSize * pixelSize;
+        let pixelHolderLength = 0;
+        let pixelHolder = null;
+        let pixelBufferHolder = null;
+        let pixelSpreadFrom = null;
+        let pixelSpreadFromLengthPreCalc = 0;
+
+        const RANDOM_TABLE_SIZE = 512; // Power of 2
+        const RANDOM_TABLE_MASK = RANDOM_TABLE_SIZE - 1;
+        const randomTable = new Float32Array( RANDOM_TABLE_SIZE );
+        let randomIndex = 0;
+
+        let gui = null;
+        let stats = null;
+
+        //---
+
+        function init() {
+
+            isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;
+
+            //---
+
+            if ( isTouchDevice === true ) {
+
+                canvas.addEventListener( 'touchmove', cursorMoveHandler, false );
+                canvas.addEventListener( 'touchstart', cursorEnterHandler, false );
+                canvas.addEventListener( 'touchend', cursorLeaveHandler, false );
+                canvas.addEventListener( 'touchcancel ', cursorLeaveHandler, false );
+
+            } else {
+
+                canvas.addEventListener( 'pointermove', cursorMoveHandler, false );
+                canvas.addEventListener( 'pointerdown', cursorDownHandler, false );
+                canvas.addEventListener( 'pointerup', cursorUpHandler, false );
+                canvas.addEventListener( 'pointerenter', cursorEnterHandler, false );
+                canvas.addEventListener( 'pointerleave', cursorLeaveHandler, false );
+
+            }
+
+            //---
+
+            for ( let i = 0; i < RANDOM_TABLE_SIZE; i++ ) {
+
+                randomTable[ i ] = Math.random();
+
+            }
+
+            //---
+
+            stats = new Stats();
+            stats.domElement.style.position = 'absolute';
+
+            document.body.appendChild( stats.domElement );
+
+            //---
+
+            document.body.appendChild( canvas );
+
+            window.addEventListener( 'resize', onResize, false );
+
+            restart( true );
+
+        }
+
+        function onResize( event ) {
+            
+            restart();
+
+        }
+
+        function restart( explosion = false ) {
+
+            const innerWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+            const innerHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+
+            //---
+
+            w = innerWidth;
+            h = innerHeight;
+
+            //---
+
+            canvas.width = w;
+            canvas.height = h;
+
+            imageData = context.getImageData( 0, 0, w, h );
+            data = imageData.data;
+
+            //---
+            
+            center.x = w / 2;
+            center.y = h / 2;
+            
+            pointerPos.x = center.x;
+            pointerPos.y = center.y;
+
+            pointerPosSave.x = pointerPos.x / pixelSize | 0;
+            pointerPosSave.y = pointerPos.y / pixelSize | 0;
+
+            //---
+
+            gridWidth = Math.floor( w / pixelSize );
+            gridHeight = Math.floor( h / pixelSize );
+
+            //---
+
+            setBackground();
+            initFire( explosion );
+
+            //---
+            
+            if ( animationFrame != null ) {
+            
+                cancelAnimFrame( animationFrame );
+            
+            }
+            
+            render();
+
+        }
+
+        //---
+
+        function initGUI() {
+
+            const updatePixelsize = () => {
+                
+                pixelSize = guiSetting[ 'Pixelsize' ];
+                pixelSizeSquared = pixelSize * pixelSize;
+
+                restart( false );
+
+            };
+
+            const updateWindStrength = () => {
+                
+                windStrength = guiSetting[ 'Wind strength' ];
+
+                spreadFrom();
+
+            };
+
+            const updateWindDirection = () => {
+                
+                windDirection = guiSetting[ 'Wind direction' ];
+
+                spreadFrom();
+
+            };
+
+            const updateFlameColorDepth = () => {
+                
+                flameColorDepth = guiSetting[ 'Color depth' ];
+                flameColorTable = createGradient( FLAME_COLORS, flameColorDepth );
+                flameColorTableLength = Math.round( flameColorTable.length / 3 ) - 1;
+
+                setBackground();
+
+            };
+
+            const updateColorGradient = ( colorIndex ) => {
+
+                const newColorArray = guiSetting[ `Color ${colorIndex + 1}` ];
+
+                FLAME_COLORS[ colorIndex * 3 ]     = Math.round( newColorArray[ 0 ] );
+                FLAME_COLORS[ colorIndex * 3 + 1 ] = Math.round( newColorArray[ 1 ] );
+                FLAME_COLORS[ colorIndex * 3 + 2 ] = Math.round( newColorArray[ 2 ] );
+
+                flameColorTable = createGradient( FLAME_COLORS, flameColorDepth );
+
+                setBackground();
+
+            };
+
+            const linkTo = () => {
+
+                window.open( 'https://x.com/niklaswebdev', '_parent' );
+
+            };
+
+            const guiSetting = {
+
+                'Pixelsize': pixelSize,
+                'Wind strength': windStrength,
+                'Wind direction': windDirection,
+                'Color depth': flameColorDepth,
+                'Color 1':  [ FLAME_COLORS[ 0 ], FLAME_COLORS[ 1 ], FLAME_COLORS[ 2 ] ],
+                'Color 2':  [ FLAME_COLORS[ 3 ], FLAME_COLORS[ 4 ], FLAME_COLORS[ 5 ] ],
+                'Color 3':  [ FLAME_COLORS[ 6 ], FLAME_COLORS[ 7 ], FLAME_COLORS[ 8 ] ],
+                'Color 4':  [ FLAME_COLORS[ 9 ], FLAME_COLORS[ 10 ], FLAME_COLORS[ 11 ] ],
+                'Color 5':  [ FLAME_COLORS[ 12 ], FLAME_COLORS[ 13 ], FLAME_COLORS[ 14 ] ],
+                'Color 6':  [ FLAME_COLORS[ 15 ], FLAME_COLORS[ 16 ], FLAME_COLORS[ 17 ] ],
+                'Color 7':  [ FLAME_COLORS[ 18 ], FLAME_COLORS[ 19 ], FLAME_COLORS[ 20 ] ],
+                'Color 8':  [ FLAME_COLORS[ 21 ], FLAME_COLORS[ 22 ], FLAME_COLORS[ 23 ] ],
+                'Color 9':  [ FLAME_COLORS[ 24 ], FLAME_COLORS[ 25 ], FLAME_COLORS[ 26 ] ],
+                'Color 10': [ FLAME_COLORS[ 27 ], FLAME_COLORS[ 28 ], FLAME_COLORS[ 29 ] ],
+                '@niklaswebdev': linkTo
+
+            };
+
+            gui = new dat.GUI();
+            gui.add( guiSetting, 'Pixelsize' ).min( 1 ).max( 10 ).step( 1 ).onChange( updatePixelsize );
+            gui.add( guiSetting, 'Wind strength' ).min( 0 ).max( 50 ).step( 1 ).onChange( updateWindStrength );
+            gui.add( guiSetting, 'Wind direction' ).min( -1 ).max( 1 ).step( 1 ).onChange( updateWindDirection );
+            gui.add( guiSetting, 'Color depth' ).min( FLAME_COLORS.length ).max( FLAME_COLORS.length / 3 * 10 ).step( 1 ).onChange( updateFlameColorDepth );
+            
+            const folderColorGradient = gui.addFolder( 'Color gradient' );
+
+            folderColorGradient.addColor( guiSetting, 'Color 1' ).onChange( updateColorGradient.bind( this, 0 ) );
+            folderColorGradient.addColor( guiSetting, 'Color 2' ).onChange( updateColorGradient.bind( this, 1 ) );
+            folderColorGradient.addColor( guiSetting, 'Color 3' ).onChange( updateColorGradient.bind( this, 2 ) );
+            folderColorGradient.addColor( guiSetting, 'Color 4' ).onChange( updateColorGradient.bind( this, 3 ) );
+            folderColorGradient.addColor( guiSetting, 'Color 5' ).onChange( updateColorGradient.bind( this, 4 ) );
+            folderColorGradient.addColor( guiSetting, 'Color 6' ).onChange( updateColorGradient.bind( this, 5 ) );
+            folderColorGradient.addColor( guiSetting, 'Color 7' ).onChange( updateColorGradient.bind( this, 6 ) );
+            folderColorGradient.addColor( guiSetting, 'Color 8' ).onChange( updateColorGradient.bind( this, 7 ) );
+            folderColorGradient.addColor( guiSetting, 'Color 9' ).onChange( updateColorGradient.bind( this, 8 ) );
+            folderColorGradient.addColor( guiSetting, 'Color 10' ).onChange( updateColorGradient.bind( this, 9 ) );
+
+            gui.add( guiSetting, '@niklaswebdev' );
+            gui.close();
+
+        }
+
+        //---
+
+        function setBackground() {
+
+            const fCTL = flameColorTable.length;
+
+            for ( let i = 0, l = data.length; i < l; i += 4 ) {
+
+                data[ i ]     = flameColorTable[ fCTL - 3 ];
+                data[ i + 1 ] = flameColorTable[ fCTL - 2 ];
+                data[ i + 2 ] = flameColorTable[ fCTL - 1 ];
+
+            }
+
+        }
+
+        function initFire( explosion = false ) {
+
+            pixelHolderLength = gridWidth * gridHeight;
+            console.log( pixelHolderLength );
+            pixelHolder = new Uint8Array( pixelHolderLength );
+            pixelBufferHolder = new Uint8Array( pixelHolderLength );
+
+            spreadFrom();
+
+            for ( let y = 0; y < h; y++ ) {
+
+                for ( let x = 0; x < w; x++ ) {
+
+                    const index = y * gridWidth + x;
+
+                    if ( y === gridHeight - 1 && explosion ) {
+
+                        pixelHolder[ index ] = 0;
+
+                    } else {
+
+                        pixelHolder[ index ] = flameColorTableLength;
+
+                    }
+
+                }
+
+            }
+
+        }
+
+        function spreadFrom() {
+
+            const right = windDirection > 0 ? [ 1, 1, ...Array( Math.max( windStrength - 2, 0 ) ).fill( 1 ) ] : [ 1, 1 ];
+            const left = windDirection < 0 ? [ -1, -1, ...Array( Math.max( windStrength - 2, 0 ) ).fill( -1 ) ] : [ -1, -1 ];
+
+            pixelSpreadFrom = new Int16Array( [
+
+                gridWidth, gridWidth, gridWidth, gridWidth, gridWidth, gridWidth, gridWidth, gridWidth, gridWidth, gridWidth, // bottom
+                ...right, // right
+                ...left, // left
+                -gridWidth, // top
+
+            ] );
+
+            pixelSpreadFromLengthPreCalc = pixelSpreadFrom.length - 1;
+
+        }
+
+        //---
+
+        function getRandomInt( min, max ) {
+
+            randomIndex = ( randomIndex + 1 ) & RANDOM_TABLE_MASK;
+
+            return ( ( randomTable[ randomIndex ] * ( max - min + 1 ) ) | 0 ) + min;
+
+        }
+
+        function interpolate( start, end, t ) {
+                
+            return Math.round( start + ( end - start ) * t );
+
+        }
+
+        function createGradient( colors, flameColorDepth ) {
+
+            const colorArray = new Uint8Array( flameColorDepth * 3 );
+
+            const segments = colors.length / 3 - 1;
+            const colorsPerSegment = Math.floor( flameColorDepth / segments );
+
+            let index = 0;
+
+            for ( let s = 0; s < segments; s++ ) {
+
+                const startColor = colors.slice( s * 3, s * 3 + 3 );
+                const endColor = colors.slice( ( s + 1 ) * 3, ( s + 1 ) * 3 + 3 );
+
+                for ( let i = 0; i < colorsPerSegment; i++ ) {
+
+                    const t = i / colorsPerSegment;
+
+                    colorArray[ index ]    = interpolate( startColor[ 0 ], endColor[ 0 ], t ); // R
+                    colorArray[ index + 1] = interpolate( startColor[ 1 ], endColor[ 1 ], t ); // G
+                    colorArray[ index + 2] = interpolate( startColor[ 2 ], endColor[ 2 ], t ); // B
+
+                    index += 3;
+
+                }
+
+            }
+
+            const lastColor = colors.slice( -3 );
+
+            while ( index < colorArray.length ) {
+
+                colorArray[ index ]     = lastColor[ 0 ];
+                colorArray[ index + 1 ] = lastColor[ 1 ];
+                colorArray[ index + 2 ] = lastColor[ 2 ];
+
+                index += 3;
+
+            }
+
+            return colorArray;
+
+        }
+
+        //---
+
+        function cursorDownHandler( event ) {
+
+            pointerDownButton = event.button;
+
+        }
+
+        function cursorUpHandler( event ) {
+
+            pointerDownButton = -1;
+
+        }
+
+        function cursorEnterHandler( event ) {
+
+            const rect = canvas.getBoundingClientRect();
+            const position = { x: 0, y: 0 };
+
+            if ( event.type === 'mouseenter' || event.type === 'pointerenter' ) {
+
+                position.x = event.pageX - rect.left; //event.clientX
+                position.y = event.pageY - rect.top; //event.clientY
+
+            } else if ( event.type === 'touchstart' ) {
+
+                position.x = event.touches[ 0 ].pageX - rect.left;
+                position.y = event.touches[ 0 ].pageY - rect.top;
+
+            }
+
+            pointerPosSave.x = position.x / pixelSize | 0;
+            pointerPosSave.y = position.y / pixelSize | 0;
+
+        }
+
+        function cursorLeaveHandler( event ) {
+
+            pointerPos.x = center.x;
+            pointerPos.y = center.y;
+            pointerPosSave.x = pointerPos.x / pixelSize | 0;
+            pointerPosSave.y = pointerPos.y / pixelSize | 0;
+            pointerDownButton = -1;
+
+        }
+
+        function cursorMoveHandler( event ) {
+
+            pointerPos = getCursorPosition( canvas, event );
+
+        }
+
+        function getCursorPosition( element, event ) {
+
+            const rect = element.getBoundingClientRect();
+            const position = { x: 0, y: 0 };
+
+            if ( event.type === 'mousemove' || event.type === 'pointermove' ) {
+
+                position.x = event.pageX - rect.left; //event.clientX
+                position.y = event.pageY - rect.top; //event.clientY
+
+            } else if ( event.type === 'touchmove' ) {
+
+                position.x = event.touches[ 0 ].pageX - rect.left;
+                position.y = event.touches[ 0 ].pageY - rect.top;
+
+            }
+
+            return position;
+
+        }
+
+        //---
+
+        function trace() {
+
+            const px = pointerPos.x / pixelSize | 0;
+            const py = pointerPos.y / pixelSize | 0;
+
+            const dx = px - pointerPosSave.x;
+            const dy = py - pointerPosSave.y;
+
+            if ( dx === 0 && dy === 0 ) {
+
+                const index = py * gridWidth + px;
+
+                if ( index >= 0 && index < pixelHolderLength ) {
+
+                    pixelHolder[ index ] = 0;
+
+                }
+
+            } else {
+
+                const distanceSquared = dx * dx + dy * dy;
+                const stepCount = Math.ceil( distanceSquared / pixelSizeSquared );
+
+                for ( let step = 0; step <= stepCount; step++ ) {
+
+                    const t = step / stepCount;
+
+                    const interpolatedX = ( px + t * dx ) | 0;
+                    const interpolatedY = ( py + t * dy ) | 0;
+
+                    const index = interpolatedY * gridWidth + interpolatedX;
+
+                    pixelHolder[ index ] = 0;
+
+                }
+
+            }
+
+            pointerPosSave.x = px;
+            pointerPosSave.y = py;
+
+        }
+
+        function draw() {
+
+            for ( let i = 0; i < pixelHolderLength; i++ ) {
+
+                let colorIndex = pixelHolder[ i ];
+
+                const direction = pixelSpreadFrom[ getRandomInt( 0, pixelSpreadFromLengthPreCalc ) ];
+
+                const neighborIndex = i + direction;
+                const neighborColorIndex = pixelHolder[ neighborIndex ];
+
+                if ( neighborColorIndex < colorIndex ) {
+
+                    if ( pointerDownButton === -1 ) {
+
+                        colorIndex = neighborColorIndex + getRandomInt( -1, 4 );
+
+                    } else {
+
+                        colorIndex = neighborColorIndex + getRandomInt( -1, 3 );
+
+                    }
+
+                } else {
+
+                    colorIndex++;
+
+                }
+
+                if ( colorIndex > flameColorTableLength ) {
+
+                    colorIndex = flameColorTableLength;
+
+                } 
+
+                if ( colorIndex < 0 ) {
+
+                    colorIndex = 0;
+
+                }
+
+                //---
+
+                pixelBufferHolder[ i ] = colorIndex;
+
+            }
+
+            for ( let i = 0; i < pixelHolderLength; i++ ) {
+
+                const colorIndex = pixelHolder[ i ];
+
+                if ( colorIndex < flameColorTableLength ) {
+
+                    if ( pixelSize > 0 ) {
+
+                        const gridY = ( i / gridWidth ) | 0;
+                        const gridX = i % gridWidth;
+
+                        for ( let offsetY = 0; offsetY < pixelSize; offsetY++ ) {
+
+                            for ( let offsetX = 0; offsetX < pixelSize; offsetX++ ) {
+                                
+                                const pixelIndex = ( ( gridY * pixelSize + offsetY ) * w + ( gridX * pixelSize + offsetX ) ) * 4;
+
+                                data[ pixelIndex ]     = flameColorTable[ colorIndex * 3 ];     // R
+                                data[ pixelIndex + 1 ] = flameColorTable[ colorIndex * 3 + 1 ]; // G
+                                data[ pixelIndex + 2 ] = flameColorTable[ colorIndex * 3 + 2 ]; // B
+
+                            }
+
+                        }
+
+                    } else {
+
+                        const pixelIndex = i * 4;
+
+                        data[ pixelIndex ]     = flameColorTable[ colorIndex * 3 ];     // R
+                        data[ pixelIndex + 1 ] = flameColorTable[ colorIndex * 3 + 1 ]; // G
+                        data[ pixelIndex + 2 ] = flameColorTable[ colorIndex * 3 + 2 ]; // B
+
+                    }
+
+                }
+
+                pixelHolder[ i ] = pixelBufferHolder[ i ];
+
+            }
+
+        }
+
+        //---
+
+        function render( timestamp ) {
+
+            trace();
+            draw();
+
+            //---
+
+            context.putImageData( imageData, 0, 0 );
+
+            //---
+
+            stats.update();
+
+            //---
+
+            animationFrame = requestAnimFrame( render );
+
+        }
+
+        window.requestAnimFrame = ( () => {
+
+            return  window.requestAnimationFrame       ||
+                    window.webkitRequestAnimationFrame ||
+                    window.mozRequestAnimationFrame    ||
+                    window.msRequestAnimationFrame;
+
+        } )();
+
+        window.cancelAnimFrame = ( () => {
+
+            return  window.cancelAnimationFrame       ||
+                    window.mozCancelAnimationFrame;
+
+        } )();
+
+        //---
+
+        document.addEventListener( 'DOMContentLoaded', () => {
+
+            init();
+            initGUI();
+
+        } );
+
+    </script>
+
+</head>
+
+    <body>
+
+        
+
+    </body>
+
+</html>
