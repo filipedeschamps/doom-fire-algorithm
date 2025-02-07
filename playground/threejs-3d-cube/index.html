@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>3D Fire Simulation - voxels, not pixels!</title>
+    <style>
+      body {
+        margin: 0;
+        overflow: hidden;
+      }
+    </style>
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://threejs.org/build/three.module.js",
+          "three/examples/jsm/controls/OrbitControls.js": "https://threejs.org/examples/jsm/controls/OrbitControls.js"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <script type="module">
+      import * as THREE from 'three';
+      import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+
+      // Parameters
+      const GRID_SIZE = 20;
+      const voxelSize = 1;
+      const maxIntensity = 1.0;
+      const decayFactor = 0.1;
+
+      // Fire Palette
+      const fireColorsPalette = [
+        { r: 7,   g: 7,   b: 7 },
+        { r: 31,  g: 7,   b: 7 },
+        { r: 47,  g: 15,  b: 7 },
+        { r: 71,  g: 15,  b: 7 },
+        { r: 87,  g: 23,  b: 7 },
+        { r: 103, g: 31,  b: 7 },
+        { r: 119, g: 31,  b: 7 },
+        { r: 143, g: 39,  b: 7 },
+        { r: 159, g: 47,  b: 7 },
+        { r: 175, g: 63,  b: 7 },
+        { r: 191, g: 71,  b: 7 },
+        { r: 199, g: 71,  b: 7 },
+        { r: 223, g: 79,  b: 7 },
+        { r: 223, g: 87,  b: 7 },
+        { r: 223, g: 87,  b: 7 },
+        { r: 215, g: 95,  b: 7 },
+        { r: 215, g: 95,  b: 7 },
+        { r: 215, g: 103, b: 15 },
+        { r: 207, g: 111, b: 15 },
+        { r: 207, g: 119, b: 15 },
+        { r: 207, g: 127, b: 15 },
+        { r: 207, g: 135, b: 23 },
+        { r: 199, g: 135, b: 23 },
+        { r: 199, g: 143, b: 23 },
+        { r: 199, g: 151, b: 31 },
+        { r: 191, g: 159, b: 31 },
+        { r: 191, g: 159, b: 31 },
+        { r: 191, g: 167, b: 39 },
+        { r: 191, g: 167, b: 39 },
+        { r: 191, g: 175, b: 47 },
+        { r: 183, g: 175, b: 47 },
+        { r: 183, g: 183, b: 47 },
+        { r: 183, g: 183, b: 55 },
+        { r: 207, g: 207, b: 111 },
+        { r: 223, g: 223, b: 159 },
+        { r: 239, g: 239, b: 199 },
+        { r: 255, g: 255, b: 255 }
+      ];
+
+      function intensityToColor(intensity) {
+        const index = Math.floor(intensity * (fireColorsPalette.length - 1));
+        const color = fireColorsPalette[index];
+        return new THREE.Color(color.r / 255, color.g / 255, color.b / 255);
+      }
+
+      // 3D pixel? Volumetric pixel? -> Voxel
+
+      // Fire Grid, initial state
+      // [y][z][x], with y=vertical. Fire source at bottom (y=0).
+      let fireGrid = [];
+      for (let y = 0; y < GRID_SIZE; y++) {
+        fireGrid[y] = [];
+        for (let z = 0; z < GRID_SIZE; z++) {
+          fireGrid[y][z] = [];
+          for (let x = 0; x < GRID_SIZE; x++) {
+            fireGrid[y][z][x] = 0;
+          }
+        }
+      }
+      // Ignite the bottom layer
+      for (let z = 0; z < GRID_SIZE; z++) {
+        for (let x = 0; x < GRID_SIZE; x++) {
+          fireGrid[0][z][x] = maxIntensity;
+        }
+      }
+
+      // Three.js Scene Setup
+      const scene = new THREE.Scene();
+
+      // Create an Orthographic Camera
+      // ...fairly large "d" so the cube appears big.
+      // It is needed to adjust “d” to zoom in/out further:
+      let d = 30; // bigger 'd' -> more zoomed out in orthographic
+      let aspect = window.innerWidth / window.innerHeight;
+
+      const camera = new THREE.OrthographicCamera(
+        -d * aspect,   // left
+         d * aspect,   // right
+         d,            // top
+        -d,            // bottom
+        1, 1000        // near, far
+      );
+
+      // Position the camera isometrically
+      camera.position.set(d, d, d);
+      // Aim at the center of our grid
+      const center = new THREE.Vector3(GRID_SIZE / 2, GRID_SIZE / 2, GRID_SIZE / 2);
+      camera.lookAt(center);
+
+      // Create WebGL Renderer
+      const renderer = new THREE.WebGLRenderer({ antialias: true });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      document.body.appendChild(renderer.domElement);
+
+      // Controls (OrbitControls let it rotate/zoom, you may see perspective changes if you rotate)
+      const controls = new OrbitControls(camera, renderer.domElement);
+      controls.enableDamping = true;
+      controls.dampingFactor = 0.25;
+      controls.enableZoom = true; // Disable if you want a fixed isometric
+
+      // Create Voxels
+      const voxelGroup = new THREE.Group();
+      scene.add(voxelGroup);
+
+      let voxels = [];
+      for (let y = 0; y < GRID_SIZE; y++) {
+        voxels[y] = [];
+        for (let z = 0; z < GRID_SIZE; z++) {
+          voxels[y][z] = [];
+          for (let x = 0; x < GRID_SIZE; x++) {
+            const geometry = new THREE.BoxGeometry(
+              voxelSize * 0.9,
+              voxelSize * 0.9,
+              voxelSize * 0.9
+            );
+            const material = new THREE.MeshBasicMaterial({ color: 0x000000 });
+            const voxel = new THREE.Mesh(geometry, material);
+            voxel.position.set(x * voxelSize, y * voxelSize, z * voxelSize);
+            voxelGroup.add(voxel);
+            voxels[y][z][x] = voxel;
+          }
+        }
+      };
+
+      // Fire Simulation
+      function updateFire() {
+        const newFireGrid = [];
+        for (let y = 0; y < GRID_SIZE; y++) {
+          newFireGrid[y] = [];
+          for (let z = 0; z < GRID_SIZE; z++) {
+            newFireGrid[y][z] = [];
+            for (let x = 0; x < GRID_SIZE; x++) {
+              newFireGrid[y][z][x] = fireGrid[y][z][x];
+            }
+          }
+        }
+
+        // Fire propagates upward (from y=1..GRID_SIZE-1), using intensities from the layer below
+        for (let y = 1; y < GRID_SIZE; y++) {
+          for (let z = 0; z < GRID_SIZE; z++) {
+            for (let x = 0; x < GRID_SIZE; x++) {
+              let sum = 0;
+              let count = 0;
+              for (let dz = -1; dz <= 1; dz++) {
+                for (let dx = -1; dx <= 1; dx++) {
+                  const nz = z + dz;
+                  const nx = x + dx;
+                  if (nx >= 0 && nx < GRID_SIZE && nz >= 0 && nz < GRID_SIZE) {
+                    sum += fireGrid[y - 1][nz][nx];
+                    count++;
+                  }
+                }
+              }
+              const avg = sum / count;
+              const decay = Math.random() * decayFactor;
+              let newIntensity = avg - decay;
+              newIntensity = Math.max(newIntensity, 0);
+              newFireGrid[y][z][x] = newIntensity;
+            }
+          }
+        }
+
+        // Keep bottom layer ignited
+        for (let z = 0; z < GRID_SIZE; z++) {
+          for (let x = 0; x < GRID_SIZE; x++) {
+            newFireGrid[0][z][x] = maxIntensity;
+          }
+        }
+
+        fireGrid = newFireGrid;
+      }
+
+      // Update Voxels
+      // If you want to hide the darkest voxels up top, pick a threshold that only shows brighter colors
+      const visibleThreshold = 5; // If paletteIndex < 5, hide voxel
+      function updateVoxels() {
+        for (let y = 0; y < GRID_SIZE; y++) {
+          for (let z = 0; z < GRID_SIZE; z++) {
+            for (let x = 0; x < GRID_SIZE; x++) {
+              const intensity = fireGrid[y][z][x];
+              const paletteIndex = Math.floor(intensity * (fireColorsPalette.length - 1));
+
+              if (paletteIndex < visibleThreshold) {
+                // Hide the darkest voxels
+                voxels[y][z][x].visible = false;
+              } else {
+                voxels[y][z][x].visible = true;
+                voxels[y][z][x].material.color.set(intensityToColor(intensity));
+              }
+            }
+          }
+        }
+      }
+
+      // Animation Loop
+      function animate() {
+        requestAnimationFrame(animate);
+        updateFire();
+        updateVoxels();
+        controls.update();
+        renderer.render(scene, camera);
+      }
+      animate();
+
+      // Resize Handling
+      window.addEventListener('resize', () => {
+        aspect = window.innerWidth / window.innerHeight;
+        camera.left = -d * aspect;
+        camera.right = d * aspect;
+        camera.top = d;
+        camera.bottom = -d;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      });
+    </script>
+  </body>
+</html>
