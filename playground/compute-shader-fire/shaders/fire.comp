@@ -1,0 +1,96 @@
+#version 310 es
+
+/*
+    OpenGL compute shader created by Gabriel Henrique Pereira Soares (https://github.com/ghsoares).
+    uses same algorithm logic from Filipe Deschamps's video (https://www.youtube.com/watch?v=fxm8cadCqbs),
+The only difference is that the point coordinate is given from the shader itself (gl_GlobalInvocationID.xy).
+    The main aim to use Compute Shader is to transfer all the algorithm logic to GPU, because the GPU.
+processes more tasks than CPU, so it makes faster to process the logic and then render the result on screen,
+this means that you can create a high-resolution fire grid without too many performance lose.
+*/
+
+layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
+
+layout(std430, binding = 0) buffer SSBO1 {
+    float grid[];
+};
+
+layout(std430, binding = 1) buffer SSBO3 {
+    float cooling_map[];
+};
+
+uniform float cool_factor;
+uniform float time;
+uniform float wind_speed;
+uniform float base_fire_heat;
+uniform vec4 secondary_fire_source;
+
+// Wraps value between a range without clamping (loop value)
+int wrapi(int x, int x_min, int x_max) {
+    return (((x - x_min) % (x_max - x_min)) + (x_max - x_min)) % (x_max - x_min) + x_min;
+}
+
+// Get decay from cooling map at pixel with offset
+float getDecay(ivec2 pixel, vec2 offset) {
+    int size_x = int(grid[0]);
+    int size_y = int(grid[1]);
+
+    ivec2 dPixel = pixel + ivec2(offset);
+
+    dPixel.x = dPixel.x % size_x;
+    dPixel.y = dPixel.y % size_y;
+
+    int i = dPixel.x + dPixel.y * size_x;
+
+    return cooling_map[i];
+}
+
+// Gets grid pixel, offsets two because the first two elements from grid is the grid size
+int idx(int x, int y) {
+    int size_x = int(grid[0]);
+
+    if (x <= 1) {
+        if (y == 0) x = 2;
+    } 
+
+    return 2 + x + y * size_x;
+}
+
+// Propagates fire
+void propagation() {
+    int size_x = int(grid[0]);
+    int size_y = int(grid[1]);
+
+    ivec2 pos = ivec2(gl_GlobalInvocationID.xy);
+
+    if (wind_speed < 0.0) {
+        pos.x = (size_x - 1) - pos.x;
+    }
+
+    int i = idx(pos.x, pos.y);
+
+    if (pos.y == size_y - 1) {
+        grid[i] = base_fire_heat;
+    } else {
+        int bellow_idx = idx(pos.x, pos.y + 1);
+
+        float cool = getDecay(pos, vec2(time * abs(wind_speed), time));
+
+        int thisX = pos.x + int(wind_speed * cool);
+        thisX = (thisX + size_x) % size_x;
+        int thisI = idx(thisX, pos.y);
+        grid[thisI] = grid[bellow_idx] * (1.0 - cool_factor * cool);
+
+        float dist_source = 1.0 - clamp(distance(vec2(pos), vec2(secondary_fire_source.x, secondary_fire_source.y)) / secondary_fire_source.z, 0.0, 1.0);
+        dist_source = round(dist_source);
+        grid[i] += dist_source * secondary_fire_source.w;
+    }
+}
+
+// Main program
+void main() {
+    int size_x = int(grid[0]);
+    int size_y = int(grid[1]);
+
+    propagation();
+}

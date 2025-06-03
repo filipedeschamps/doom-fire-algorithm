@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no" />
+    <meta name="google" content="notranslate" />
+    <title>Compute Shaders</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="./js/perlin.js"></script>
+</head>
+
+<body>
+    <div id="contents">
+        <div id="error" class="hidden">
+            <h2>WebGL 2.0 Compute not available</h2>
+            <p>
+                Make sure you are on a system with WebGL 2.0 Compute enabled.
+                Windows Google Chrome Canary or <a
+                    href="https://www.microsoftedgeinsider.com/en-us/download/?platform=win10">Microsoft Edge Insider
+                    Channels</a> with Command Line Switches:
+                "--enable-webgl2-compute-context", "--use-angle=gl" and "--use-cmd-decoder=passthrough". Be aware that
+                Compute Shader is an experimental feature.
+            </p>
+        </div>
+        <div id="experiment" class="hidden">
+            <h1>Compute Shader Doom Fire</h1>
+            <a href="https://github.com/filipedeschamps/doom-fire-algorithm">https://github.com/filipedeschamps/doom-fire-algorithm</a>
+            <div id="wrapper">
+                <div id="picker-submit">
+                    <span id="color-picker">
+                        <span id="offset">offset: 0%</span>
+                        <div id="color"></div>
+                        <span class="color-option" id="color-r">
+                            <label>Red: </label><input type="range"min="0" max="255" step="1"><span>0</span>
+                        </span>
+                        <span class="color-option" id="color-g">
+                            <label>Green: </label><input type="range" min="0" max="255" step="1"><span>0</span>
+                        </span>
+                        <span class="color-option" id="color-b">
+                            <label>Blue: </label><input type="range" min="0" max="255" step="1"><span>0</span>
+                        </span>
+                    </span>
+                    <button id="update">Update Fire Gradient</button>
+                </div>
+                <span id="gradient-slider">
+                </span>
+                <canvas id="canvas"></canvas>
+            </div>
+            <h2 id="fps">elapsed computation time: </h2>
+            <span class="option">
+                <span>Base heat:</span><input type="range" id="base-heat" min="0" max="2" step="0.01">
+            </span>
+            <span class="option">
+                <span>Cool factor:</span><input type="range" id="cool-factor" min="0.01" max="0.9" step="0.01">
+            </span>
+            <span class="option">
+                <span>Wind speed:</span><input type="range" id="wind-speed" min="-4" max="4" step="0.1">
+            </span>
+            <table id="teste-table"></table>
+        </div>
+    </div>
+    <script src="./js/script.js"></script>
+</body>
+
+</html>

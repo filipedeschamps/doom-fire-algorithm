@@ -1,0 +1,164 @@
+body, html, #contents {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    font-family: sans-serif;
+    background-color: #54391B;
+    color: white;
+    user-select: none;
+}
+
+a {
+    color: white;
+}
+
+#experiment {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#fps {
+    margin-top: 8px;
+}
+
+.option {
+    margin-top: 16px;
+    display: flex;
+    width: 256px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+table {
+    border-spacing: 0;
+}
+
+td {
+    width: 2px;
+    height: 2px;
+}
+
+#canvas {
+    image-rendering: pixelated;
+    width: 512px;
+    height: 512px;
+}
+
+#error {
+    margin: 32px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+h2 {
+    margin: 0;
+}
+
+#wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+#color-picker {
+    display: flex;
+    flex-direction: column;
+    margin-right: 64px;
+    background-color: white;
+    color: black;
+    padding: 16px;
+    border-radius: 8px;
+    justify-content: space-between
+}
+
+#color {
+    height: 32px;
+    background-color: black;
+    border-radius: 6px;
+    margin: 16px 0;
+}
+
+.color-option {
+    width: 224px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.color-option:not(:last-child) {
+    margin-bottom: 12px;
+}
+
+#gradient-slider {
+    display: block;
+    position: relative;
+    height: 256px;
+    width: 8px;
+    background: white;
+    margin-right: 16px;
+}
+
+.gradient-step {
+    outline: none;
+    position: absolute;
+    height: 16px;
+    width: 256px;
+    margin: 0;
+    -webkit-appearance: none;
+    pointer-events: none;
+    background: transparent;
+    bottom: 0;
+    left: 150%;
+    transform-origin: 0% 100%;
+    transform: rotate(-90deg) translateY(-1%);
+    z-index: 2;
+}
+
+.gradient-step::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 10px;
+    height: 16px;
+    border-radius: 1px;
+    background-color: white;
+    pointer-events: all;
+    cursor: pointer;
+    border: 1px solid black;
+}
+
+.gradient-step.focused::-webkit-slider-thumb {
+    width: 14px;
+    height: 20px;
+}
+
+.gradient-step::-webkit-slider-runnable-track {
+    background: transparent; 
+}
+
+#update {
+    font-size: 24px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    border: 0;
+    background-color: rgb(145, 255, 191);
+    margin-top: 16px;
+    outline: none;
+    cursor: pointer;
+}
+
+#update:hover {
+    background-color: rgb(177, 255, 225);
+}
+
+#update:active {
+    background-color: rgb(48, 114, 100);
+}
