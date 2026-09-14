@@ -1,0 +1,176 @@
+initFire(Int[] fire, Int width, Int height, Int maxIntensity) {
+    for (var i = 0; i < width * height; i++) {
+        fire[i] = 0
+    }
+    for (var x = 0; x < width; x++) {
+        fire[(height - 1) * width + x] = maxIntensity
+    }
+}
+
+spreadFire(Int[] fire, Int width, Int height, Int src) {
+    var x = src % width
+    var y = src / width
+    var pixel = fire[src]
+    if (pixel == 0) {
+        fire[(y - 1) * width + x] = 0
+    } else {
+        var rand = random.randomInt(4)
+        var dstX = x - rand + 1
+        if (dstX < 0) {
+            dstX = 0
+        }
+        if (dstX >= width) {
+            dstX = width - 1
+        }
+        fire[(y - 1) * width + dstX] = pixel - (rand & 1)
+    }
+}
+
+doFire(Int[] fire, Int width, Int height) {
+    for (var x = 0; x < width; x++) {
+        for (var y = 1; y < height; y++) {
+            spreadFire(fire, width, height, y * width + x)
+        }
+    }
+}
+
+render(Int[] fire, Int[] paletteR, Int[] paletteG, Int[] paletteB, Int width, Int height): String {
+    var out = "[H"
+    for (var y = 0; y < height; y++) {
+        for (var x = 0; x < width; x++) {
+            var idx = fire[y * width + x]
+            out = out + "[48;2;" + paletteR[idx] + ";" + paletteG[idx] + ";" + paletteB[idx] + "m  "
+        }
+        out = out + "[0m\n"
+    }
+    return out
+}
+
+main() {
+    var width = 80
+    var height = 40
+    var maxIntensity = 35
+
+    var paletteR = new Int[36]
+    var paletteG = new Int[36]
+    var paletteB = new Int[36]
+    paletteR[0] = 7
+    paletteG[0] = 7
+    paletteB[0] = 7
+    paletteR[1] = 31
+    paletteG[1] = 7
+    paletteB[1] = 7
+    paletteR[2] = 47
+    paletteG[2] = 15
+    paletteB[2] = 7
+    paletteR[3] = 71
+    paletteG[3] = 15
+    paletteB[3] = 7
+    paletteR[4] = 87
+    paletteG[4] = 23
+    paletteB[4] = 7
+    paletteR[5] = 103
+    paletteG[5] = 31
+    paletteB[5] = 7
+    paletteR[6] = 119
+    paletteG[6] = 31
+    paletteB[6] = 7
+    paletteR[7] = 143
+    paletteG[7] = 39
+    paletteB[7] = 7
+    paletteR[8] = 159
+    paletteG[8] = 47
+    paletteB[8] = 7
+    paletteR[9] = 175
+    paletteG[9] = 63
+    paletteB[9] = 7
+    paletteR[10] = 191
+    paletteG[10] = 71
+    paletteB[10] = 7
+    paletteR[11] = 199
+    paletteG[11] = 71
+    paletteB[11] = 7
+    paletteR[12] = 223
+    paletteG[12] = 79
+    paletteB[12] = 7
+    paletteR[13] = 223
+    paletteG[13] = 87
+    paletteB[13] = 7
+    paletteR[14] = 223
+    paletteG[14] = 87
+    paletteB[14] = 7
+    paletteR[15] = 215
+    paletteG[15] = 95
+    paletteB[15] = 7
+    paletteR[16] = 215
+    paletteG[16] = 103
+    paletteB[16] = 15
+    paletteR[17] = 207
+    paletteG[17] = 111
+    paletteB[17] = 15
+    paletteR[18] = 207
+    paletteG[18] = 119
+    paletteB[18] = 15
+    paletteR[19] = 207
+    paletteG[19] = 127
+    paletteB[19] = 15
+    paletteR[20] = 207
+    paletteG[20] = 135
+    paletteB[20] = 23
+    paletteR[21] = 199
+    paletteG[21] = 135
+    paletteB[21] = 23
+    paletteR[22] = 199
+    paletteG[22] = 143
+    paletteB[22] = 23
+    paletteR[23] = 199
+    paletteG[23] = 151
+    paletteB[23] = 31
+    paletteR[24] = 191
+    paletteG[24] = 159
+    paletteB[24] = 31
+    paletteR[25] = 191
+    paletteG[25] = 159
+    paletteB[25] = 31
+    paletteR[26] = 191
+    paletteG[26] = 167
+    paletteB[26] = 39
+    paletteR[27] = 191
+    paletteG[27] = 167
+    paletteB[27] = 39
+    paletteR[28] = 191
+    paletteG[28] = 175
+    paletteB[28] = 47
+    paletteR[29] = 183
+    paletteG[29] = 175
+    paletteB[29] = 47
+    paletteR[30] = 183
+    paletteG[30] = 183
+    paletteB[30] = 47
+    paletteR[31] = 183
+    paletteG[31] = 183
+    paletteB[31] = 55
+    paletteR[32] = 207
+    paletteG[32] = 207
+    paletteB[32] = 111
+    paletteR[33] = 223
+    paletteG[33] = 223
+    paletteB[33] = 159
+    paletteR[34] = 239
+    paletteG[34] = 239
+    paletteB[34] = 199
+    paletteR[35] = 255
+    paletteG[35] = 255
+    paletteB[35] = 255
+
+    var fire = new Int[width * height]
+    initFire(fire, width, height, maxIntensity)
+
+    println("[?25l[2J")
+    while (true) {
+        doFire(fire, width, height)
+        println(render(fire, paletteR, paletteG, paletteB, width, height))
+        time.sleep(40)
+    }
+    println("[0m[?25h")
+}
