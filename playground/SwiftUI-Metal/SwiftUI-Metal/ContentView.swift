@@ -14,7 +14,7 @@ struct ContentView: View {
     var body: some View {
         FireView(settings: settings)
             .ignoresSafeArea()
-            .overlay(alignment: .bottom) {
+            .overlay(alignment: .top) {
                 HStack {
                     Picker("Wind", selection: $settings.wind) {
                         Text("←").tag(Int32(-1))
