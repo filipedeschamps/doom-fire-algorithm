@@ -6,8 +6,13 @@
 	objectVersion = 110;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		A1F0E6213079A00000A61575 /* DoomFire in Frameworks */ = {isa = PBXBuildFile; productRef = A1F0E6203079A00000A61575 /* DoomFire */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		A1F0E608307997AB00A61575 /* SwiftUI-Metal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SwiftUI-Metal.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A1F0E61F30799EC700A61575 /* DoomFire */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = DoomFire; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -22,6 +27,7 @@
 		A1F0E605307997AB00A61575 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			files = (
+				A1F0E6213079A00000A61575 /* DoomFire in Frameworks */,
 			);
 		};
 /* End PBXFrameworksBuildPhase section */
@@ -30,6 +36,7 @@
 		A1F0E5FF307997AB00A61575 = {
 			isa = PBXGroup;
 			children = (
+				A1F0E61F30799EC700A61575 /* DoomFire */,
 				A1F0E60A307997AB00A61575 /* SwiftUI-Metal */,
 				A1F0E609307997AB00A61575 /* Products */,
 			);
@@ -60,6 +67,9 @@
 				A1F0E60A307997AB00A61575 /* SwiftUI-Metal */,
 			);
 			name = "SwiftUI-Metal";
+			packageProductDependencies = (
+				A1F0E6203079A00000A61575 /* DoomFire */,
+			);
 			productName = "SwiftUI-Metal";
 			productReference = A1F0E608307997AB00A61575 /* SwiftUI-Metal.app */;
 			productType = "com.apple.product-type.application";
@@ -339,6 +349,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A1F0E6203079A00000A61575 /* DoomFire */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = DoomFire;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = A1F0E600307997AB00A61575 /* Project object */;
 	validationLevel = 1;

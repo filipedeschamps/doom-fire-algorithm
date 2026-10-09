@@ -1,6 +1,6 @@
 //
 //  Fire.metal
-//  SwiftUI-Metal
+//  DoomFire
 //
 //  Created by Andrew Althage on 10/9/26.
 //

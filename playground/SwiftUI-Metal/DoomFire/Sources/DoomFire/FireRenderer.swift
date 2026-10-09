@@ -1,6 +1,6 @@
 //
 //  FireRenderer.swift
-//  SwiftUI-Metal
+//  DoomFire
 //
 //  Created by Andrew Althage on 10/9/26.
 //
@@ -8,14 +8,21 @@
 import MetalKit
 
 /// Mirrors `FireSettings` in Fire.metal — keep field order and types in sync.
-struct FireSettings {
-    var wind: Int32 = -1        // the original leans left
-    var maxDecay: UInt32 = 2
-    var source: UInt32 = 36
+public struct FireSettings: Equatable, Sendable {
+    public var wind: Int32 = -1        // -1 left (like the original), 0 straight up, 1 right
+    public var maxDecay: UInt32 = 2    // higher = shorter flames
+    public var source: UInt32 = 36     // fire source intensity, 0 (extinguished)...36
+
+    public init(wind: Int32 = -1, maxDecay: UInt32 = 2, source: UInt32 = 36) {
+        self.wind = wind
+        self.maxDecay = maxDecay
+        self.source = source
+    }
 }
 
+/// Drives the simulation; public only because it is `FireView`'s coordinator.
 @MainActor
-final class FireRenderer: NSObject, MTKViewDelegate {
+public final class FireRenderer: NSObject, MTKViewDelegate {
     var settings = FireSettings()
     var pixelSize: CGFloat = 4
 
@@ -31,7 +38,7 @@ final class FireRenderer: NSObject, MTKViewDelegate {
         // Demo code: a device without Metal or a missing shader is a programmer error.
         device = MTLCreateSystemDefaultDevice()!
         queue = device.makeCommandQueue()!
-        let library = device.makeDefaultLibrary()!
+        let library = try! device.makeDefaultLibrary(bundle: .module)
 
         propagate = try! device.makeComputePipelineState(function: library.makeFunction(name: "propagate")!)
 
@@ -43,7 +50,7 @@ final class FireRenderer: NSObject, MTKViewDelegate {
         super.init()
     }
 
-    func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
+    public func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
         let width = max(Int(size.width / pixelSize), 1)
         let height = max(Int(size.height / pixelSize), 1)
         let desc = MTLTextureDescriptor.texture2DDescriptor(
@@ -65,7 +72,7 @@ final class FireRenderer: NSObject, MTKViewDelegate {
         cmd.commit()
     }
 
-    func draw(in view: MTKView) {
+    public func draw(in view: MTKView) {
         guard textures.count == 2,
               let drawable = view.currentDrawable,
               let pass = view.currentRenderPassDescriptor,

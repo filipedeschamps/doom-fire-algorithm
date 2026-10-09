@@ -5,6 +5,7 @@
 //  Created by Andrew Althage on 10/9/26.
 //
 
+import DoomFire
 import SwiftUI
 
 struct ContentView: View {
