@@ -87,8 +87,10 @@ public final class FireRenderer: NSObject, MTKViewDelegate {
         compute.setTexture(dst, index: 1)
         compute.setBytes(&settings, length: MemoryLayout<FireSettings>.stride, index: 0)
         compute.setBytes(&frame, length: MemoryLayout<UInt32>.stride, index: 1)
-        compute.dispatchThreads(MTLSize(width: dst.width, height: dst.height, depth: 1),
-                                threadsPerThreadgroup: MTLSize(width: 16, height: 16, depth: 1))
+        let group = MTLSize(width: 16, height: 16, depth: 1)
+        let groups = MTLSize(width: (dst.width + group.width - 1) / group.width,
+                             height: (dst.height + group.height - 1) / group.height, depth: 1)
+        compute.dispatchThreadgroups(groups, threadsPerThreadgroup: group)
         compute.endEncoding()
         
         let render = cmd.makeRenderCommandEncoder(descriptor: pass)!
