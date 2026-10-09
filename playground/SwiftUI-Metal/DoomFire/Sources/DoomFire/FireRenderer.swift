@@ -51,8 +51,13 @@ public final class FireRenderer: NSObject, MTKViewDelegate {
     }
 
     public func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
-        let width = max(Int(size.width / pixelSize), 1)
-        let height = max(Int(size.height / pixelSize), 1)
+        #if os(macOS)
+        let scale = view.window?.backingScaleFactor ?? NSScreen.main?.backingScaleFactor ?? 1
+        #else
+        let scale = view.contentScaleFactor
+        #endif
+        let width = max(Int(size.width / (pixelSize * scale)), 1)
+        let height = max(Int(size.height / (pixelSize * scale)), 1)
         let desc = MTLTextureDescriptor.texture2DDescriptor(
             pixelFormat: .r8Uint, width: width, height: height, mipmapped: false)
         desc.usage = [.shaderRead, .shaderWrite, .renderTarget]
