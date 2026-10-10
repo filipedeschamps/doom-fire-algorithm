@@ -2,6 +2,10 @@
 
 The Doom fire effect running on the GPU with Metal, wrapped in a small SwiftUI app for macOS and iOS.
 
+<p align="center">
+  <img src="SwiftUI-Metal/Assets.xcassets/screenshot-mac.imageset/doom-fire-swiftui-metal-mac-01.png" width="600" alt="Doom fire running in the SwiftUI + Metal app on macOS">
+</p>
+
 The fire itself lives in a local Swift package called `DoomFire` (in the `DoomFire/` folder). The app in `SwiftUI-Metal/` just puts the fire on screen and adds a few controls on top. If you want the fire in your own SwiftUI view, it's one line:
 
 ```swift
