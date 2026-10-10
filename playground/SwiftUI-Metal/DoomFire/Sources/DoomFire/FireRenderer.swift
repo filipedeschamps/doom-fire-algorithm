@@ -38,15 +38,19 @@ public final class FireRenderer: NSObject, MTKViewDelegate {
         // Demo code: a device without Metal or a missing shader is a programmer error.
         device = MTLCreateSystemDefaultDevice()!
         queue = device.makeCommandQueue()!
-        let library = try! device.makeDefaultLibrary(bundle: .module)
+        do {
+            let library = try device.makeDefaultLibrary(bundle: .module)
 
-        propagate = try! device.makeComputePipelineState(function: library.makeFunction(name: "propagate")!)
+            propagate = try device.makeComputePipelineState(function: library.makeFunction(name: "propagate")!)
 
-        let desc = MTLRenderPipelineDescriptor()
-        desc.vertexFunction = library.makeFunction(name: "fullscreen")
-        desc.fragmentFunction = library.makeFunction(name: "colorize")
-        desc.colorAttachments[0].pixelFormat = .bgra8Unorm   // must match MTKView.colorPixelFormat
-        colorize = try! device.makeRenderPipelineState(descriptor: desc)
+            let desc = MTLRenderPipelineDescriptor()
+            desc.vertexFunction = library.makeFunction(name: "fullscreen")
+            desc.fragmentFunction = library.makeFunction(name: "colorize")
+            desc.colorAttachments[0].pixelFormat = .bgra8Unorm   // must match MTKView.colorPixelFormat
+            colorize = try device.makeRenderPipelineState(descriptor: desc)
+        } catch {
+            fatalError("Metal pipeline setup failed: \(error)")
+        }
         super.init()
     }
 
@@ -97,7 +101,7 @@ public final class FireRenderer: NSObject, MTKViewDelegate {
                              height: (dst.height + group.height - 1) / group.height, depth: 1)
         compute.dispatchThreadgroups(groups, threadsPerThreadgroup: group)
         compute.endEncoding()
-        
+
         let render = cmd.makeRenderCommandEncoder(descriptor: pass)!
         render.setRenderPipelineState(colorize)
         render.setFragmentTexture(dst, index: 0)
