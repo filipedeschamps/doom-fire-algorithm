@@ -146,3 +146,202 @@ write-shift form of propagation (the pull form of D-04 is specified instead).
 ## Human acceptance
 Devin opens `vanilla/doom-fire.xlsx` in Excel 16.x, holds F9, and judges whether it
 looks like the Doom fire. Not machine-tested.
+
+
+---
+
+# excel-doom-fire — VBA (M2) SPEC
+
+Doom fire in Excel + VBA: a macro-enabled workbook with a Start/Stop animation loop and
+source buttons. Same provenance root as M1 (`fire.js Lx-y` = `playground/1st-implementation-with-tables/fire.js @854c39f`).
+M1 ids (D-01..D-07, SPEC-001..012) above are untouched; M2 uses D-10..D-16 and SPEC-101..114.
+M2 cross-references are written as plain ids (not bracket links) so the M1 meta-test, which
+parses everything below `## SPEC-012`, is unaffected.
+
+Verify (all lanes):
+`cd playground/excel-doom-fire && uv run --python 3.11 --with-requirements tests/requirements.txt pytest tests/acceptance/vba -q`
+Hermetic lane only (no Excel): append `-m "not excel"`. The excel lane is NOT gated: on
+macOS with Excel installed it runs by default; it skips only when not on macOS / Excel.app is
+absent, and it FAILS (never touches) if an Excel process is already running — quit Excel first.
+Excel 16.113.4 on macOS 26 is the verified target. The excel lane takes about 30 s (one Excel launch).
+
+Conventions: grid = `Fire!A4:BH43` (60 columns x 40 rows, defined name `FireGrid`); the
+bottom/source row is sheet row 43 (grid row 40). Rows 1-3 of `Fire` hold the buttons.
+
+## Decisions (M2)
+
+### D-10: Artifact
+`vba/doom-fire.xlsm`, built from `vba/src/*.bas` by committed `vba/build_vba.py` (the recipe of D-15). The
+`.bas` files are the reviewable source of truth for the upstream PR; the xlsm carries exactly those modules.
+Specs: SPEC-101, SPEC-102
+
+### D-11: Faithful port
+State is a 1-D `Long` array of 60x40; propagation is the PUSH form of fire.js L23-49 in place
+(column-outer, row-inner, `new = max(0, below - decay)` written to `index - decay`, the wind shift;
+the bottom row returns early). A negative target index (row 0, wind) is skipped, not an error. Constants
+as fire.js L2-5. Create/destroy/increase/decrease source as L82-130 (36 / 0 / +rand 0..13 / -rand 0..13).
+Specs: SPEC-105, SPEC-108, SPEC-109, SPEC-110, SPEC-111, SPEC-113, SPEC-114
+
+### D-12: Render
+Per frame the whole grid is written to `FireGrid` as one 2-D Variant array. Colours come from the same
+37 conditional-format rules (exact L5 palette) created at build time, never from per-cell `Interior` loops.
+Specs: SPEC-103, SPEC-104, SPEC-105
+
+### D-13: Controls
+Six buttons on `Fire` rows 1-3, above the grid (VML form-control buttons from XlsxWriter `insert_button`, or DrawingML shapes — the tests accept either): Start, Stop, Create source, Destroy source, Increase
+source, Decrease source, wired to the public macros StartFire, StopFire, CreateFireSource, DestroyFireSource,
+IncreaseFireSource, DecreaseFireSource (`Stop` is a reserved word in VBA, hence StopFire). The loop is a
+DoEvents/Timer loop at about 50 ms per frame (fire.js L12) with a Stop flag. No `OnTime` (1 s granularity on Mac).
+(Settled by the orchestrator: buttons/controls live on the `Fire` sheet itself so the fire stays visible
+while pressing them.)
+Specs: SPEC-103, SPEC-105
+
+### D-14: Test hooks
+Public `SeedRng(seed As Long)` (`Rnd -1: Randomize seed`), `StepFrames(n As Long)` (step + render, no delay)
+and `ResetFire()` (all-zero grid, rendered). Callable via AppleScript `run VB macro`.
+Specs: SPEC-106, SPEC-108, SPEC-112
+
+### D-15: Build recipe (offline, proven in the Step-0 spike)
+Excel's AppleScript dictionary has no VB-project import verb (only `run VB macro` / `run XLM Macro`), so the
+.xlsm is built outside Excel: `tests/support/ovba_writer.py` (pure Python MS-CFB + MS-OVBA writer, source-only,
+no p-code; `build_vba_project(std_modules)`) turns the `.bas` text into `vbaProject.bin`; XlsxWriter
+(`workbook.add_vba_project`, `insert_button`, conditional formats) assembles the sheet, buttons, CF and
+embeds it. Excel compiles the module source on load. Verified: olevba extracts the modules back byte-equal
+(modulo line endings) and Excel 16.113.4 loads and runs them (`Ping` -> 42, see D-16). The builder card
+may vendor `ovba_writer.py` into `vba/`; keep `build_vba_project` / `compress` signatures.
+Specs: SPEC-101
+
+### D-16: Excel test harness (startup-folder recipe, approved by Devin)
+Opening a `.xlsm` through osascript raises Excel's macro-enable modal that nothing unattended can dismiss (even
+with `automation security` = low), and the sdef gives no way around it. A workbook that Excel opens itself at
+launch from its startup folder does not prompt. So `tests/support/excel_driver.py`: (1) refuses to run if any
+Excel process exists; (2) snapshots `~/Library/Group Containers/UBF8T346G9.Office/User Content.localized/Startup.localized/Excel`;
+(3) COPIES (never symlinks) the workbook there as `doomfire_acceptance.xlsm`; (4) launches Excel with
+`open -a`; (5) drives it with `osascript` under hard timeouts (per call 20-240 s, launch 90 s); (6) in a
+finalizer, always: close the workbook without saving, quit Excel (SIGTERM then SIGKILL of the instance the lane launched),
+delete only its own copy and `~$` lock file, and assert the folder equals the snapshot. Files that were already
+in the folder are never touched. No Excel security preference is changed; no GUI click is needed.
+Specs: SPEC-107
+
+## Spike result (Step 0, this Mac)
+(a) PROVEN: offline build (D-15). (b) PROVEN with the startup folder (D-16): launching Excel with a spike
+workbook (`Ping()` and `SetA4(n)` in a source-only module) in the folder opened without any dialog; `run VB macro`
+returned 42, `SetA4 9` was read back through `get value of range`, teardown restored the (empty) folder and left no
+Excel process. Opening the same xlsm via osascript `open workbook` does NOT work (modal, see D-16). The macro
+syntax that works: `run VB macro "'doomfire_acceptance.xlsm'!Ping"` and `... arg1 9` (no `macro name` keyword).
+Suite satisfiability was also proven with a throwaway probe implementation kept OUT of the repo (all 44 tests
+passed against it, startup folder clean and no Excel left afterwards).
+
+## Requirements (M2)
+
+### SPEC-101: Macro-enabled artifact and reproducible build
+Decisions: D-10, D-15 · [P: none — packaging; whole-program port of fire.js L1-130]
+`vba/doom-fire.xlsm` exists, is an OOXML zip with `xl/vbaProject.bin` and the macroEnabled content type.
+`python vba/build_vba.py --out PATH` exits 0 and writes a workbook with the same part list and the same
+standard modules (name and text) as the committed xlsm and as `vba/src`.
+Tests: test_spec101_*
+
+### SPEC-102: The .bas files are the source of truth
+Decisions: D-10 · [P: none — packaging]
+`vba/src/` holds >= 1 `*.bas` (each starting its text with `Attribute VB_Name = "<file stem>"`). olevba
+extraction of the committed xlsm yields exactly the same set of standard modules, with equal text after
+line-ending normalisation.
+Tests: test_spec102_*
+
+### SPEC-103: Controls and grid placement
+Decisions: D-12, D-13 · [P: fire.js L82-130 — the four source operations; L12 — loop]
+Sheet `Fire` is first. Defined name `FireGrid` = `Fire!$A$4:$BH$43`. `Fire` has exactly six shape buttons with
+captions Start / Stop / Create source / Destroy source / Increase source / Decrease source, assigned to
+StartFire / StopFire / CreateFireSource / DestroyFireSource / IncreaseFireSource / DecreaseFireSource, anchored
+above row 4.
+Tests: test_spec103_*
+
+### SPEC-104: Palette reused as conditional formats
+Decisions: D-12 · [P: fire.js L5]
+`Fire` has exactly 37 conditional-format rules, `cellIs`/`equal` with integer k, each k in 0..36 once, filled
+with the exact RGB of upstream palette entry k (parsed from fire.js L5), covering all of `FireGrid`; every
+`FireGrid` cell has number format `;;;` (digits hidden).
+Tests: test_spec104_*
+
+### SPEC-105: Faithful-port source rules
+Decisions: D-11, D-12, D-13 · [P: fire.js L2-5, L23-49; L12 (Timer loop)]
+Static checks on `vba/src/*.bas` (comments and string literals ignored): a `Public Sub` exists for each of the
+six button macros; the constants 60, 40, 36, 14 and 50 appear; the pixel state is a 1-D `Long` array; the loop
+uses `DoEvents` and `Timer` and never `OnTime`; rendering assigns a value block (`.Value =`) and never touches
+`.Interior` or `.FormatConditions` at run time; no Windows-only or external APIs (`Declare`, `CreateObject`,
+`GetObject`, `WScript`, `SendKeys`, `Scripting.`, `Shell`).
+Tests: test_spec105_*
+
+### SPEC-106: Test hooks
+Decisions: D-14 · [P: none — test seam for the RNG in fire.js L43]
+`Public Sub SeedRng(seed As Long)` whose body does `Rnd -1` and `Randomize seed`; `Public Sub StepFrames(n As Long)`;
+`Public Sub ResetFire()`.
+Tests: test_spec105_* (file test_spec105_source_rules.py)
+
+### SPEC-107: Excel lane hygiene
+Decisions: D-16 · [P: none — test infrastructure; approved startup-folder grant]
+During the lane the staged copy is a regular file (not a symlink) identical to the committed xlsm, and is the
+only workbook open; the only additions to the startup folder are the copy and its `~$` lock file. After the lane
+(also on failure or timeout) the startup folder equals its pre-run listing, no Excel process remains, and the
+committed xlsm is byte-unchanged (closed without saving).
+Tests: test_spec107_* (session fixture teardown asserts the rest)
+
+### SPEC-108: Grid shape, range and reset
+Decisions: D-11, D-14 · [P: fire.js L2-3, L5 (intensity 0..36)]
+`FireGrid` reads back as 40x60 integers. After `ResetFire` every cell is 0. After seeded runs of 1, 5 and 40
+frames with the source on, every value is an integer in 0..36 and the grid is not all zero.
+Tests: test_spec108_*
+
+### SPEC-109: Create source
+Decisions: D-11 · [P: fire.js L82-90]
+After `CreateFireSource` the bottom row (grid row 40) is all 36 and nothing above it changes. While burning
+(1 and 61 frames) the bottom row stays all 36; one frame after creating, the row above has a value >= 34;
+after 60 frames more than half of grid row 30 is lit.
+Tests: test_spec109_*
+
+### SPEC-110: Destroy source
+Decisions: D-11 · [P: fire.js L92-98; fire.js L23-49 simulated: all-zero took 45..74 frames over 1000 trials, so Devin's card text "plus 40 frames" can never hold — approved 100]
+After `DestroyFireSource` the bottom row is all 0 immediately, and 100 frames later the whole grid is 0. A
+hermetic reference model (tests/support/firemodel.py) shows burn-out needs > 40 and <= 100 frames.
+Tests: test_spec110_* (model, hermetic) and test_spec107_excel_lane.py::test_spec110_*
+
+### SPEC-111: Per-frame propagation invariant
+Decisions: D-11 · [P: fire.js L23-49, L43-48]
+For every single frame (`StepFrames 1`, 45 frames with the source on and 30 through burn-out), with `old`/`new`
+the grids before/after: all values are integers in 0..36; the bottom row is unchanged; and for rows above it,
+columns 1..56, `new[r][c]` is `old[r][c]` (nobody wrote it) or `max(0, old[r+1][c+d] - d)` for some d in
+0..2 with c+d <= 60 — hence no pixel ever exceeds the max of its below-row wind window old[r+1][c..c+2]
+unless it was left unchanged. Columns 57..60 get the range check only, because a column-0 wind write
+(`index - decay`) wraps onto the previous row's last two columns, exactly as in JS.
+Tests: test_spec110_model.py (guards for the checker) and test_spec107_excel_lane.py::test_spec111_*
+
+### SPEC-112: Seeded determinism
+Decisions: D-14 · [P: none — test seam]
+`ResetFire; SeedRng s; CreateFireSource; StepFrames 30` gives an identical grid on repeat with the same s and a
+different grid with another s (use seeds that differ in high bits, e.g. 123 vs 4567891: VBA `Randomize` drops low bits, so 123 and 124 give the identical sequence — observed on Excel 16.113.4).
+Tests: test_spec107_excel_lane.py::test_spec112_*
+
+### SPEC-113: Increase / decrease source bounds
+Decisions: D-11 · [P: fire.js L100-130]
+Per bottom-row cell, one `DecreaseFireSource` gives `max(0, p-13) <= new <= p`; one `IncreaseFireSource` gives
+`p <= new <= min(36, p+13)` and leaves a 36 at 36; each column draws its own random amount (not all columns
+equal); repeated decreases reach all 0 and repeated increases all 36 (within 40 calls); rows above the source
+are unchanged.
+Tests: test_spec107_excel_lane.py::test_spec113_*
+
+### SPEC-114: Negative-index guard
+Decisions: D-11 · [P: fire.js L35-49 — `firePixelsArray[index - decay]` is a silent property write in JS when negative]
+`StepFrames 300` with the source on completes without a VBA error (row-0 wind writes to a negative index are
+skipped), and the grid stays in 0..36 with the bottom row all 36.
+Tests: test_spec107_excel_lane.py::test_spec114_*
+
+## Out of scope (M2)
+Debug/index mode; wind or palette UI; Windows-only APIs (it must run on Mac Excel); the upstream PR; changing
+Excel security settings; a machine test of the Start/Stop animation loop itself and of its frame rate (the loop
+blocks `run VB macro`; covered by Human acceptance); the second README line (the top-level README already carries
+the one allowed `excel-doom-fire` entry from SPEC-012).
+
+## Human acceptance (M2)
+Devin opens `vba/doom-fire.xlsm` in Excel (enabling macros as usual), presses Start, and judges that it looks like
+Doom fire at a usable frame rate (about 20 fps target, fire.js L12), with no digits visible; and that Stop, Create,
+Destroy, Increase and Decrease source respond. Not machine-tested.
