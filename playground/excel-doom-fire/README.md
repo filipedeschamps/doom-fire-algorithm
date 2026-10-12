@@ -1,6 +1,8 @@
 # excel-doom-fire
 
-The Doom fire algorithm in plain Excel — formulas and conditional formatting, no macros.
+The Doom fire algorithm in Excel, two ways: a vanilla workbook (formulas and conditional formatting, no macros) and an Excel + VBA workbook.
+
+![The VBA version running in Microsoft Excel 16 for Mac](doom-fire-vba.gif)
 
 ## Vanilla (M1)
 

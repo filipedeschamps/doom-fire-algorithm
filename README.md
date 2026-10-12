@@ -82,7 +82,7 @@ These people are making this repository **MORE THAN AWESOME**.
 - [Doom Fire JS canvas2d typed arrays (mouse-follower)](https://filipedeschamps.github.io/doom-fire-algorithm/playground/doom-fire-js-canvas2d-typedarrays) ([@NiklasKnaack](https://github.com/NiklasKnaack))
 - [Doom Fire - Voxel Version (Three.js)](https://filipedeschamps.github.io/doom-fire-algorithm/playground/threejs-3d-cube) ([@arturovaine](https://github.com/arturovaine))
 - [Doom Fire - Subpixel Division and Color Interpolation](https://filipedeschamps.github.io/doom-fire-algorithm/playground/subpixel-division-and-color-interpolation) ([@joaodanilo123](https://github.com/joaodanilo123))
-- [Doom Fire in Excel - formulas and conditional formatting, no macros](https://github.com/filipedeschamps/doom-fire-algorithm/tree/master/playground/excel-doom-fire) ([@devinmlowe](https://github.com/devinmlowe))
+- [Doom Fire in Excel - vanilla (formulas + conditional formatting) and VBA](https://github.com/filipedeschamps/doom-fire-algorithm/tree/master/playground/excel-doom-fire) ([@devinmlowe](https://github.com/devinmlowe))
 
 ## Contributors
 
