@@ -1,0 +1,4 @@
+pytest==8.3.4
+openpyxl==3.1.5
+oletools==0.60.2
+XlsxWriter==3.2.0
