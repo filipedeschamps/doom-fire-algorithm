@@ -22,6 +22,7 @@ make
 
 Controls:
 
+- `Space`: Toggle fire on/off ,i.e. flames burn out from bottom to top, and reignite
 - `Left` / `Right` arrows: change the wind, i.e. which way the flames lean
 - `Up` / `Down` arrows: make the flames taller / shorter
 - `q` (or `Ctrl-C`): quit; the terminal settings are restored on exit
