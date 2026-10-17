@@ -84,6 +84,8 @@ These people are making this repository **MORE THAN AWESOME**.
 - [Doom Fire - Subpixel Division and Color Interpolation](https://filipedeschamps.github.io/doom-fire-algorithm/playground/subpixel-division-and-color-interpolation) ([@joaodanilo123](https://github.com/joaodanilo123))
 - [SwiftUI + Metal (GPU) Implementation](https://github.com/filipedeschamps/doom-fire-algorithm/tree/master/playground/SwiftUI-Metal) ([@drewalth](https://github.com/drewalth))
 - [Doom Fire in Excel - vanilla (formulas + conditional formatting) and VBA](https://github.com/filipedeschamps/doom-fire-algorithm/tree/master/playground/excel-doom-fire) ([@devinmlowe](https://github.com/devinmlowe))
+- [Fortran](https://github.com/filipedeschamps/doom-fire-algorithm/tree/master/playground/fortran-doom-fire) ([@Harshit-Dhanwalkar](https://github.com/Harshit-Dhanwalkar))
+
 
 ## Contributors
 
