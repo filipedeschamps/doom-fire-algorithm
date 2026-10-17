@@ -1,6 +1,6 @@
 # Fortran Doom Fire
 
-Doom fire algorithm in Fortran 2018, rendered in the terminal with Unicode block characters and ANSI 256-color escapes. Based on [Fabien Sanglard's article](https://fabiensanglard.net/doom_fire_psx/index.html).
+Doom fire algorithm in Fortran 2018 (with the original's left-leaning flames), rendered in the terminal with Unicode block characters and ANSI 256-color escapes. Based on [Fabien Sanglard's article](https://fabiensanglard.net/doom_fire_psx/index.html).
 
 ## Running
 
@@ -20,7 +20,11 @@ make
 ./doom_fire
 ```
 
-Press `q` (or `Ctrl-C`) to quit.
+Controls:
+
+- `Left` / `Right` arrows: change the wind, i.e. which way the flames lean
+- `Up` / `Down` arrows: make the flames taller / shorter
+- `q` (or `Ctrl-C`): quit; the terminal settings are restored on exit
 
 If your compiler is installed under a different name, the Makefile tries `gfortran` and then `gfortran-16`. You can also choose one explicitly:
 
