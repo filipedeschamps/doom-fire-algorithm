@@ -3,7 +3,11 @@
 !
 ! Algorithm: https://fabiensanglard.net/doom_fire_psx/index.html
 !
-! Grid: 100 columns x 30 rows (hardcoded).  Press q (or Ctrl-C) to quit.
+! Grid: 100 columns x 30 rows.
+!
+! Keys:  Left / Right  change the wind (which way the flames lean)
+!        Up / Down     make the flames taller / shorter
+!        q or Ctrl-C   quit
 
 program doom_fire
   use, intrinsic :: iso_c_binding,   only: c_int, c_char, c_long, c_size_t
@@ -34,8 +38,7 @@ program doom_fire
   integer,        parameter :: MAX_HEAT = 36        ! canonical max intensity
   integer(c_int), parameter :: FRAME_US = 50000_c_int   ! 50 ms -> ~20 fps
 
-  ! Room for per-row reset/newline and the cursor-home prefix.
-  integer, parameter :: BUF_LEN = W * H * 14 + H * 8 + 64
+  integer, parameter :: BUF_LEN = W * H * 14 + H * 8 + 256
 
   character(len=1), parameter :: ESC = achar(27)
 
@@ -62,6 +65,15 @@ program doom_fire
   integer :: i
   logical :: quit
 
+  ! Interactive controls (changed by the arrow keys in poll_input):
+  !   drift  - horizontal bias added to every flame's shift.  The average
+  !            net shift per row is (drift - 1), so  0 = original DOOM lean
+  !            (left), 1 = straight up, 2.. = lean right, -1.. = lean more left.
+  !   source - heat of the bottom row.  Heat dies off by ~1 per row, so this is
+  !            roughly the flame height in rows.
+  integer :: drift, source
+  integer :: esc_state      ! 0 normal, 1 saw ESC, 2 saw ESC [  (arrow parser)
+
   ! Setup
   call random_seed()
 
@@ -77,8 +89,11 @@ program doom_fire
   glyph(3) = char(226)//char(150)//char(147);  glyph_len(3) = 3  ! U+2593 dark shade
   glyph(4) = char(226)//char(150)//char(136);  glyph_len(4) = 3  ! U+2588 full block
 
+  drift     = 0
+  source    = MAX_HEAT
+  esc_state = 0
   fire = 0.0
-  fire(:, H-1) = real(MAX_HEAT)
+  fire(:, H-1) = real(source)
 
   ! Put the terminal in non-blocking
   call execute_command_line('stty -icanon -echo -isig min 0 time 0 2>/dev/null')
@@ -91,7 +106,7 @@ program doom_fire
   do while (.not. quit)
     call propagate()
     call render()
-    call poll_quit(quit)
+    call poll_input(quit)
     call usleep(FRAME_US)
   end do
 
@@ -106,12 +121,15 @@ contains
     integer :: x, y, decay, dst_x
     real    :: r
 
+    ! Fuel row follows height control.
+    fire(:, H-1) = real(source)
+
     do y = 1, H - 1
       do x = 0, W - 1
         call random_number(r)
-        decay = int(r * 3.0) ! 0, 1 or 2
+        decay = int(r * 3.0)                ! 0, 1 or 2
 
-        dst_x = modulo(x - decay, W)
+        dst_x = modulo(x + drift - decay, W)
 
         fire(dst_x, y - 1) = max(fire(x, y) - real(decay), 0.0)
       end do
@@ -126,19 +144,62 @@ contains
     pos = pos + n
   end subroutine put
 
-  ! Drain all pending keystrokes; set quit if one is `q`, `Q` or Ctrl-C.
-  subroutine poll_quit(want_quit)
+  ! Drain all pending keystrokes. Arrow keys arrive as 3 bytes: ESC [ A/B/C/D
+  subroutine poll_input(want_quit)
     logical, intent(out) :: want_quit
     character(kind=c_char) :: ch(1)
-    integer(c_long) :: n
+    character(len=1)       :: c
+    integer(c_long)        :: n
 
     want_quit = .false.
     do
       n = c_read(0_c_int, ch, 1_c_size_t)
       if (n <= 0) exit                      ! nothing (more) waiting
-      if (ch(1) == 'q' .or. ch(1) == 'Q' .or. ch(1) == char(3)) want_quit = .true.
+      c = ch(1)
+
+      select case (esc_state)
+      case (1)                              ! previous byte was ESC
+        if (c == '[' .or. c == 'O') then
+          esc_state = 2
+        else
+          esc_state = 0
+        end if
+      case (2)                              ! inside an ESC [ sequence
+        esc_state = 0
+        select case (c)
+        case ('A'); source = min(source + 2, MAX_HEAT)   ! up    -> taller
+        case ('B'); source = max(source - 2, 2)          ! down  -> shorter
+        case ('C'); drift  = min(drift + 1, 4)           ! right -> lean right
+        case ('D'); drift  = max(drift - 1, -2)          ! left  -> lean left
+        end select
+      case default
+        if (c == char(27)) then
+          esc_state = 1
+        else if (c == 'q' .or. c == 'Q' .or. c == char(3)) then
+          want_quit = .true.
+        end if
+      end select
     end do
-  end subroutine poll_quit
+  end subroutine poll_input
+
+  ! Status text
+  function status_line() result(text)
+    character(len=W) :: text
+    character(len=8) :: wind
+    integer :: lean
+
+    lean = drift - 1                        ! average net shift per row
+    if (lean < 0) then
+      wind = repeat('<', -lean)
+    else if (lean > 0) then
+      wind = repeat('>', lean)
+    else
+      wind = '|'
+    end if
+
+    write(text, '(A,A,A,I0,A,I0,A)') ' wind: ', trim(wind), '   height: ', &
+          source, '/', MAX_HEAT, '   [arrows] wind/height   [q] quit'
+  end function status_line
 
   ! Build the full frame in `buf`, then emit it with a single write.
   subroutine render()
@@ -150,7 +211,10 @@ contains
     do y = 0, H - 1
       last_heat = -1                        ! force a colour code at row start
       do x = 0, W - 1
-        heat  = min(max(int(fire(x, y)), 0), MAX_HEAT)
+        ! Scale by the source so the bottom stays white-hot at any height;
+        ! shorter flames just fade out over fewer rows.
+        heat  = min(max(int(fire(x, y) * real(MAX_HEAT) / real(source)), 0), &
+                    MAX_HEAT)
 
         ! Map heat 0..36 to one of 5 glyph levels 0..4.
         level = min(int(real(heat) * 5.0 / real(MAX_HEAT)), 4)
@@ -162,8 +226,12 @@ contains
         call put(glyph(level), glyph_len(level))
       end do
       call put(ESC//'[0m', 4)               ! reset colours at end of row
-      if (y < H - 1) call put(achar(10), 1) ! no newline after last row: no scroll
+      call put(achar(10), 1)
     end do
+
+    ! Status line on row H+1
+    call put(status_line(), W)
+    call put(ESC//'[K', 3)                  ! clear anything left to the right
 
     write(output_unit, '(A)', advance='no') buf(1:pos)
     flush(output_unit)
