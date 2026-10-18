@@ -1,3 +1,7 @@
+<div align="center">
+  <img src="COBOL_Doom_fire.png" alt="Screenshot of Terminal Output" width="290">
+</div>
+
 # COBOL Doom Fire
 
 Doom fire algorithm implemented in COBOL, rendered in the terminal.
