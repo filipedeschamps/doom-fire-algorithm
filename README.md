@@ -85,6 +85,7 @@ These people are making this repository **MORE THAN AWESOME**.
 - [SwiftUI + Metal (GPU) Implementation](https://github.com/filipedeschamps/doom-fire-algorithm/tree/master/playground/SwiftUI-Metal) ([@drewalth](https://github.com/drewalth))
 - [Doom Fire in Excel - vanilla (formulas + conditional formatting) and VBA](https://github.com/filipedeschamps/doom-fire-algorithm/tree/master/playground/excel-doom-fire) ([@devinmlowe](https://github.com/devinmlowe))
 - [Fortran](https://github.com/filipedeschamps/doom-fire-algorithm/tree/master/playground/fortran-doom-fire) ([@Harshit-Dhanwalkar](https://github.com/Harshit-Dhanwalkar))
+- [The fire burning on an audio waveform, as a wavesurfer.js plugin](https://wavesurfer-doomfire.ebaker.me.uk/) ([@edwbaker](https://github.com/edwbaker))
 
 ## Contributors
 
